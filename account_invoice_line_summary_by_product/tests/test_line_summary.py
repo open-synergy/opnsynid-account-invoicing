@@ -48,16 +48,16 @@ class TestLineSummary(TransactionCase):
     def test_line_summary(self, parent_menu_id=False):
         data_invoice = self._create_invoice()
 
-        #Check Line Summary Ids Is Not None
+        # Check Line Summary Ids Is Not None
         self.assertIsNotNone(
             data_invoice.line_summary_ids)
 
-        #Check Line Summary Is Grouped By Product
+        # Check Line Summary Is Grouped By Product
         self.assertEquals(
             1,
             len(data_invoice.line_summary_ids.ids))
 
-        #Check Line Summary Data
+        # Check Line Summary Data
         self.assertEquals(
             6,
             data_invoice.line_summary_ids[0].product_qty)
