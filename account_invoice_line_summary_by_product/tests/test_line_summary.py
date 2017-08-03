@@ -12,10 +12,13 @@ class TestLineSummary(TransactionCase):
         # Object
         self.obj_invoice = self.env['account.invoice']
         self.obj_invoice_line = self.env['account.invoice.line']
+        self.obj_account = self.env['account.account']
 
         # Data
         self.partner_1 = self.env.ref('base.res_partner_1')
-        self.account = self.env.ref('account.a_recv')
+        self.account = self.obj_account.search(
+            [('internal_type', '=', 'receivable')]
+        )[0]
         self.product_1 = self.env.ref('product.product_product_3')
         self.curr = self.env.ref('base.IDR')
 
@@ -34,6 +37,7 @@ class TestLineSummary(TransactionCase):
             'quantity': 1,
             'price_unit': 1000000,
             'invoice_id': invoice_id.id,
+            'account_id': self.account.id,
             'name': 'Test'
         })
         self.obj_invoice_line.create({
@@ -41,6 +45,7 @@ class TestLineSummary(TransactionCase):
             'quantity': 5,
             'price_unit': 1000000,
             'invoice_id': invoice_id.id,
+            'account_id': self.account.id,
             'name': 'Test'
         })
         return invoice_id

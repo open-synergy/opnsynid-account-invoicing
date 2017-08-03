@@ -48,7 +48,7 @@ class AccountInvoiceLineSummary(models.Model):
                 row_number() OVER() AS id,
                 a.invoice_id AS invoice_id,
                 a.product_id AS product_id,
-                a.uos_id AS product_uom_id,
+                a.uom_id AS product_uom_id,
                 a.name AS name,
                 a.price_unit AS price_unit,
                 a.discount AS discount,
@@ -81,7 +81,7 @@ class AccountInvoiceLineSummary(models.Model):
             GROUP BY a.invoice_id,
                         a.product_id,
                         a.name,
-                        a.uos_id,
+                        a.uom_id,
                         a.price_unit,
                         a.discount,
                         b.tax_arr
