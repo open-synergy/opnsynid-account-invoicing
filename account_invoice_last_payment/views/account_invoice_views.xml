@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+<data>
+<record id="account_customer_invoice_view_form" model="ir.ui.view">
+    <field name="name">account.invoice customer form - Last Payment Info</field>
+    <field name="model">account.invoice</field>
+    <field name="inherit_id" ref="account.invoice_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='payment_ids']" position="after">
+            <group name="group_last_payment" string="Last Payment Information" colspan="4" col="2">
+                <field name="last_payment_date"/>
+                <field name="last_payment_move_id"/>
+                <field name="last_payment_line_id"/>
+            </group>
+        </xpath>
+    </field>
+</record>
+   
+<record id="account_supplier_invoice_view_form" model="ir.ui.view">
+    <field name="name">account.invoice supplier form - Last Payment Info</field>
+    <field name="model">account.invoice</field>
+    <field name="inherit_id" ref="account.invoice_supplier_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='payment_ids']" position="after">
+            <group name="group_last_payment" string="Last Payment Information" colspan="4" col="2">
+                <field name="last_payment_date"/>
+                <field name="last_payment_move_id"/>
+                <field name="last_payment_line_id"/>
+            </group>
+        </xpath>
+    </field>
+</record>
+
+<record id="account_invoice_view_tree" model="ir.ui.view">
+    <field name="name">account.invoice tree - Last Payment Info</field>
+    <field name="model">account.invoice</field>
+    <field name="inherit_id" ref="account.invoice_tree"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='residual']" position="before">
+            <field name="last_payment_date"/>
+        </xpath>
+    </field>
+</record>
+
+<record id="account_invoice_view_search" model="ir.ui.view">
+    <field name="name">account.invoice search - Last Payment Info</field>
+    <field name="model">account.invoice</field>
+    <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+    <field name="arch" type="xml">
+        <xpath expr="//filter[@string='Due Month']" position="after">
+            <filter name="grp_last_payment_date_day" string="Last Payment Date by Day" context="{'group_by':'last_payment_date:day'}"/>
+            <filter name="grp_last_payment_date_month" string="Last Payment Date by Month" context="{'group_by':'last_payment_date:month'}"/>
+        </xpath>
+    </field>
+</record>
+
+</data>
+</openerp>
+
