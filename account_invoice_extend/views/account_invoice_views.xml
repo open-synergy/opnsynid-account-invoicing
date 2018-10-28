@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="account_invoice_view_form" model="ir.ui.view">
+            <field name="name">account.invoice.form extend form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='invoice_open']" position="before">
+                    <button string="Confirm" name="button_confirm" states="draft" class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//button[@name='invoice_open']" position="attributes">
+                    <attribute name="states">confirm</attribute>
+                </xpath>
+                <xpath expr="//field[@name='state']" position="attributes">
+                    <attribute name="statusbar_visible">draft,confirm,open,paid</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="account_invoice_supplier_view_form" model="ir.ui.view">
+            <field name="name">account.invoice.supplier form extend form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='invoice_open']" position="before">
+                    <button string="Confirm" name="button_confirm" states="draft" class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//button[@name='invoice_open']" position="attributes">
+                    <attribute name="states">confirm</attribute>
+                </xpath>
+                <xpath expr="//field[@name='state']" position="attributes">
+                    <attribute name="statusbar_visible">draft,confirm,open,paid</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
