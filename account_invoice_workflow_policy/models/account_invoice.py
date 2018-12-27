@@ -14,22 +14,20 @@ class AccountInvoice(models.Model):
     )
     def _compute_policy(self):
         for invoice in self:
-            if self.env.user.id == SUPERUSER_ID:
-                invoice.open_ok = invoice.refund_ok = \
-                    invoice.cancel_ok = invoice.restart_ok = \
-                    invoice.reopen_ok = invoice.send_email_ok = \
-                    invoice.proforma_ok = True
-                continue
-
-            if invoice.journal_id:
-                journal = invoice.journal_id
+            journal = invoice.journal_id
+            if journal:
                 for policy in journal.\
                         _get_invoice_workflow_button_policy_map():
+                    if self.env.user.id == SUPERUSER_ID:
+                        result = True
+                    else:
+                        result = journal.\
+                            _get_invoice_workflow_button_policy(
+                                policy[1])
                     setattr(
                         invoice,
                         policy[0],
-                        journal._get_invoice_workflow_button_policy(
-                            policy[1]),
+                        result,
                     )
 
     open_ok = fields.Boolean(
