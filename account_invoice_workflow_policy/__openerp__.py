@@ -4,7 +4,7 @@
 # pylint: disable=locally-disabled, manifest-required-author
 {
     "name": "Account Invoice Workflow Policy",
-    "version": "8.0.1.0.1",
+    "version": "8.0.1.1.0",
     "category": "Accounting",
     "website": "https://opensynergy-indonesia.com",
     "author": "OpenSynergy Indonesia",
@@ -12,8 +12,10 @@
     "installable": True,
     "depends": [
         "account",
+        "base_workflow_policy",
     ],
     "data": [
+        "data/base_workflow_policy_data.xml",
         "views/account_journal_views.xml",
         "views/account_invoice_views.xml",
     ],
