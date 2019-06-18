@@ -15,7 +15,6 @@
         "base_print_policy"
     ],
     "data": [
-        "security/res_groups.xml",
         "views/account_invoice_views.xml",
     ],
 }
