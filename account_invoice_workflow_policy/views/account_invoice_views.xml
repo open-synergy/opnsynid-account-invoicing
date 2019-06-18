@@ -45,7 +45,7 @@
 
                     <xpath expr="//button[@name='action_cancel_draft']" position="attributes">
                         <attribute name="attrs">
-                            {'invisible':['|',('state','=', 'cancel'),('restart_ok','=',False)]}
+                            {'invisible':['|',('state','!=', 'cancel'),('restart_ok','=',False)]}
                         </attribute>
                         <attribute name="states"/>
                         <attribute name="groups"/>

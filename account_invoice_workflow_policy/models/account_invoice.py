@@ -2,33 +2,23 @@
 # Copyright 2017 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, api, fields, SUPERUSER_ID
+from openerp import models, api, fields
 
 
 class AccountInvoice(models.Model):
-    _inherit = "account.invoice"
+    _name = "account.invoice"
+    _inherit = [
+        "account.invoice",
+        "base.workflow_policy_object"
+    ]
 
     @api.multi
     @api.depends(
         "journal_id",
     )
     def _compute_policy(self):
-        for invoice in self:
-            journal = invoice.journal_id
-            if journal:
-                for policy in journal.\
-                        _get_invoice_workflow_button_policy_map():
-                    if self.env.user.id == SUPERUSER_ID:
-                        result = True
-                    else:
-                        result = journal.\
-                            _get_invoice_workflow_button_policy(
-                                policy[1])
-                    setattr(
-                        invoice,
-                        policy[0],
-                        result,
-                    )
+        _super = super(AccountInvoice, self)
+        _super._compute_policy()
 
     open_ok = fields.Boolean(
         string="Can Validate",
