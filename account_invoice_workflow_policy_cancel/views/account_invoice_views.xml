@@ -9,7 +9,7 @@
                 <data>
                     <xpath expr="//button[@name='invoice_cancel']" position="attributes">
                         <attribute name="attrs">
-                            {'invisible':['|',('state','not in', ['draft', 'proforma2']),('cancel_ok','=',False)]}
+                            {'invisible':['|',('state','not in', ['draft','proforma2','open','sale']),('cancel_ok','=',False)]}
                         </attribute>
                         <attribute name="states"/>
                         <attribute name="groups"/>
@@ -26,7 +26,7 @@
                 <data>
                     <xpath expr="//button[@name='invoice_cancel']" position="attributes">
                         <attribute name="attrs">
-                            {'invisible':['|',('state','not in', ['draft', 'proforma2', 'open']),('cancel_ok','=',False)]}
+                            {'invisible':['|',('state','not in', ['draft','proforma2','open','sale']),('cancel_ok','=',False)]}
                         </attribute>
                         <attribute name="states"/>
                         <attribute name="groups"/>
