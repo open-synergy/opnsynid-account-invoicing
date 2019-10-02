@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+<record id="debt_collection_import_invoice_view_form" model="ir.ui.view">
+    <field name="name">account.debt.collection.import.invoices.form</field>
+    <field name="model">account.debt_collection_import_invoice</field>
+    <field name="arch" type="xml">
+        <form>
+            <group>
+              <field name="collection_id" colspan="4" invisible="1"/>
+              <field name="allowed_invoice_ids" invisible="1" colspan="4"/>
+              <field name="invoice_ids" domain="[('id', 'in', allowed_invoice_ids[0][2])]" nolabel="1" colspan="4"/>
+            </group>
+            <footer>
+                <button name="action_import_invoice"
+                        type="object"
+                        string="Import"
+                        class="oe_highlight"/>
+                or
+                <button special="cancel"
+                        string="Cancel"/>
+            </footer>
+        </form>
+    </field>
+</record>
+
+<record id="debt_collection_import_invoice_action" model="ir.actions.act_window">
+    <field name="name">Import Invoices</field>
+    <field name="res_model">account.debt_collection_import_invoice</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+</record>
+
+</data>
+</openerp>
