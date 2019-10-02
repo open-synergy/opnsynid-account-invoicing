@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+account_debt_collection_type_employee,account.debt_collection_type - user,model_account_debt_collection_type,base.group_user,1,1,1,1
+account_debt_collection_type_all,account.debt_collection_type - all,model_account_debt_collection_type,,0,0,0,0
+account_debt_collection_employee,account.debt_collection - user,model_account_debt_collection,base.group_user,1,1,1,1
+account_debt_collection_all,account.debt_collection – all,model_account_debt_collection,,0,0,0,0
+account_debt_collection_detail_employee,account.debt_collection_detail - user,model_account_debt_collection_detail,base.group_user,1,1,1,1
+account_debt_collection_detail_all,account.debt_collection_detail – all,model_account_debt_collection_detail,,0,0,0,0

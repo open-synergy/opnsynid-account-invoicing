@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+<record id="account_debt_collection_view_tree" model="ir.ui.view">
+    <field name="name">account.debt_collection.tree</field>
+    <field name="model">account.debt_collection</field>
+    <field name="arch" type="xml">
+        <tree>
+            <field name="name"/>
+            <field name="date"/>
+            <field name="collector_id"/>
+            <field name="user_id"/>
+            <field name="state"/>
+        </tree>
+    </field>
+</record>
+
+<record id="account_debt_collection_view_form" model="ir.ui.view">
+    <field name="name">account.debt_collection.form</field>
+    <field name="model">account.debt_collection</field>
+    <field name="arch" type="xml">
+        <form>
+          <header>
+              <button name="action_confirm" type="object" string="Confirm" class="oe_highlight" attrs="{'invisible':['|',('state','!=','draft'),('confirm_ok','=',False)]}" confirm="Confirm Collection. Are you sure?"/>
+              <button name="action_start" type="object" string="Approve" class="oe_highlight" attrs="{'invisible':['|',('state','!=','confirm'),('open_ok','=',False)]}" confirm="Open Collection. Are you sure?"/>
+              <button name="action_done" type="object" string="Finish" class="oe_highlight" attrs="{'invisible':['|',('state','!=','open'),('done_ok','=',False)]}" confirm="Finish Collection. Are you sure?"/>
+              <button name="%(base_print_policy.base_print_document_action)d" string="Print" type="action" icon="gtk-print"/>
+              <button name="%(base_cancel_reason.base_cancel_reason_wizard_action)d" type="action" string="Cancel" attrs="{'invisible':['|',('state','=','cancel'),('cancel_ok','=',False)]}" confirm="Cancel Collection. Are you sure?"/>
+              <button name="action_restart" type="object" string="Restart" attrs="{'invisible':['|',('state','!=','cancel'),('restart_ok','=',False)]}" confirm="Restart Collection. Are you sure?"/>
+              <field name="state" widget="statusbar" statusbar_visible="draft,confirm,open"/>
+          </header>
+          <sheet>
+              <div class="oe_right oe_button_box" style="width: 300px;" name="buttons">
+              </div>
+              <div class="oe_left" style="width: 500px;">
+                  <div class="oe_title" style="width: 500px;">
+                      <label for="name"/>
+                      <h1>
+                          <field name="name"/>
+                      </h1>
+                      <h2 attrs="{'invisible': [('state', '!=', 'cancel')]}">
+                          <label for="cancel_reason_id" string="Cancellation reason:"/>
+                          <field name="cancel_reason_id" class="oe_inline"/>
+                      </h2>
+                  </div>
+              </div>
+              <group name="group_1" colspan="4" col="2">
+                  <group name="group_1_1" colspan="1" col="2">
+                      <field name="company_id" groups="base.group_multi_company"/>
+                      <field name="allowed_collector_ids" widget="many2many_tags" invisible="1"/>
+                      <field name="collection_type_id"/>
+                      <field name="collector_id" domain="[('id', 'in', allowed_collector_ids[0][2])]"/>
+                  </group>
+                  <group name="group_1_2" colspan="1" col="2">
+                      <field name="date"/>
+                      <field name="user_id"/>
+                  </group>
+              </group>
+              <notebook colspan="4">
+                  <page name="content" string="Invoice Details">
+                      <field name="allowed_invoice_ids" widget="many2many_tags" invisible="1"/>
+                      <field name="allowed_invoice_specific_ids" widget="many2many_tags" invisible="1"/>
+                      <button
+                          string="Import Invoices"
+                          name="%(debt_collection_import_invoice_action)d"
+                          type="action"
+                          attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+
+                      <field name="detail_ids" colspan="4" nolabel="1">
+                          <tree editable="bottom" create="false">
+                              <field name="invoice_id" options="{'no_open': True}"/>
+                              <field name="date_invoice"/>
+                              <field name="date_due"/>
+                              <field name="amount_invoice"/>
+                              <field name="amount_due"/>
+                              <field name="amount_collected"/>
+                              <field name="state" invisible="1"/>
+                          </tree>
+                      </field>
+                  </page>
+                  <page name="note" string="Notes">
+                      <field name="note"/>
+                  </page>
+                  <page name="log" string="Log" groups="base.group_system">
+                      <group name="group_log_1" colspan="4" col="3">
+                          <field name="confirm_date" string="Confirmation"/>
+                          <field name="confirm_user_id" nolabel="1"/>
+                          <field name="open_date" string="Approval"/>
+                          <field name="open_user_id" nolabel="1"/>
+                          <field name="done_date" string="Finisih"/>
+                          <field name="done_user_id" nolabel="1"/>
+                          <field name="cancel_date" string="Cancel"/>
+                          <field name="cancel_user_id" nolabel="1"/>
+                      </group>
+                  </page>
+                  <page name="policy" string="Policy" groups="base.group_system">
+                      <group name="policy_1" colspan="4" col="2">
+                          <field name="confirm_ok"/>
+                          <field name="open_ok"/>
+                          <field name="done_ok"/>
+                          <field name="cancel_ok"/>
+                          <field name="restart_ok"/>
+                          <field name="print_ok"/>
+                      </group>
+                  </page>
+              </notebook>
+          </sheet>
+          <div class="oe_chatter">
+              <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+              <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+    </field>
+</record>
+
+<record id="account_debt_collection_view_search" model="ir.ui.view">
+    <field name="name">account.debt_collection.search</field>
+    <field name="model">account.debt_collection</field>
+    <field name="arch" type="xml">
+        <search>
+            <field name="name"/>
+            <field name="date"/>
+            <field name="collector_id"/>
+            <field name="user_id"/>
+            <group name="group_state" string="State">
+                <filter name="dom_draft" string="Draft" domain="[('state','=','draft')]"/>
+                <filter name="dom_confirm" string="Waiting for Approval" domain="[('state','=','confirm')]"/>
+                <filter name="dom_open" string="In Progress" domain="[('state','=','open')]"/>
+                <filter name="dom_done" string="Done" domain="[('state','=','done')]"/>
+                <filter name="dom_cancel" string="Cancel" domain="[('state','=','cancel')]"/>
+            </group>
+            <group name="group_main" string="Group By..">
+                <filter name="grp_company" string="Company" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
+                <filter name="grp_collector" string="Collector" context="{'group_by':'collector_id'}"/>
+                <filter name="grp_user" string="Responsible" context="{'group_by':'user_id'}"/>
+                <filter name="grp_date_day" string="Date by Day" context="{'group_by':'date:day'}"/>
+                <filter name="grp_date_week" string="Date by Week" context="{'group_by':'date:week'}"/>
+                <filter name="grp_date_month" string="Date by Month" context="{'group_by':'date:month'}"/>
+                <filter name="grp_date_year" string="Date by Year" context="{'group_by':'date:year'}"/>
+            </group>
+        </search>
+    </field>
+</record>
+
+<record id="account_debt_collection_action" model="ir.actions.act_window">
+    <field name="name">Debt Collection</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">account.debt_collection</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem
+    id="account_debt_collection_menu"
+    name="Debt Collection"
+    parent="account.menu_finance_receivables"
+    action="account_debt_collection_action"
+    sequence="3"
+    />
+
+</data>
+</openerp>

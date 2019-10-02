@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+<record id="base_workflow_debt_collection" model="base.workflow_policy">
+    <field name="model_id" ref="account_debt_collection.model_account_debt_collection"/>
+</record>
+<record id="base_workflow_line_debt_collection_confirm" model="base.workflow_policy_line">
+    <field name="workflow_id" ref="base_workflow_debt_collection"/>
+    <field name="field_id" search="[('model_id.model','=','account.debt_collection'),('name','=','confirm_ok')]"/>
+    <field name="python_code">result = document.collection_type_id.collection_confirm_group_ids.ids</field>
+</record>
+<record id="base_workflow_line_debt_collection_open" model="base.workflow_policy_line">
+    <field name="workflow_id" ref="base_workflow_debt_collection"/>
+    <field name="field_id" search="[('model_id.model','=','account.debt_collection'),('name','=','open_ok')]"/>
+    <field name="python_code">result = document.collection_type_id.collection_open_group_ids.ids</field>
+</record>
+<record id="base_workflow_line_debt_collection_done" model="base.workflow_policy_line">
+    <field name="workflow_id" ref="base_workflow_debt_collection"/>
+    <field name="field_id" search="[('model_id.model','=','account.debt_collection'),('name','=','done_ok')]"/>
+    <field name="python_code">result = document.collection_type_id.collection_done_group_ids.ids</field>
+</record>
+<record id="base_workflow_line_debt_collection_cancel" model="base.workflow_policy_line">
+    <field name="workflow_id" ref="base_workflow_debt_collection"/>
+    <field name="field_id" search="[('model_id.model','=','account.debt_collection'),('name','=','cancel_ok')]"/>
+    <field name="python_code">result = document.collection_type_id.collection_cancel_group_ids.ids</field>
+</record>
+<record id="base_workflow_line_debt_collection_restart" model="base.workflow_policy_line">
+    <field name="workflow_id" ref="base_workflow_debt_collection"/>
+    <field name="field_id" search="[('model_id.model','=','account.debt_collection'),('name','=','restart_ok')]"/>
+    <field name="python_code">result = document.collection_type_id.collection_restart_group_ids.ids</field>
+</record>
+<record id="base_workflow_line_debt_collection_print" model="base.workflow_policy_line">
+    <field name="workflow_id" ref="base_workflow_debt_collection"/>
+    <field name="field_id" search="[('model_id.model','=','account.debt_collection'),('name','=','print_ok')]"/>
+    <field name="python_code">result = document.collection_type_id.collection_print_group_ids.ids</field>
+</record>
+</data>
+</openerp>
