@@ -26,3 +26,7 @@ class AccountDebtCollectionBank(models.Model):
         related="debt_collection_id.allowed_journal_br_ids",
         store=False,
     )
+    payment_mode_id = fields.Many2one(
+        string="Payment Mode",
+        comodel_name="payment.mode",
+    )

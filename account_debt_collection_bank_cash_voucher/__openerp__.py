@@ -4,13 +4,14 @@
 # pylint: disable=locally-disabled, manifest-required-author
 {
     "name": "Account Debt Collection Bank and Cash",
-    "version": "8.0.1.0.0",
+    "version": "8.0.1.1.0",
     "category": "Invoicing",
     "website": "https://opensynergy-indonesia.com",
     "author": "OpenSynergy Indonesia",
     "license": "AGPL-3",
     "depends": [
         "account_debt_collection_voucher_common",
+        "account_voucher_bank_cash",
     ],
     "data": [
         "security/ir.model.access.csv",

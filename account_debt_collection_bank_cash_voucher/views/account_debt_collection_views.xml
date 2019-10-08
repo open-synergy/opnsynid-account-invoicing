@@ -30,15 +30,19 @@
                           <form>
                             <group name="group_3" colspan="4" col="2">
                                 <group name="group_3_1" colspan="1" col="2">
+                                    <field name="company_id" groups="base.group_multi_company"/>
                                     <field name="debt_collection_id" invisible="1"/>
                                     <field name="allowed_journal_ids" widget="many2many_tags" invisible="1"/>
                                     <field name="allowed_partner_ids" widget="many2many_tags" invisible="1"/>
-                                    <field name="journal_id" domain="[('id', 'in', allowed_journal_ids[0][2])]"/>
+                                    <field name="reference"/>
                                     <field name="date"/>
                                     <field name="period_id"/>
-                                    <field name="reference"/>
-                                    <field name="partner_id" domain="[('id', 'in', allowed_partner_ids[0][2])]"/>
                                     <field name="amount"/>
+                                </group>
+                                <group name="group_3_2" colspan="1" col="2">
+                                    <field name="journal_id" domain="[('id', 'in', allowed_journal_ids[0][2])]"/>
+                                    <field name="partner_id" domain="[('id', 'in', allowed_partner_ids[0][2])]"/>
+                                    <field name="payment_mode_id"/>
                                 </group>
                             </group>
                             <notebook colspan="4">
@@ -64,17 +68,19 @@
                           <field name="amount"/>
                       </tree>
                       <form>
-                        <group name="group_3" colspan="4" col="2">
-                            <group name="group_3_1" colspan="1" col="2">
+                        <group name="group_4" colspan="4" col="2">
+                            <group name="group_4_1" colspan="1" col="2">
                                 <field name="debt_collection_id" invisible="1"/>
                                 <field name="allowed_journal_ids" widget="many2many_tags" invisible="1"/>
                                 <field name="allowed_partner_ids" widget="many2many_tags" invisible="1"/>
-                                <field name="journal_id" domain="[('id', 'in', allowed_journal_ids[0][2])]"/>
+                                <field name="reference"/>
                                 <field name="date"/>
                                 <field name="period_id"/>
-                                <field name="reference"/>
-                                <field name="partner_id" domain="[('id', 'in', allowed_partner_ids[0][2])]"/>
                                 <field name="amount"/>
+                            </group>
+                            <group name="group_4_2" colspan="1" col="2">
+                                <field name="journal_id" domain="[('id', 'in', allowed_journal_ids[0][2])]"/>
+                                <field name="partner_id" domain="[('id', 'in', allowed_partner_ids[0][2])]"/>
                             </group>
                         </group>
                         <notebook colspan="4">
