@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+account_debt_collection_giro_employee,account.debt_collection_giro - user,model_account_debt_collection_giro,base.group_user,1,1,1,1
+account_debt_collection_giro_all,account.debt_collection_giro - all,model_account_debt_collection_giro,,0,0,0,0
+account_debt_collection_giro_detail_employee,account.debt_collection_giro_detail - user,model_account_debt_collection_giro_detail,base.group_user,1,1,1,1
+account_debt_collection_giro_detail_all,account.debt_collection_giro_detail - all,model_account_debt_collection_giro_detail,,0,0,0,0
