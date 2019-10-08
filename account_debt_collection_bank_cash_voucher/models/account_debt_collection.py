@@ -77,6 +77,14 @@ class AccountDebtCollection(models.Model):
     )
 
     @api.multi
+    def _prepare_bank_receipt_data(self, document):
+        self.ensure_one()
+
+        return {
+            "payment_mode_id": document.payment_mode_id.id,
+        }
+
+    @api.multi
     def _create_bank_receipt(self):
         self.ensure_one()
 
@@ -90,9 +98,13 @@ class AccountDebtCollection(models.Model):
             self.env["account.bank_receipt_line"]
 
         for bank in self.bank_detail_ids:
-            br = obj_bank_receipt.create(
+            voucher_data =\
                 self._prepare_receipt_voucher_data(
-                    bank, voucher_type_id))
+                    bank, voucher_type_id)
+            bank_data =\
+                self._prepare_bank_receipt_data(bank)
+            bank_data.update(voucher_data)
+            br = obj_bank_receipt.create(bank_data)
             bank.write({
                 "bank_receipt_id": br.id
             })

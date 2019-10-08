@@ -3,3 +3,7 @@ account_debt_collection_bank_employee,account.debt_collection_bank - user,model_
 account_debt_collection_bank_all,account.debt_collection_bank - all,model_account_debt_collection_bank,,0,0,0,0
 account_debt_collection_bank_detail_employee,account.debt_collection_bank_detail - user,model_account_debt_collection_bank_detail,base.group_user,1,1,1,1
 account_debt_collection_bank_detail_all,account.debt_collection_bank_detail – all,model_account_debt_collection_bank_detail,,0,0,0,0
+account_debt_collection_cash_employee,account.debt_collection_cash - user,model_account_debt_collection_cash,base.group_user,1,1,1,1
+account_debt_collection_cash_all,account.debt_collection_cash - all,model_account_debt_collection_cash,,0,0,0,0
+account_debt_collection_cash_detail_employee,account.debt_collection_cash_detail - user,model_account_debt_collection_cash_detail,base.group_user,1,1,1,1
+account_debt_collection_cash_detail_all,account.debt_collection_cash_detail – all,model_account_debt_collection_cash_detail,,0,0,0,0
