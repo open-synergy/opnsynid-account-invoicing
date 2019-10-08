@@ -56,6 +56,9 @@ class AccountDebtCollection(models.Model):
         account_id = journal.default_debit_account_id and \
             journal.default_debit_account_id.id or False
         description = "Payment from %s" % (self.name)
+        reference = ""
+        if document.reference != "/":
+            reference = "References: %s" % (document.reference)
 
         return {
             "description": description,
@@ -66,6 +69,7 @@ class AccountDebtCollection(models.Model):
             "journal_id": journal.id,
             "partner_id": document.partner_id.id,
             "amount": document.amount,
+            "note": reference,
         }
 
     @api.multi

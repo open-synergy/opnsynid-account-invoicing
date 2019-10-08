@@ -11,6 +11,16 @@ class AccountDebtCollectionVoucherCommon(models.AbstractModel):
     _description = "Abstract Model for Debt Collection Voucher"
 
     @api.model
+    def _default_company_id(self):
+        return self.env.user.company_id.id
+
+    company_id = fields.Many2one(
+        string="Company",
+        comodel_name="res.company",
+        default=lambda self: self._default_company_id(),
+    )
+
+    @api.model
     def _default_collection_id(self):
         active_id =\
             self.env.context.get("debt_collection_id", False)
