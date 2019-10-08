@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+      <record id="account_debt_collection_view_form" model="ir.ui.view">
+          <field name="name">account.debt_collection.cheque.form</field>
+          <field name="model">account.debt_collection</field>
+          <field name="inherit_id" ref="account_debt_collection.account_debt_collection_view_form"/>
+          <field name="arch" type="xml">
+              <xpath expr="//field[@name='company_id']" position="before">
+                  <field name="id" invisible="1"/>
+                  <field name="allowed_journal_cheque_ids" widget="many2many_tags" invisible="1"/>
+                  <field name="allowed_partner_ids" widget="many2many_tags" invisible="1"/>
+              </xpath>
+              <xpath expr="//field[@name='amount_collected']" position="after">
+                  <field name="amount_cheque_collected"/>
+              </xpath>
+              <xpath expr="//notebook/page[@name='note']" position="before">
+                  <page name="cheque_detail" string="Cheque Receipt">
+                    <field name="cheque_detail_ids" colspan="4" nolabel="1" context="{'debt_collection_id': id}">
+                      <tree>
+                          <field name="reference"/>
+                          <field name="journal_id"/>
+                          <field name="date"/>
+                          <field name="date_issue"/>
+                          <field name="partner_id"/>
+                          <field name="payee_partner_id"/>
+                          <field name="source_bank_id"/>
+                          <field name="amount"/>
+                      </tree>
+                      <form>
+                        <group name="group_3" colspan="4" col="2">
+                            <group name="group_3_1" colspan="1" col="2">
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="debt_collection_id" invisible="1"/>
+                                <field name="allowed_journal_ids" widget="many2many_tags" invisible="1"/>
+                                <field name="allowed_partner_ids" widget="many2many_tags" invisible="1"/>
+                                <field name="reference"/>
+                                <field name="date"/>
+                                <field name="date_issue"/>
+                                <field name="period_id"/>
+                                <field name="amount"/>
+                            </group>
+                            <group name="group_3_2" colspan="1" col="2">
+                                <field name="journal_id" domain="[('id', 'in', allowed_journal_ids[0][2])]"/>
+                                <field name="partner_id" domain="[('id', 'in', allowed_partner_ids[0][2])]"/>
+                                <field name="payee_partner_id"/>
+                                <field name="source_bank_id"/>
+                            </group>
+                        </group>
+                        <notebook colspan="4">
+                            <page name="cheque_details" string="Details">
+                                <field name="detail_ids" colspan="4" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="collection_detail_id" domain="[('debt_collection_id', '=', parent.debt_collection_id),('invoice_id.partner_id', '=', parent.partner_id)]"/>
+                                        <field name="amount"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                      </form>
+                    </field>
+                  </page>
+              </xpath>
+          </field>
+      </record>
+
+    </data>
+</openerp>
