@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+account_debt_collection_cheque_employee,account.debt_collection_cheque - user,model_account_debt_collection_cheque,base.group_user,1,1,1,1
+account_debt_collection_cheque_all,account.debt_collection_cheque - all,model_account_debt_collection_cheque,,0,0,0,0
+account_debt_collection_cheque_detail_employee,account.debt_collection_cheque_detail - user,model_account_debt_collection_cheque_detail,base.group_user,1,1,1,1
+account_debt_collection_cheque_detail_all,account.debt_collection_cheque_detail - all,model_account_debt_collection_cheque_detail,,0,0,0,0
