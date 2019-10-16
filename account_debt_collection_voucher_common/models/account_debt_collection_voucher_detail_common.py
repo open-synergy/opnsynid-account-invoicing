@@ -19,6 +19,7 @@ class AccountDebtCollectionVoucherDetailCommon(models.AbstractModel):
     collection_detail_id = fields.Many2one(
         string="# Collection Detail",
         comodel_name="account.debt_collection_detail",
+        ondelete="cascade",
         required=True,
     )
     amount = fields.Float(
@@ -36,14 +37,20 @@ class AccountDebtCollectionVoucherDetailCommon(models.AbstractModel):
                 self.collection_detail_id.invoice_id.residual
 
     @api.constrains(
+        "collection_voucher_id",
         "collection_detail_id"
     )
     def _check_collection_detail_id(self):
         if self.collection_detail_id:
             strWarning = _("No duplicate collection")
+            collection_voucher_id =\
+                self.collection_voucher_id
+            collection_detail_id =\
+                self.collection_detail_id.id
             check_collection =\
                 self.search([
-                    ("collection_detail_id", "=", self.collection_detail_id.id)
+                    ("collection_voucher_id", "=", collection_voucher_id.id),
+                    ("collection_detail_id", "=", collection_detail_id.id)
                 ])
             if len(check_collection) > 1:
                 raise UserError(strWarning)
