@@ -2,7 +2,8 @@
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
+from openerp import models, fields, api, _
+from openerp.exceptions import Warning as UserError
 
 
 class AccountDebtCollection(models.Model):
@@ -43,6 +44,19 @@ class AccountDebtCollection(models.Model):
     )
 
     @api.multi
+    def action_cancel(self):
+        _super = super(AccountDebtCollection, self)
+        result = _super.action_cancel()
+        for document in self:
+            for cheque_detail in document.cheque_detail_ids:
+                if not cheque_detail._check_cheque_receipt_cancel():
+                    msg = _("Cheque Receipts must be on <Draft> state")
+                    raise UserError(msg)
+                cheque_detail.cheque_receipt_id.unlink()
+            document.cheque_detail_ids.unlink()
+        return result
+
+    @api.multi
     def _prepare_cheque_receipt_data(self, document):
         self.ensure_one()
 
@@ -65,35 +79,56 @@ class AccountDebtCollection(models.Model):
         obj_cheque_receipt_line =\
             self.env["account.cheque_receipt_line"]
 
-        for cheque in self.cheque_detail_ids:
-            voucher_data =\
-                self._prepare_receipt_voucher_data(
-                    cheque, voucher_type_id)
-            cheque_data =\
-                self._prepare_cheque_receipt_data(cheque)
-            cheque_data.update(voucher_data)
-            chr = obj_cheque_receipt.create(cheque_data)
-            cheque.write({
-                "cheque_receipt_id": chr.id
-            })
-            for cheque_detail in cheque.detail_ids:
-                cheque_line = obj_cheque_receipt_line.create(
-                    self._prepare_receipt_voucher_line_data(
-                        chr, cheque_detail))
-                cheque_detail.write({
-                    "cheque_receipt_line_id": cheque_line.id
-                })
-        return chr
+        if self.cheque_detail_ids:
+            for cheque in self.cheque_detail_ids:
+                if cheque.detail_ids:
+                    voucher_data =\
+                        self._prepare_receipt_voucher_data(
+                            cheque, voucher_type_id)
+                    cheque_data =\
+                        self._prepare_cheque_receipt_data(cheque)
+                    cheque_data.update(voucher_data)
+                    chr = obj_cheque_receipt.create(cheque_data)
+                    cheque.write({
+                        "cheque_receipt_id": chr.id
+                    })
+                    for cheque_detail in cheque.detail_ids:
+                        cheque_line = obj_cheque_receipt_line.create(
+                            self._prepare_receipt_voucher_line_data(
+                                chr, cheque_detail))
+                        cheque_detail.write({
+                            "cheque_receipt_line_id": cheque_line.id
+                        })
+        return True
 
     @api.multi
     def action_done(self):
         _super = super(AccountDebtCollection, self)
         result = _super.action_done()
         for document in self:
-            cheque_detail_ids =\
-                document.cheque_detail_ids
-            detail_cheque =\
-                document.cheque_detail_ids.detail_ids
-            if cheque_detail_ids and detail_cheque:
-                document._create_cheque_receipt()
+            document._create_cheque_receipt()
         return result
+
+    @api.multi
+    def _get_cheque_receipts(self):
+        return self.mapped("cheque_detail_ids.cheque_receipt_id")
+
+    @api.multi
+    def _get_action_cheque_receipt(self):
+        action =\
+            self.env.ref(
+                "account_voucher_cheque."
+                "account_cheque_receipt_action").read()[0]
+        return action
+
+    @api.multi
+    def action_view_cheque_receipts(self):
+        self.ensure_one()
+        receipts = self._get_cheque_receipts()
+        action = self._get_action_cheque_receipt()
+
+        if len(receipts) > 0:
+            action["domain"] = [("id", "in", receipts.ids)]
+        else:
+            action = {"type": "ir.actions.act_window_close"}
+        return action

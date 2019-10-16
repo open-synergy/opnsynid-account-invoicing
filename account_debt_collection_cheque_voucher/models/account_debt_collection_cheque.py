@@ -61,3 +61,19 @@ class AccountDebtCollectionCheque(models.Model):
             ]
 
         return {"domain": domain}
+
+    @api.multi
+    def _check_cheque_receipt_cancel(self):
+        self.ensure_one()
+        result = True
+        obj_cheque_receipt =\
+            self.env["account.cheque_receipt"]
+        if self.cheque_receipt_id:
+            criteria = [
+                ("state", "<>", "draft"),
+                ("id", "=", self.cheque_receipt_id.id)
+            ]
+            post_count = obj_cheque_receipt.search_count(criteria)
+            if post_count > 0:
+                result = False
+        return result
