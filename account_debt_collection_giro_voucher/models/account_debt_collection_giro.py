@@ -90,3 +90,19 @@ class AccountDebtCollectionGiro(models.Model):
             ]
 
         return {"domain": domain}
+
+    @api.multi
+    def _check_giro_receipt_cancel(self):
+        self.ensure_one()
+        result = True
+        obj_giro_receipt =\
+            self.env["account.giro_receipt"]
+        if self.giro_receipt_id:
+            criteria = [
+                ("state", "not in", ["draft", "cancel"]),
+                ("id", "=", self.giro_receipt_id.id)
+            ]
+            post_count = obj_giro_receipt.search_count(criteria)
+            if post_count > 0:
+                result = False
+        return result
