@@ -17,6 +17,12 @@
               </xpath>
               <xpath expr="//notebook/page[@name='note']" position="before">
                   <page name="giro_detail" string="Giro Receipt">
+                    <button
+                        string="Giro Receipts"
+                        name="action_view_giro_receipts"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-list-alt"/>
                     <field name="giro_detail_ids" colspan="4" nolabel="1" context="{'debt_collection_id': id}">
                       <tree>
                           <field name="reference"/>
