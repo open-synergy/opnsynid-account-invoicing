@@ -345,6 +345,7 @@ class AccountDebtCollection(models.Model):
     @api.multi
     def action_cancel(self):
         for document in self:
+            document.detail_ids.unlink()
             document.write(document._prepare_cancel_data())
 
     @api.multi
