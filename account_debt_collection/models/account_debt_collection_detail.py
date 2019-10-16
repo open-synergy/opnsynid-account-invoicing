@@ -2,9 +2,8 @@
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api, _
+from openerp import models, fields, api
 import openerp.addons.decimal_precision as dp
-from openerp.exceptions import Warning as UserError
 
 
 class AccountDebtCollectionDetail(models.Model):
@@ -112,13 +111,3 @@ class AccountDebtCollectionDetail(models.Model):
                 "name": name,
             })
         return result
-
-    @api.multi
-    def unlink(self):
-        strWarning = _("You can only delete data on draft state")
-        for document in self:
-            if document.state != "draft":
-                if not self.env.context.get("force_unlink", False):
-                    raise UserError(strWarning)
-        _super = super(AccountDebtCollectionDetail, self)
-        _super.unlink()
