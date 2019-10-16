@@ -18,4 +18,5 @@ class AccountDebtCollectionBankDetail(models.Model):
     bank_receipt_line_id = fields.Many2one(
         string="# Bank Receipt Line",
         comodel_name="account.bank_receipt_line",
+        ondelete="cascade",
     )

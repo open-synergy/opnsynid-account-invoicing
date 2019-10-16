@@ -19,6 +19,12 @@
               </xpath>
               <xpath expr="//notebook/page[@name='note']" position="before">
                   <page name="bank_detail" string="Bank Receipt">
+                      <button
+                          string="Bank Receipts"
+                          name="action_view_bank_receipts"
+                          type="object"
+                          class="oe_stat_button"
+                          icon="fa-list-alt"/>
                       <field name="bank_detail_ids" colspan="4" nolabel="1" context="{'debt_collection_id': id}">
                           <tree>
                               <field name="reference"/>
@@ -59,6 +65,12 @@
                       </field>
                   </page>
                   <page name="cash_detail" string="Cash Receipt">
+                    <button
+                        string="Cash Receipts"
+                        name="action_view_cash_receipts"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-list-alt"/>
                     <field name="cash_detail_ids" colspan="4" nolabel="1" context="{'debt_collection_id': id}">
                       <tree>
                           <field name="reference"/>
