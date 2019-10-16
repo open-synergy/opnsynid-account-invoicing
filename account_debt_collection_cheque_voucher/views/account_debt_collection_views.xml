@@ -17,6 +17,12 @@
               </xpath>
               <xpath expr="//notebook/page[@name='note']" position="before">
                   <page name="cheque_detail" string="Cheque Receipt">
+                    <button
+                        string="Cheque Receipts"
+                        name="action_view_cheque_receipts"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-list-alt"/>
                     <field name="cheque_detail_ids" colspan="4" nolabel="1" context="{'debt_collection_id': id}">
                       <tree>
                           <field name="reference"/>
