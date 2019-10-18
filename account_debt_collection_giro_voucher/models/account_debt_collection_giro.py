@@ -99,7 +99,7 @@ class AccountDebtCollectionGiro(models.Model):
             self.env["account.giro_receipt"]
         if self.giro_receipt_id:
             criteria = [
-                ("state", "not in", ["draft", "cancel"]),
+                ("state", "<>", "draft"),
                 ("id", "=", self.giro_receipt_id.id)
             ]
             post_count = obj_giro_receipt.search_count(criteria)

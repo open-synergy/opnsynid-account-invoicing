@@ -50,12 +50,9 @@ class AccountDebtCollection(models.Model):
         for document in self:
             for giro_detail in document.giro_detail_ids:
                 if not giro_detail._check_giro_receipt_cancel():
-                    msg = _("Please Cancel All giro Receipts")
+                    msg = _("Giro Receipts must be on <Draft> state")
                     raise UserError(msg)
-                ctx = {
-                    "force_unlink": True
-                }
-                giro_detail.giro_receipt_id.with_context(ctx).unlink()
+                giro_detail.giro_receipt_id.unlink()
             document.giro_detail_ids.unlink()
         return result
 
@@ -121,18 +118,18 @@ class AccountDebtCollection(models.Model):
     def _get_action_giro_receipt(self):
         action =\
             self.env.ref(
-                'account_voucher_giro.'
-                'account_giro_receipt_action').read()[0]
+                "account_voucher_giro."
+                "account_giro_receipt_action").read()[0]
         return action
 
     @api.multi
     def action_view_giro_receipts(self):
+        self.ensure_one()
         receipts = self._get_giro_receipts()
         action = self._get_action_giro_receipt()
 
         if len(receipts) > 0:
-            action['domain'] = [('id', 'in', receipts.ids)]
-            action['context'] = [('id', 'in', receipts.ids)]
+            action["domain"] = [("id", "in", receipts.ids)]
         else:
-            action = {'type': 'ir.actions.act_window_close'}
+            action = {"type": "ir.actions.act_window_close"}
         return action
