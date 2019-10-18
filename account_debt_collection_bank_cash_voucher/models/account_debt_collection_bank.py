@@ -39,7 +39,7 @@ class AccountDebtCollectionBank(models.Model):
             self.env["account.bank_receipt"]
         if self.bank_receipt_id:
             criteria = [
-                ("state", "not in", ["draft", "cancel"]),
+                ("state", "<>", "draft"),
                 ("id", "=", self.bank_receipt_id.id)
             ]
             post_count = obj_bank_receipt.search_count(criteria)

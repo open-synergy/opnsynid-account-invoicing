@@ -84,22 +84,16 @@ class AccountDebtCollection(models.Model):
         for document in self:
             for bank_detail in document.bank_detail_ids:
                 if not bank_detail._check_bank_receipt_cancel():
-                    msg = _("Please Cancel All Bank Receipts")
+                    msg = _("Bank Receipts must be on <Draft> state")
                     raise UserError(msg)
-                ctx = {
-                    "force_unlink": True
-                }
-                bank_detail.bank_receipt_id.with_context(ctx).unlink()
+                bank_detail.bank_receipt_id.unlink()
             document.bank_detail_ids.unlink()
 
             for cash_detail in document.cash_detail_ids:
                 if not cash_detail._check_cash_receipt_cancel():
-                    msg = _("Please Cancel All Cash Receipts")
+                    msg = _("Cash Receipts must be on <Draft> state")
                     raise UserError(msg)
-                ctx = {
-                    "force_unlink": True
-                }
-                cash_detail.cash_receipt_id.with_context(ctx).unlink()
+                cash_detail.cash_receipt_id.unlink()
             document.cash_detail_ids.unlink()
         return result
 
@@ -194,20 +188,20 @@ class AccountDebtCollection(models.Model):
     def _get_action_bank_receipt(self):
         action =\
             self.env.ref(
-                'account_voucher_bank_cash.'
-                'account_bank_receipt_action').read()[0]
+                "account_voucher_bank_cash."
+                "account_bank_receipt_action").read()[0]
         return action
 
     @api.multi
     def action_view_bank_receipts(self):
+        self.ensure_one()
         receipts = self._get_bank_receipts()
         action = self._get_action_bank_receipt()
 
         if len(receipts) > 0:
-            action['domain'] = [('id', 'in', receipts.ids)]
-            action['context'] = [('id', 'in', receipts.ids)]
+            action["domain"] = [("id", "in", receipts.ids)]
         else:
-            action = {'type': 'ir.actions.act_window_close'}
+            action = {"type": "ir.actions.act_window_close"}
         return action
 
     @api.multi
@@ -218,18 +212,18 @@ class AccountDebtCollection(models.Model):
     def _get_action_cash_receipt(self):
         action =\
             self.env.ref(
-                'account_voucher_bank_cash.'
-                'account_cash_receipt_action').read()[0]
+                "account_voucher_bank_cash."
+                "account_cash_receipt_action").read()[0]
         return action
 
     @api.multi
     def action_view_cash_receipts(self):
+        self.ensure_one()
         receipts = self._get_cash_receipts()
         action = self._get_action_cash_receipt()
 
         if len(receipts) > 0:
-            action['domain'] = [('id', 'in', receipts.ids)]
-            action['context'] = [('id', 'in', receipts.ids)]
+            action["domain"] = [("id", "in", receipts.ids)]
         else:
-            action = {'type': 'ir.actions.act_window_close'}
+            action = {"type": "ir.actions.act_window_close"}
         return action
