@@ -46,7 +46,7 @@ class AccountDebtCollectionVoucherDetailCommon(models.AbstractModel):
             collection_voucher_id =\
                 self.collection_voucher_id
             collection_detail_id =\
-                self.collection_detail_id.id
+                self.collection_detail_id
             check_collection =\
                 self.search([
                     ("collection_voucher_id", "=", collection_voucher_id.id),
