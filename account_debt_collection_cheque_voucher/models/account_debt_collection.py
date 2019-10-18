@@ -50,12 +50,9 @@ class AccountDebtCollection(models.Model):
         for document in self:
             for cheque_detail in document.cheque_detail_ids:
                 if not cheque_detail._check_cheque_receipt_cancel():
-                    msg = _("Please Cancel All Cheque Receipts")
+                    msg = _("Cheque Receipts must be on <Draft> state")
                     raise UserError(msg)
-                ctx = {
-                    "force_unlink": True
-                }
-                cheque_detail.cheque_receipt_id.with_context(ctx).unlink()
+                cheque_detail.cheque_receipt_id.unlink()
             document.cheque_detail_ids.unlink()
         return result
 
@@ -120,18 +117,18 @@ class AccountDebtCollection(models.Model):
     def _get_action_cheque_receipt(self):
         action =\
             self.env.ref(
-                'account_voucher_cheque.'
-                'account_cheque_receipt_action').read()[0]
+                "account_voucher_cheque."
+                "account_cheque_receipt_action").read()[0]
         return action
 
     @api.multi
     def action_view_cheque_receipts(self):
+        self.ensure_one()
         receipts = self._get_cheque_receipts()
         action = self._get_action_cheque_receipt()
 
         if len(receipts) > 0:
-            action['domain'] = [('id', 'in', receipts.ids)]
-            action['context'] = [('id', 'in', receipts.ids)]
+            action["domain"] = [("id", "in", receipts.ids)]
         else:
-            action = {'type': 'ir.actions.act_window_close'}
+            action = {"type": "ir.actions.act_window_close"}
         return action

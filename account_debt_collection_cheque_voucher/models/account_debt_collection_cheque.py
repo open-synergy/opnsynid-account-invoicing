@@ -70,7 +70,7 @@ class AccountDebtCollectionCheque(models.Model):
             self.env["account.cheque_receipt"]
         if self.cheque_receipt_id:
             criteria = [
-                ("state", "not in", ["draft", "cancel"]),
+                ("state", "<>", "draft"),
                 ("id", "=", self.cheque_receipt_id.id)
             ]
             post_count = obj_cheque_receipt.search_count(criteria)
