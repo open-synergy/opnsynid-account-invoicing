@@ -16,7 +16,7 @@
                   <field name="amount_giro_collected"/>
               </xpath>
               <xpath expr="//notebook/page[@name='note']" position="before">
-                  <page name="giro_detail" string="Giro Receipt">
+                  <page name="giro_detail" string="Giro Receipts">
                     <button
                         string="Giro Receipts"
                         name="action_view_giro_receipts"
