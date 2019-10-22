@@ -18,7 +18,7 @@
                   <field name="amount_cash_collected"/>
               </xpath>
               <xpath expr="//notebook/page[@name='note']" position="before">
-                  <page name="bank_detail" string="Bank Receipt">
+                  <page name="bank_detail" string="Bank Receipts">
                       <button
                           string="Bank Receipts"
                           name="action_view_bank_receipts"
@@ -64,7 +64,7 @@
                           </form>
                       </field>
                   </page>
-                  <page name="cash_detail" string="Cash Receipt">
+                  <page name="cash_detail" string="Cash Receipts">
                     <button
                         string="Cash Receipts"
                         name="action_view_cash_receipts"
