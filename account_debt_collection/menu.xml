@@ -7,7 +7,7 @@
 
 <menuitem
     id="collection_configuration_menu"
-    name="Debt Collections"
+    name="A/R Collections"
     sequence="99"
     parent="account.menu_finance_configuration"
     />

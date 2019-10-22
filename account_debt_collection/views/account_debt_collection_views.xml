@@ -146,7 +146,7 @@
 </record>
 
 <record id="account_debt_collection_action" model="ir.actions.act_window">
-    <field name="name">Debt Collection</field>
+    <field name="name">A/R Collection</field>
     <field name="type">ir.actions.act_window</field>
     <field name="res_model">account.debt_collection</field>
     <field name="view_type">form</field>
@@ -155,10 +155,10 @@
 
 <menuitem
     id="account_debt_collection_menu"
-    name="Debt Collection"
+    name="A/R Collection"
     parent="account.menu_finance_receivables"
     action="account_debt_collection_action"
-    sequence="3"
+    sequence="13"
     />
 
 </data>
