@@ -113,6 +113,13 @@ class AccountDebtCollection(models.Model):
         },
     )
 
+    detail_summary_ids = fields.One2many(
+        string="Detail Summary By Partner",
+        comodel_name="account.debt_collection_detail_summary",
+        inverse_name="debt_collection_id",
+        readonly=True,
+    )
+
     @api.multi
     def _compute_allowed_invoice_ids(self):
         obj_account_invoice =\
@@ -316,6 +323,14 @@ class AccountDebtCollection(models.Model):
         return result
 
     @api.multi
+    def _check_detail_ids(self):
+        self.ensure_one()
+        result = True
+        if not len(self.detail_ids.ids):
+            result = False
+        return result
+
+    @api.multi
     def _check_amount_collected(self):
         self.ensure_one()
         result = True
@@ -326,7 +341,10 @@ class AccountDebtCollection(models.Model):
 
     @api.multi
     def action_confirm(self):
+        msg = _("You cannot confirm an A/R collection which has no invoice")
         for document in self:
+            if not document._check_detail_ids():
+                raise UserError(msg)
             document.write(document._prepare_confirm_data())
 
     @api.multi

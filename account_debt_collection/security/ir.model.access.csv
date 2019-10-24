@@ -5,3 +5,5 @@ account_debt_collection_employee,account.debt_collection - user,model_account_de
 account_debt_collection_all,account.debt_collection – all,model_account_debt_collection,,0,0,0,0
 account_debt_collection_detail_employee,account.debt_collection_detail - user,model_account_debt_collection_detail,base.group_user,1,1,1,1
 account_debt_collection_detail_all,account.debt_collection_detail – all,model_account_debt_collection_detail,,0,0,0,0
+account_debt_collection_detail_summary_employee,account.debt_collection_detail_summary - user,model_account_debt_collection_detail_summary,base.group_user,1,1,1,1
+account_debt_collection_detail_summary_all,account.debt_collection_detail_summary - all,model_account_debt_collection_detail_summary,,0,0,0,0
