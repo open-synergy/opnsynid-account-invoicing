@@ -4,7 +4,7 @@
 # pylint: disable=locally-disabled, manifest-required-author
 {
     "name": "Account Debt Collection Bank and Cash",
-    "version": "8.0.1.3.0",
+    "version": "8.0.1.4.0",
     "category": "Invoicing",
     "website": "https://opensynergy-indonesia.com",
     "author": "OpenSynergy Indonesia",
