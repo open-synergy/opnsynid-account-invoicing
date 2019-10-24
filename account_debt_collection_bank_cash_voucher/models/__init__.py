@@ -9,4 +9,5 @@ from . import (
     account_debt_collection_cash,
     account_debt_collection_detail,
     account_debt_collection,
+    account_debt_collection_summary,
 )

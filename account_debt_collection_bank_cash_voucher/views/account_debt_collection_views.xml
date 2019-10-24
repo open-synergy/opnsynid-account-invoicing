@@ -17,6 +17,10 @@
                   <field name="amount_bank_collected"/>
                   <field name="amount_cash_collected"/>
               </xpath>
+              <xpath expr="//field[@name='total_amount_collected']" position="after">
+                  <field name="total_amount_bank_collected"/>
+                  <field name="total_amount_cash_collected"/>
+              </xpath>
               <xpath expr="//notebook/page[@name='note']" position="before">
                   <page name="bank_detail" string="Bank Receipts">
                       <button
