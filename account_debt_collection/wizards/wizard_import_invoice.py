@@ -66,3 +66,6 @@ class AccountDebtCollectionImportInvoice(models.TransientModel):
                 "invoice_id": invoice.id,
             })
             detail_id.onchange_amount_due()
+            invoice.write({
+                "debt_collection_detail_id": detail_id.id
+            })

@@ -68,7 +68,7 @@
                           name="%(debt_collection_import_invoice_action)d"
                           type="action"
                           attrs="{'invisible': [('state', '!=', 'draft')]}"/>
-
+                      <separator string="By Invoice(s)" colspan="4"/>
                       <field name="detail_ids" colspan="4" nolabel="1">
                           <tree editable="bottom" create="false">
                               <field name="invoice_id" options="{'no_open': True}"/>
@@ -78,6 +78,14 @@
                               <field name="amount_due"/>
                               <field name="amount_collected"/>
                               <field name="state" invisible="1"/>
+                          </tree>
+                      </field>
+                      <separator string="By Partner(s)" colspan="4"/>
+                      <field name="detail_summary_ids" colspan="4" nolabel="1">
+                          <tree>
+                              <field name="partner_id"/>
+                              <field name="invoice_group"/>
+                              <field name="total_amount_collected"/>
                           </tree>
                       </field>
                   </page>

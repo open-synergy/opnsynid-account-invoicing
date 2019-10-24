@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+<data>
+<record id="account_customer_invoice_debt_collection_view_form" model="ir.ui.view">
+    <field name="name">account.invoice.debt.collection.form</field>
+    <field name="model">account.invoice</field>
+    <field name="inherit_id" ref="account.invoice_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='origin']" position="before">
+            <field name="debt_collection_detail_id" invisible="1"/>
+            <field name="debt_collection_ok"/>
+        </xpath>
+    </field>
+</record>
+
+<record id="account_customer_invoice_debt_collection_view_search" model="ir.ui.view">
+    <field name="name">account.invoice.debt.collection.search</field>
+    <field name="model">account.invoice</field>
+    <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+    <field name="mode">primary</field>
+    <field name="priority" eval="5000"/>
+    <field name="arch" type="xml">
+        <xpath expr="//filter[@name='unpaid']" position="after">
+            <filter name="debt_collection_ok" string="Used In A/R Collection" domain="[('debt_collection_ok','!=',False)]"/>
+        </xpath>
+    </field>
+</record>
+
+<record id="account.action_invoice_tree1" model="ir.actions.act_window">
+       <field name="search_view_id" ref="account_customer_invoice_debt_collection_view_search"/>
+</record>
+
+</data>
+</openerp>

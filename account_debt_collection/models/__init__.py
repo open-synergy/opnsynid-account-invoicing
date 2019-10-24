@@ -6,5 +6,7 @@ from . import (
     account_debt_collection_type,
     account_debt_collection,
     account_debt_collection_detail,
+    account_debt_collection_summary,
     res_partner,
+    account_invoice,
 )
