@@ -172,12 +172,33 @@ class AccountDebtCollection(models.Model):
         return True
 
     @api.multi
+    def _check_auto_post_bank_receipt(self):
+        self.ensure_one()
+        if self.collection_type_id.autopost_bank_receipt:
+            for bank in self.bank_detail_ids:
+                bank.bank_receipt_id.workflow_action_confirm()
+                bank.bank_receipt_id.workflow_action_approve()
+                bank.bank_receipt_id.workflow_action_post()
+
+    @api.multi
+    def _check_auto_post_cash_receipt(self):
+        self.ensure_one()
+        if self.collection_type_id.autopost_cash_receipt:
+            for cash in self.cash_detail_ids:
+                cash.cash_receipt_id.workflow_action_confirm()
+                cash.cash_receipt_id.workflow_action_approve()
+                cash.cash_receipt_id.workflow_action_post()
+
+    @api.multi
     def action_done(self):
         _super = super(AccountDebtCollection, self)
         result = _super.action_done()
         for document in self:
             document._create_bank_receipt()
+            document._check_auto_post_bank_receipt()
+
             document._create_cash_receipt()
+            document._check_auto_post_cash_receipt()
         return result
 
     @api.multi
