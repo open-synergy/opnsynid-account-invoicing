@@ -4,7 +4,7 @@
 # pylint: disable=locally-disabled, manifest-required-author
 {
     "name": "Account Debt Collection",
-    "version": "8.0.1.3.1",
+    "version": "8.0.1.4.0",
     "category": "Invoicing",
     "website": "https://opensynergy-indonesia.com",
     "author": "OpenSynergy Indonesia",
@@ -28,6 +28,7 @@
         "views/account_debt_collection_type_views.xml",
         "views/account_debt_collection_views.xml",
         "views/res_partner_views.xml",
+        "views/account_debt_collection_summary_by_date_views.xml",
         "views/account_invoice_views.xml",
     ],
 }
