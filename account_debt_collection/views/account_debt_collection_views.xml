@@ -164,9 +164,9 @@
 <menuitem
     id="account_debt_collection_menu"
     name="A/R Collection"
-    parent="account.menu_finance_receivables"
+    parent="account_debt_collection_root_menu"
     action="account_debt_collection_action"
-    sequence="13"
+    sequence="1"
     />
 
 </data>
