@@ -5,12 +5,19 @@
 <openerp>
 <data>
 
-<menuitem
-    id="collection_configuration_menu"
-    name="A/R Collections"
-    sequence="99"
-    parent="account.menu_finance_configuration"
-    />
+  <menuitem
+      id="account_debt_collection_root_menu"
+      name="A/R Collection"
+      parent="account.menu_finance_receivables"
+      sequence="9999"
+      />
+
+  <menuitem
+      id="collection_configuration_menu"
+      name="A/R Collections"
+      sequence="99"
+      parent="account.menu_finance_configuration"
+      />
 
 
 </data>
