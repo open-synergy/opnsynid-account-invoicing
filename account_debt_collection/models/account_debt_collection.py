@@ -273,15 +273,12 @@ class AccountDebtCollection(models.Model):
         ]
         allowed_journal_ids =\
             self.collection_type_id.allowed_journal_ids.ids
-        collector_id =\
-            self.collector_id.id
 
-        if allowed_journal_ids and collector_id:
+        if allowed_journal_ids:
             result = [
                 ("state", "=", "open"),
                 ("type", "=", "out_invoice"),
                 ("journal_id", "in", allowed_journal_ids),
-                ("partner_id.collector_id", "=", collector_id),
             ]
         return result
 
@@ -290,6 +287,11 @@ class AccountDebtCollection(models.Model):
         self.ensure_one()
         criteria =\
             self._prepare_general_criteria_invoice()
+        collector_id =\
+            self.collector_id.id
+        criteria += [
+            ("partner_id.collector_id", "=", collector_id),
+        ]
         if self.date:
             date = datetime.strptime(self.date, "%Y-%m-%d")
             days_after_due =\
