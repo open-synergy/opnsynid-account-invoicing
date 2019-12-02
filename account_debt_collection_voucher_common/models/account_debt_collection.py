@@ -55,6 +55,7 @@ class AccountDebtCollection(models.Model):
         journal = document.journal_id
         account_id = journal.default_debit_account_id and \
             journal.default_debit_account_id.id or False
+        write_off_account = document._get_write_off_account()
         description = "Payment from %s" % (self.name)
         reference = ""
         if document.reference != "/":
@@ -68,8 +69,10 @@ class AccountDebtCollection(models.Model):
             "type_id": voucher_type_id.id,
             "journal_id": journal.id,
             "partner_id": document.partner_id.id,
-            "amount": document.amount,
+            "amount": document.amount_real,
             "note": reference,
+            "writeoff_account_id": write_off_account and
+            write_off_account.id or False,
         }
 
     @api.multi
