@@ -27,7 +27,7 @@ class AccountDebtCollectionVoucherCommon(models.AbstractModel):
         return active_id
 
     debt_collection_id = fields.Many2one(
-        string="#Collection",
+        string="# Collection",
         comodel_name="account.debt_collection",
         default=lambda self: self._default_collection_id(),
         required=True,
@@ -81,6 +81,12 @@ class AccountDebtCollectionVoucherCommon(models.AbstractModel):
         readonly=True,
         compute="_compute_amount",
     )
+    amount_real = fields.Float(
+        string="Real Amount",
+        digits=dp.get_precision("Account"),
+        required=True,
+        default=0.0,
+    )
 
     reference = fields.Char(
         string="Reference",
@@ -104,3 +110,18 @@ class AccountDebtCollectionVoucherCommon(models.AbstractModel):
     def onchange_period_id(self):
         self.period_id = self.env[
             "account.period"].find(self.date).id
+
+    @api.multi
+    def _get_write_off_account(self):
+        self.ensure_one()
+
+        collection = self.debt_collection_id
+        collection_type = collection.collection_type_id
+        result = False
+
+        if self.amount_real > self.amount:
+            result = collection_type.positive_write_off_account_id
+        elif self.amount_real < self.amount:
+            result = collection_type.negative_write_off_account_id
+
+        return result

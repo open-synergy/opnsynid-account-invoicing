@@ -14,6 +14,7 @@
         "account_voucher_common",
     ],
     "data": [
+        "views/account_debt_collection_type_views.xml",
     ],
     "installable": True,
     "auto_install": True,
