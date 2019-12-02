@@ -37,6 +37,7 @@
                           <field name="source_bank_id"/>
                           <field name="destination_bank_id"/>
                           <field name="amount"/>
+                          <field name="amount_real"/>
                       </tree>
                       <form>
                         <group name="group_3" colspan="4" col="2">
@@ -51,6 +52,7 @@
                                 <field name="date_due"/>
                                 <field name="period_id"/>
                                 <field name="amount"/>
+                                <field name="amount_real"/>
                             </group>
                             <group name="group_3_2" colspan="1" col="2">
                                 <field name="journal_id" domain="[('id', 'in', allowed_journal_ids[0][2])]"/>
