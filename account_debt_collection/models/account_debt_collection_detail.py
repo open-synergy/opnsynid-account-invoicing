@@ -10,6 +10,15 @@ class AccountDebtCollectionDetail(models.Model):
     _name = "account.debt_collection_detail"
     _description = "Debt Collection Details"
 
+    @api.multi
+    @api.depends(
+        "invoice_id",
+    )
+    def _compute_partner_id(self):
+        for document in self:
+            document.partner_id = document.invoice_id.partner_id.\
+                commercial_partner_id.id
+
     name = fields.Char(
         string="Description",
         default="/",
@@ -24,6 +33,12 @@ class AccountDebtCollectionDetail(models.Model):
         string="Invoice",
         comodel_name="account.invoice",
         readonly="True",
+    )
+    partner_id = fields.Many2one(
+        string="Customer",
+        comodel_name="res.partner",
+        compute="_compute_partner_id",
+        store=True,
     )
     amount_invoice = fields.Float(
         string="Invoice Amount",

@@ -72,6 +72,7 @@
                       <field name="detail_ids" colspan="4" nolabel="1">
                           <tree editable="bottom" create="false">
                               <field name="invoice_id" options="{'no_open': True}"/>
+                              <field name="partner_id"/>
                               <field name="date_invoice"/>
                               <field name="date_due"/>
                               <field name="amount_invoice"/>
