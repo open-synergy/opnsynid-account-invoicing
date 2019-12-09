@@ -78,6 +78,7 @@
                               <field name="amount_invoice"/>
                               <field name="amount_due"/>
                               <field name="amount_collected"/>
+                              <field name="amount_diff"/>
                               <field name="state" invisible="1"/>
                           </tree>
                       </field>

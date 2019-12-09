@@ -80,6 +80,24 @@ class AccountDebtCollectionDetail(models.Model):
     )
 
     @api.multi
+    @api.depends(
+        "amount_collected",
+        "amount_due",
+    )
+    def _compute_amount_diff(self):
+        for document in self:
+            amount_diff = document.amount_due - document.amount_collected
+            document.amount_diff = amount_diff
+
+    amount_diff = fields.Float(
+        string="Diff. Amount",
+        digits=dp.get_precision("Account"),
+        store=True,
+        readonly=True,
+        compute="_compute_amount_diff",
+    )
+
+    @api.multi
     def _compute_state(self):
         for document in self:
             document.state = \
