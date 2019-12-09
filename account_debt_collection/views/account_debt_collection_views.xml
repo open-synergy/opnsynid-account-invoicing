@@ -75,10 +75,10 @@
                               <field name="partner_id"/>
                               <field name="date_invoice"/>
                               <field name="date_due"/>
-                              <field name="amount_invoice"/>
-                              <field name="amount_due"/>
-                              <field name="amount_collected"/>
-                              <field name="amount_diff"/>
+                              <field name="amount_invoice" sum="Total Invoice"/>
+                              <field name="amount_due" sum="Total Amount Due"/>
+                              <field name="amount_collected" sum="Total Amount Collected"/>
+                              <field name="amount_diff" sum="Total Diff"/>
                               <field name="state" invisible="1"/>
                           </tree>
                       </field>
