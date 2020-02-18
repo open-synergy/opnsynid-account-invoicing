@@ -17,7 +17,7 @@
                   <field name="amount_bank_collected"/>
                   <field name="amount_cash_collected"/>
               </xpath>
-              <xpath expr="//field[@name='total_amount_collected']" position="after">
+              <xpath expr="//notebook/page[@name='content']/field[@name='detail_summary_ids']/tree/field[@name='total_amount_collected']" position="after">
                   <field name="total_amount_bank_collected"/>
                   <field name="total_amount_cash_collected"/>
               </xpath>
