@@ -121,6 +121,11 @@ class AccountDebtCollection(models.Model):
     )
 
     @api.multi
+    @api.depends(
+        "detail_ids",
+        "detail_ids.amount_due",
+        "detail_ids.amount_collected",
+    )
     def _compute_total_amount(self):
         for document in self:
             total_amount_due = 0.0
@@ -136,16 +141,20 @@ class AccountDebtCollection(models.Model):
     total_amount_due = fields.Float(
         string="Total Amount Due",
         compute="_compute_total_amount",
-        store=False,
+        store=True,
     )
 
     total_amount_collected = fields.Float(
         string="Total Collected Amount",
         compute="_compute_total_amount",
-        store=False,
+        store=True,
     )
 
     @api.multi
+    @api.depends(
+        "total_amount_due",
+        "total_amount_collected",
+    )
     def _compute_collection_rate(self):
         for document in self:
             total_amount_due = \
@@ -158,7 +167,7 @@ class AccountDebtCollection(models.Model):
     collection_rate = fields.Float(
         string="Collection Rate (Dec)",
         compute="_compute_collection_rate",
-        store=False,
+        store=True,
     )
 
     @api.multi
