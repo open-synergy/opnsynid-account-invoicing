@@ -161,8 +161,11 @@ class AccountDebtCollection(models.Model):
                 document.total_amount_due
             total_amount_collected = \
                 document.total_amount_collected
-            document.collection_rate = \
-                total_amount_collected / total_amount_due
+            try:
+                document.collection_rate = \
+                    total_amount_collected / total_amount_due
+            except ZeroDivisionError:
+                document.collection_rate = 0
 
     collection_rate = fields.Float(
         string="Collection Rate (Dec)",
