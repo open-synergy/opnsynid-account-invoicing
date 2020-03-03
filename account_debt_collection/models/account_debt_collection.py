@@ -121,6 +121,59 @@ class AccountDebtCollection(models.Model):
     )
 
     @api.multi
+    @api.depends(
+        "detail_ids",
+        "detail_ids.amount_due",
+        "detail_ids.amount_collected",
+    )
+    def _compute_total_amount(self):
+        for document in self:
+            total_amount_due = 0.0
+            total_amount_collected = 0.0
+            for line in document.detail_ids:
+                total_amount_due += line.amount_due
+                total_amount_collected += line.amount_collected
+            document.total_amount_due =\
+                total_amount_due
+            document.total_amount_collected =\
+                total_amount_collected
+
+    total_amount_due = fields.Float(
+        string="Total Amount Due",
+        compute="_compute_total_amount",
+        store=True,
+    )
+
+    total_amount_collected = fields.Float(
+        string="Total Collected Amount",
+        compute="_compute_total_amount",
+        store=True,
+    )
+
+    @api.multi
+    @api.depends(
+        "total_amount_due",
+        "total_amount_collected",
+    )
+    def _compute_collection_rate(self):
+        for document in self:
+            total_amount_due = \
+                document.total_amount_due
+            total_amount_collected = \
+                document.total_amount_collected
+            try:
+                document.collection_rate = \
+                    total_amount_collected / total_amount_due
+            except ZeroDivisionError:
+                document.collection_rate = 0
+
+    collection_rate = fields.Float(
+        string="Collection Rate (Dec)",
+        compute="_compute_collection_rate",
+        store=True,
+    )
+
+    @api.multi
     def _compute_allowed_invoice_ids(self):
         obj_account_invoice =\
             self.env["account.invoice"]

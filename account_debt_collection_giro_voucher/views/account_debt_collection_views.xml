@@ -15,7 +15,7 @@
               <xpath expr="//field[@name='amount_collected']" position="after">
                   <field name="amount_giro_collected"/>
               </xpath>
-              <xpath expr="//field[@name='total_amount_collected']" position="after">
+              <xpath expr="//notebook/page[@name='content']/field[@name='detail_summary_ids']/tree/field[@name='total_amount_collected']" position="after">
                   <field name="total_amount_giro_collected"/>
               </xpath>
               <xpath expr="//notebook/page[@name='note']" position="before">

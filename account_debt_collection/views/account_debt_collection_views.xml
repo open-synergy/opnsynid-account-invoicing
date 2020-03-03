@@ -58,6 +58,11 @@
                       <field name="date"/>
                       <field name="user_id"/>
                   </group>
+                  <group name="group_1_3" string="Total" colspan="1" col="2">
+                      <field name="total_amount_due"/>
+                      <field name="total_amount_collected"/>
+                      <field name="collection_rate"/>
+                  </group>
               </group>
               <notebook colspan="4">
                   <page name="content" string="Invoice Details">
