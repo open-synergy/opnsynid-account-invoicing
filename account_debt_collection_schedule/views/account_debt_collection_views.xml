@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+      <record id="account_debt_collection_view_form" model="ir.ui.view">
+          <field name="name">account.debt_collection.schedule</field>
+          <field name="model">account.debt_collection</field>
+          <field name="inherit_id" ref="account_debt_collection.account_debt_collection_view_form"/>
+          <field name="arch" type="xml">
+              <xpath expr="//field[@name='cancel_user_id']" position="after">
+                  <field name="cron_create_date" string="Cron"/>
+                  <field name="cron_create_user_id" nolabel="1"/>
+              </xpath>
+          </field>
+      </record>
+
+    </data>
+</openerp>
