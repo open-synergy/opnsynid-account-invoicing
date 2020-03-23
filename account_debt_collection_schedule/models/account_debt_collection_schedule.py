@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright 2020 OpenSynergy Indonesia
+# Copyright 2020 PT. Simetri Sinergi Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp import models, fields, api
@@ -98,16 +99,14 @@ class AccountDebtCollectionSchedule(models.Model):
         "type_id",
     )
     def onchange_collector_id(self):
-        if self.type_id:
-            self.collector_id = False
+        self.collector_id = False
 
     @api.multi
     @api.onchange(
         "collector_id",
     )
     def onchange_partner_ids(self):
-        if self.collector_id:
-            self.partner_ids = False
+        self.partner_ids = False
 
     @api.multi
     def action_create_cron(self):

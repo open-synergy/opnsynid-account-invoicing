@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright 2020 OpenSynergy Indonesia
+     Copyright 2020 PT. Simetri Sinergi Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 
 <openerp>
@@ -40,6 +41,7 @@
                 <button name="action_delete_cron" string="Delete Cron" type="object" attrs="{'invisible':[('cron_id','=',False)]}"/>
             </header>
             <sheet>
+              <div class="oe_right oe_button_box" style="width: 300px;" name="buttons"/>
               <group name="group_1" colspan="4" col="2">
                   <group name="group_1_1" colspan="1" col="2">
                     <field name="code"/>
