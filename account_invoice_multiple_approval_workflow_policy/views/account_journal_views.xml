@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="account_journal_view_form" model="ir.ui.view">
+            <field name="name">Account Journal Policy Form</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account_invoice_workflow_policy.account_journal_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_open_group_ids']" position="replace">
+                    <field name="invoice_confim_group_ids" widget="many2many_tags"/>
+                </xpath>
+                <xpath expr="//field[@name='invoice_proforma_group_ids']" position="after">
+                    <field name="invoice_restart_approval_grp_ids" widget="many2many_tags"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
