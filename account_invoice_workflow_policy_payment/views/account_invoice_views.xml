@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="account_invoice_workflow_policy.account_invoice_supplier_view_form"/>
             <field name="arch" type="xml">
                 <data>
-                    <xpath expr="//field[@name='open_ok']" position="after">
+                    <xpath expr="//field[@name='reopen_ok']" position="after">
                         <field name="pay_ok"/>
                     </xpath>
                 </data>
@@ -38,7 +38,7 @@
             <field name="inherit_id" ref="account_invoice_workflow_policy.account_invoice_view_form"/>
             <field name="arch" type="xml">
                 <data>
-                    <xpath expr="//field[@name='open_ok']" position="after">
+                    <xpath expr="//field[@name='reopen_ok']" position="after">
                         <field name="pay_ok"/>
                     </xpath>
                 </data>

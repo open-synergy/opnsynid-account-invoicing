@@ -5,7 +5,7 @@
 {
     "name": "Account Invoice Workflow Policy - "
             "account_voucher Integration",
-    "version": "8.0.1.1.0",
+    "version": "8.0.1.1.1",
     "category": "Accounting",
     "website": "https://opensynergy-indonesia.com",
     "author": "OpenSynergy Indonesia",

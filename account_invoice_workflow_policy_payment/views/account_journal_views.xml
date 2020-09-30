@@ -6,7 +6,7 @@
             <field name="model">account.journal</field>
             <field name="inherit_id" ref="account_invoice_workflow_policy.account_journal_view_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='invoice_open_group_ids']" position="after">
+                <xpath expr="//field[@name='invoice_proforma_group_ids']" position="after">
                     <field name="invoice_pay_group_ids" widget="many2many_tags"/>
                 </xpath>
             </field>
