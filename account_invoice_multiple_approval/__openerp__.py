@@ -6,7 +6,7 @@
     "name": "Invoicing Multiple Approval",
     "summary": "Implement a multiple approval process based on tiers "
                "for Invoicing",
-    "version": "8.0.1.0.0",
+    "version": "8.0.1.1.0",
     "category": "Invoicing",
     "website": "https://simetri-sinergi.id",
     "author": "PT. Simetri Sinergi Indonesia, OpenSynergy Indonesia",
@@ -20,5 +20,8 @@
     "data": [
         "workflow/account_invoice_workflow.xml",
         "views/account_invoice_views.xml",
+    ],
+    "images": [
+        "static/description/banner.png",
     ],
 }

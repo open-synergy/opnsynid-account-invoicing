@@ -157,5 +157,19 @@
                 </xpath>
             </field>
         </record>
+
+        <record id="account_invoice_view_search" model="ir.ui.view">
+            <field name="name">account.invoice.multiple.approval.search</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='unpaid']" position="after">
+                  <filter name="needs_review" string="Waiting for Approval"
+                          domain="[('state', '=', 'confirm')]"/>
+                    <filter name="needs_review" string="Needs my Review"
+                            domain="[('reviewer_ids','in',uid), ('state', '=', 'confirm')]"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
