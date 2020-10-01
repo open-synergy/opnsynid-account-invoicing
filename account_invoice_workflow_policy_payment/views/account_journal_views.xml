@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 OpenSynergy Indonesia
+     Copyright 2020 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <openerp>
     <data>
         <record id="account_journal_view_form" model="ir.ui.view">
@@ -6,7 +9,7 @@
             <field name="model">account.journal</field>
             <field name="inherit_id" ref="account_invoice_workflow_policy.account_journal_view_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='invoice_open_group_ids']" position="after">
+                <xpath expr="//field[@name='invoice_proforma_group_ids']" position="after">
                     <field name="invoice_pay_group_ids" widget="many2many_tags"/>
                 </xpath>
             </field>
