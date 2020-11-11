@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2020 OpenSynergy Indonesia
+     Copyright 2020 PT Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+    <!--    # Customer Invoice -->
+    <record id="dashboard_tile_all_account_invoice_customer_invoice_draft" model="tile.tile">
+        <field name="name">All Customer Invoice: Draft</field>
+        <field name="sequence">9</field>
+        <field name="domain">
+        [
+	    ("type","=","out_invoice"),
+            ("state","=","draft"),
+        ]
+        </field>
+        <field name="model_id" ref="account.model_account_invoice" />
+        <field name="action_id" ref="account.action_invoice_tree1" />
+        <field name="primary_function">count</field>
+        <field name="background_color">#776D8A</field>
+    </record>
+    <record id="dashboard_tile_all_account_invoice_customer_invoice_open" model="tile.tile">
+        <field name="name">All Customer Invoice: Open</field>
+        <field name="sequence">9</field>
+        <field name="domain">
+        [
+	    ("type","=","out_invoice"),
+            ("state","=","open"),
+        ]
+        </field>
+        <field name="model_id" ref="account.model_account_invoice" />
+        <field name="action_id" ref="account.action_invoice_tree1" />
+        <field name="primary_function">sum</field>
+        <field name="primary_field_id" ref="account.field_account_invoice_residual" />
+        <field name="primary_format">Rp. {:,}</field>
+        <field name="secondary_function">count</field>
+        <field name="background_color">#776D8A</field>
+    </record>
+    <record id="dashboard_tile_all_account_invoice_customer_invoice_due" model="tile.tile">
+        <field name="name">All Customer Invoice: Due</field>
+        <field name="sequence">9</field>
+        <field name="domain">
+        [
+	    ("type","=","out_invoice"),
+            ("state","=","open"),
+	        ("date_due","&lt;=","today()"),
+        ]
+        </field>
+        <field name="model_id" ref="account.model_account_invoice" />
+        <field name="action_id" ref="account.action_invoice_tree1" />
+        <field name="primary_function">sum</field>
+        <field name="primary_field_id" ref="account.field_account_invoice_residual" />
+        <field name="primary_format">Rp. {:,}</field>
+        <field name="secondary_function">count</field>
+        <field name="background_color">#776D8A</field>
+    </record>
+        <!--    # Supplier Invoice -->
+        <record id="dashboard_tile_all_account_invoice_supplier_invoice_draft" model="tile.tile">
+            <field name="name">All Supplier Invoice: Draft</field>
+            <field name="sequence">10</field>
+            <field name="domain">
+            [
+    	    ("type","=","in_invoice"),
+                ("state","=","draft"),
+            ]
+            </field>
+            <field name="model_id" ref="account.model_account_invoice" />
+            <field name="action_id" ref="account.action_invoice_tree2" />
+            <field name="primary_function">count</field>
+            <field name="background_color">#9CADA4</field>
+        </record>
+        <record id="dashboard_tile_all_account_invoice_supplier_invoice_open" model="tile.tile">
+            <field name="name">All Supplier Invoice: Draft</field>
+            <field name="sequence">10</field>
+            <field name="domain">
+            [
+    	    ("type","=","in_invoice"),
+                ("state","=","open"),
+            ]
+            </field>
+            <field name="model_id" ref="account.model_account_invoice" />
+            <field name="action_id" ref="account.action_invoice_tree2" />
+            <field name="primary_function">sum</field>
+            <field name="primary_field_id" ref="account.field_account_invoice_residual" />
+            <field name="primary_format">Rp. {:,}</field>
+            <field name="secondary_function">count</field>
+            <field name="background_color">#9CADA4</field>
+        </record>
+        <record id="dashboard_tile_all_account_invoice_supplier_invoice_due" model="tile.tile">
+            <field name="name">All Supplier Invoice: Draft</field>
+            <field name="sequence">10</field>
+            <field name="domain">
+            [
+    	    ("type","=","in_invoice"),
+                ("state","=","open"),
+    	    ("date_due", "&lt;=", "today()"),
+            ]
+            </field>
+            <field name="model_id" ref="account.model_account_invoice" />
+            <field name="action_id" ref="account.action_invoice_tree2" />
+            <field name="primary_function">sum</field>
+            <field name="primary_field_id" ref="account.field_account_invoice_residual" />
+            <field name="primary_format">Rp. {:,}</field>
+            <field name="secondary_function">count</field>
+            <field name="background_color">#9CADA4</field>
+        </record>
+
+</data>
+</openerp>
