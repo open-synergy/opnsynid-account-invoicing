@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
 import openerp.addons.decimal_precision as dp
+from openerp import api, fields, models
 
 
 class AccountDebtCollectionDetail(models.Model):
@@ -13,12 +12,9 @@ class AccountDebtCollectionDetail(models.Model):
     def get_amount_collected_all(self):
         _super = super(AccountDebtCollectionDetail, self)
         result = _super.get_amount_collected_all()
-        amount_bank_collected =\
-            self.amount_bank_collected
-        amount_cash_collected =\
-            self.amount_cash_collected
-        amount_bank_cash =\
-            (amount_bank_collected + amount_cash_collected)
+        amount_bank_collected = self.amount_bank_collected
+        amount_cash_collected = self.amount_cash_collected
+        amount_bank_cash = amount_bank_collected + amount_cash_collected
         result += amount_bank_cash
         return result
 
@@ -40,8 +36,7 @@ class AccountDebtCollectionDetail(models.Model):
     def _compute_bank_collected_amount(self):
         for document in self:
             amount_bank_collected = 0.0
-            bank_detail_ids =\
-                document.debt_collection_id.bank_detail_ids
+            bank_detail_ids = document.debt_collection_id.bank_detail_ids
             if bank_detail_ids:
                 for bank_detail in bank_detail_ids:
                     detail_ids = bank_detail.detail_ids
@@ -49,9 +44,11 @@ class AccountDebtCollectionDetail(models.Model):
                         lambda r: r.collection_detail_id.id == document.id
                     ):
                         amount_bank_collected += detail.amount
-                        document.update({
-                            "amount_bank_collected": amount_bank_collected,
-                        })
+                        document.update(
+                            {
+                                "amount_bank_collected": amount_bank_collected,
+                            }
+                        )
 
     @api.multi
     @api.depends(
@@ -61,8 +58,7 @@ class AccountDebtCollectionDetail(models.Model):
     def _compute_cash_collected_amount(self):
         for document in self:
             amount_cash_collected = 0.0
-            cash_detail_ids =\
-                document.debt_collection_id.cash_detail_ids
+            cash_detail_ids = document.debt_collection_id.cash_detail_ids
             if cash_detail_ids:
                 for cash_detail in cash_detail_ids:
                     detail_ids = cash_detail.detail_ids
@@ -70,9 +66,11 @@ class AccountDebtCollectionDetail(models.Model):
                         lambda r: r.collection_detail_id.id == document.id
                     ):
                         amount_cash_collected += detail.amount
-                        document.update({
-                            "amount_cash_collected": amount_cash_collected,
-                        })
+                        document.update(
+                            {
+                                "amount_cash_collected": amount_cash_collected,
+                            }
+                        )
 
     amount_bank_collected = fields.Float(
         string="Collected Bank Amount",

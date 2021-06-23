@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
+from openerp import api, fields, models
 
 
 class AccountDebtCollectionBank(models.Model):
@@ -35,13 +34,9 @@ class AccountDebtCollectionBank(models.Model):
     def _check_bank_receipt_cancel(self):
         self.ensure_one()
         result = True
-        obj_bank_receipt =\
-            self.env["account.bank_receipt"]
+        obj_bank_receipt = self.env["account.bank_receipt"]
         if self.bank_receipt_id:
-            criteria = [
-                ("state", "<>", "draft"),
-                ("id", "=", self.bank_receipt_id.id)
-            ]
+            criteria = [("state", "<>", "draft"), ("id", "=", self.bank_receipt_id.id)]
             post_count = obj_bank_receipt.search_count(criteria)
             if post_count > 0:
                 result = False

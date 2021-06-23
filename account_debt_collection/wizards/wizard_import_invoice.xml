@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <openerp>
 <data>
 
@@ -8,18 +8,24 @@
     <field name="arch" type="xml">
         <form>
             <group>
-              <field name="collection_id" colspan="4" invisible="1"/>
-              <field name="allowed_invoice_ids" invisible="1" colspan="4"/>
-              <field name="invoice_ids" domain="[('id', 'in', allowed_invoice_ids[0][2])]" nolabel="1" colspan="4"/>
+              <field name="collection_id" colspan="4" invisible="1" />
+              <field name="allowed_invoice_ids" invisible="1" colspan="4" />
+              <field
+                            name="invoice_ids"
+                            domain="[('id', 'in', allowed_invoice_ids[0][2])]"
+                            nolabel="1"
+                            colspan="4"
+                        />
             </group>
             <footer>
-                <button name="action_import_invoice"
-                        type="object"
-                        string="Import"
-                        class="oe_highlight"/>
+                <button
+                            name="action_import_invoice"
+                            type="object"
+                            string="Import"
+                            class="oe_highlight"
+                        />
                 or
-                <button special="cancel"
-                        string="Cancel"/>
+                <button special="cancel" string="Cancel" />
             </footer>
         </form>
     </field>

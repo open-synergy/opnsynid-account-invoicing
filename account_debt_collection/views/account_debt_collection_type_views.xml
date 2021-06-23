@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2019 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <openerp>
 <data>
 <record id="account_debt_collection_type_view_search" model="ir.ui.view">
@@ -9,8 +8,8 @@
     <field name="model">account.debt_collection_type</field>
     <field name="arch" type="xml">
         <search>
-            <field name="name"/>
-            <field name="code"/>
+            <field name="name" />
+            <field name="code" />
         </search>
     </field>
 </record>
@@ -20,8 +19,8 @@
     <field name="model">account.debt_collection_type</field>
     <field name="arch" type="xml">
         <tree>
-            <field name="name"/>
-            <field name="code"/>
+            <field name="name" />
+            <field name="code" />
         </tree>
     </field>
 </record>
@@ -32,37 +31,69 @@
     <field name="arch" type="xml">
         <form>
             <sheet>
-                <div class="oe_right oe_button_box" style="width: 300px;" name="buttons"/>
+                <div
+                            class="oe_right oe_button_box"
+                            style="width: 300px;"
+                            name="buttons"
+                        />
                 <group name="group_1" colspan="4" col="2">
-                    <field name="name"/>
-                    <field name="code"/>
-                    <field name="days_before_due"/>
-                    <field name="days_after_due"/>
-                    <field name="active"/>
+                    <field name="name" />
+                    <field name="code" />
+                    <field name="days_before_due" />
+                    <field name="days_after_due" />
+                    <field name="active" />
                 </group>
                 <notebook>
                     <page name="allowed_collector_ids" string="Allowed Collectors">
                         <group name="group_allowed_collector" colspan="4" col="2">
-                            <field name="allowed_collector_ids" col="2" nolabel="1"/>
+                            <field name="allowed_collector_ids" col="2" nolabel="1" />
                         </group>
                     </page>
                     <page name="allowed_journal_ids" string="Allowed Journals">
                         <group name="group_allowed_journal" colspan="4" col="2">
-                            <field name="allowed_journal_ids" col="2" nolabel="1" domain="[('type','=','sale')]"/>
+                            <field
+                                        name="allowed_journal_ids"
+                                        col="2"
+                                        nolabel="1"
+                                        domain="[('type','=','sale')]"
+                                    />
                         </group>
                     </page>
                     <page name="policy" string="Workflow Policy">
-                        <group name="group_workflow_policy" colspan="4" col="2" string="Agreement">
-                            <field name="collection_confirm_group_ids" widget="many2many_tags"/>
-                            <field name="collection_open_group_ids" widget="many2many_tags"/>
-                            <field name="collection_done_group_ids" widget="many2many_tags"/>
-                            <field name="collection_cancel_group_ids" widget="many2many_tags"/>
-                            <field name="collection_restart_group_ids" widget="many2many_tags"/>
-                            <field name="collection_print_group_ids" widget="many2many_tags"/>
+                        <group
+                                    name="group_workflow_policy"
+                                    colspan="4"
+                                    col="2"
+                                    string="Agreement"
+                                >
+                            <field
+                                        name="collection_confirm_group_ids"
+                                        widget="many2many_tags"
+                                    />
+                            <field
+                                        name="collection_open_group_ids"
+                                        widget="many2many_tags"
+                                    />
+                            <field
+                                        name="collection_done_group_ids"
+                                        widget="many2many_tags"
+                                    />
+                            <field
+                                        name="collection_cancel_group_ids"
+                                        widget="many2many_tags"
+                                    />
+                            <field
+                                        name="collection_restart_group_ids"
+                                        widget="many2many_tags"
+                                    />
+                            <field
+                                        name="collection_print_group_ids"
+                                        widget="many2many_tags"
+                                    />
                         </group>
                     </page>
                     <page name="note" string="Note">
-                        <field name="note" nolabel="1" colspan="4"/>
+                        <field name="note" nolabel="1" colspan="4" />
                     </page>
                 </notebook>
             </sheet>
@@ -79,12 +110,12 @@
 </record>
 
 <menuitem
-    id="account_debt_collection_type_menu"
-    name="A/R Collection Types"
-    parent="collection_configuration_menu"
-    action="account_debt_collection_type_action"
-    sequence="1"
-    />
+            id="account_debt_collection_type_menu"
+            name="A/R Collection Types"
+            parent="collection_configuration_menu"
+            action="account_debt_collection_type_action"
+            sequence="1"
+        />
 
 </data>
 </openerp>

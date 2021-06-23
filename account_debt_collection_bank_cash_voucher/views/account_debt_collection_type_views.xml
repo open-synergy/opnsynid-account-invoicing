@@ -1,21 +1,26 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <openerp>
     <data>
 
       <record id="account_debt_collection_type_view_form" model="ir.ui.view">
-          <field name="name">account.debt_collection_type - add bank and cash voucher configuration</field>
+          <field
+                name="name"
+            >account.debt_collection_type - add bank and cash voucher configuration</field>
           <field name="model">account.debt_collection_type</field>
-          <field name="inherit_id" ref="account_debt_collection.account_debt_collection_type_view_form"/>
+          <field
+                name="inherit_id"
+                ref="account_debt_collection.account_debt_collection_type_view_form"
+            />
           <field name="arch" type="xml">
               <xpath expr="//page[@name='policy']" position="before">
                   <page name="bank_configuration" string="Bank Receipt Configuration">
                       <group name="bank_configuration_1" colspan="4" col="2">
-                          <field name="autopost_bank_receipt"/>
+                          <field name="autopost_bank_receipt" />
                       </group>
                   </page>
                   <page name="cash_configuration" string="Cash Receipt Configuration">
                       <group name="cash_configuration_1" colspan="4" col="2">
-                          <field name="autopost_cash_receipt"/>
+                          <field name="autopost_cash_receipt" />
                       </group>
                   </page>
               </xpath>

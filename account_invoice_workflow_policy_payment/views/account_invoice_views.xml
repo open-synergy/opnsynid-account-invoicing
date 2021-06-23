@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2019 OpenSynergy Indonesia
      Copyright 2020 PT. Simetri Sinergi Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
@@ -7,11 +7,14 @@
         <record id="account_invoice_supplier_view_form" model="ir.ui.view">
             <field name="name">Account Invoice Supplier Form</field>
             <field name="model">account.invoice</field>
-            <field name="inherit_id" ref="account_invoice_workflow_policy.account_invoice_supplier_view_form"/>
+            <field
+                name="inherit_id"
+                ref="account_invoice_workflow_policy.account_invoice_supplier_view_form"
+            />
             <field name="arch" type="xml">
                 <data>
                     <xpath expr="//field[@name='reopen_ok']" position="after">
-                        <field name="pay_ok"/>
+                        <field name="pay_ok" />
                     </xpath>
                 </data>
             </field>
@@ -20,15 +23,18 @@
         <record id="account_invoice_supplier_view_form_1" model="ir.ui.view">
             <field name="name">Account Invoice Supplier Form</field>
             <field name="model">account.invoice</field>
-            <field name="inherit_id" ref="account_voucher.view_invoice_supplier"/>
+            <field name="inherit_id" ref="account_voucher.view_invoice_supplier" />
             <field name="arch" type="xml">
                 <data>
-                    <xpath expr="//button[@name='invoice_pay_customer']" position="attributes">
+                    <xpath
+                        expr="//button[@name='invoice_pay_customer']"
+                        position="attributes"
+                    >
                         <attribute name="attrs">
                             {'invisible':['|',('state','!=', 'open'),('pay_ok','=',False)]}
                         </attribute>
-                        <attribute name="states"/>
-                        <attribute name="groups"/>
+                        <attribute name="states" />
+                        <attribute name="groups" />
                     </xpath>
                 </data>
             </field>
@@ -38,11 +44,14 @@
         <record id="account_invoice_view_form" model="ir.ui.view">
             <field name="name">Account Invoice Form</field>
             <field name="model">account.invoice</field>
-            <field name="inherit_id" ref="account_invoice_workflow_policy.account_invoice_view_form"/>
+            <field
+                name="inherit_id"
+                ref="account_invoice_workflow_policy.account_invoice_view_form"
+            />
             <field name="arch" type="xml">
                 <data>
                     <xpath expr="//field[@name='reopen_ok']" position="after">
-                        <field name="pay_ok"/>
+                        <field name="pay_ok" />
                     </xpath>
                 </data>
             </field>
@@ -51,18 +60,24 @@
         <record id="account_invoice_view_form_1" model="ir.ui.view">
             <field name="name">Account Invoice Form</field>
             <field name="model">account.invoice</field>
-            <field name="inherit_id" ref="account_voucher.view_invoice_customer"/>
+            <field name="inherit_id" ref="account_voucher.view_invoice_customer" />
             <field name="arch" type="xml">
                 <data>
-                    <xpath expr="//button[@name='invoice_pay_customer'][1]" position="attributes">
+                    <xpath
+                        expr="//button[@name='invoice_pay_customer'][1]"
+                        position="attributes"
+                    >
                         <attribute name="invisible">1</attribute>
                     </xpath>
-                    <xpath expr="//button[@name='invoice_pay_customer'][2]" position="attributes">
+                    <xpath
+                        expr="//button[@name='invoice_pay_customer'][2]"
+                        position="attributes"
+                    >
                         <attribute name="attrs">
                             {'invisible':['|',('state','!=', 'open'),('pay_ok','=',False)]}
                         </attribute>
-                        <attribute name="states"/>
-                        <attribute name="groups"/>
+                        <attribute name="states" />
+                        <attribute name="groups" />
                     </xpath>
 
                 </data>

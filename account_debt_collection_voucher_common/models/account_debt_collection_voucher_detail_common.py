@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api, _
+from openerp import _, api, fields, models
 from openerp.exceptions import Warning as UserError
 
 
@@ -33,24 +32,19 @@ class AccountDebtCollectionVoucherDetailCommon(models.AbstractModel):
     )
     def onchange_amount(self):
         if self.collection_detail_id:
-            self.amount =\
-                self.collection_detail_id.invoice_id.residual
+            self.amount = self.collection_detail_id.invoice_id.residual
 
-    @api.constrains(
-        "collection_voucher_id",
-        "collection_detail_id"
-    )
+    @api.constrains("collection_voucher_id", "collection_detail_id")
     def _check_collection_detail_id(self):
         if self.collection_detail_id:
             strWarning = _("No duplicate collection")
-            collection_voucher_id =\
-                self.collection_voucher_id
-            collection_detail_id =\
-                self.collection_detail_id
-            check_collection =\
-                self.search([
+            collection_voucher_id = self.collection_voucher_id
+            collection_detail_id = self.collection_detail_id
+            check_collection = self.search(
+                [
                     ("collection_voucher_id", "=", collection_voucher_id.id),
-                    ("collection_detail_id", "=", collection_detail_id.id)
-                ])
+                    ("collection_detail_id", "=", collection_detail_id.id),
+                ]
+            )
             if len(check_collection) > 1:
                 raise UserError(strWarning)

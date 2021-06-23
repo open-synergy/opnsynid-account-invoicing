@@ -1,11 +1,9 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 OpenSynergy Indonesia
 # Copyright 2020 PT. Simetri Sinergi Indonesia
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Invoicing Multiple Approval",
-    "summary": "Implement a multiple approval process based on tiers "
-               "for Invoicing",
+    "summary": "Implement a multiple approval process based on tiers " "for Invoicing",
     "version": "8.0.1.1.0",
     "category": "Invoicing",
     "website": "https://simetri-sinergi.id",

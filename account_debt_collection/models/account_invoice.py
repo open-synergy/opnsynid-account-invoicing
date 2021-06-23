@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api, _
+from openerp import _, api, fields, models
 from openerp.exceptions import Warning as UserError
 
 
@@ -14,10 +13,7 @@ class AccountInvoice(models.Model):
         comodel_name="account.debt_collection_detail",
     )
 
-    @api.depends(
-        "debt_collection_detail_id",
-        "debt_collection_detail_id.invoice_id"
-    )
+    @api.depends("debt_collection_detail_id", "debt_collection_detail_id.invoice_id")
     @api.multi
     def _compute_debt_collection_ok(self):
         for document in self:

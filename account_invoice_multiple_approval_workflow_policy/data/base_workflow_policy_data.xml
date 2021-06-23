@@ -1,19 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2020 OpenSynergy Indonesia
      Copyright 2020 PT. Simetri Sinergi Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <openerp>
 <data>
-<record id="base_workflow_line_account_invoice_confirm" model="base.workflow_policy_line">
-    <field name="workflow_id" ref="account_invoice_workflow_policy.base_workflow_account_invoice"/>
-    <field name="field_id" search="[('model_id.model','=','account.invoice'),('name','=','confirm_ok')]"/>
-    <field name="python_code">result = document.journal_id.invoice_confim_group_ids.ids</field>
+<record
+            id="base_workflow_line_account_invoice_confirm"
+            model="base.workflow_policy_line"
+        >
+    <field
+                name="workflow_id"
+                ref="account_invoice_workflow_policy.base_workflow_account_invoice"
+            />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','confirm_ok')]"
+            />
+    <field
+                name="python_code"
+            >result = document.journal_id.invoice_confim_group_ids.ids</field>
 </record>
-<record id="base_workflow_line_account_invoice_restart_approval" model="base.workflow_policy_line">
-    <field name="workflow_id" ref="account_invoice_workflow_policy.base_workflow_account_invoice"/>
-    <field name="field_id" search="[('model_id.model','=','account.invoice'),('name','=','restart_approval_ok')]"/>
-    <field name="python_code">result = document.journal_id.invoice_restart_approval_grp_ids.ids</field>
+<record
+            id="base_workflow_line_account_invoice_restart_approval"
+            model="base.workflow_policy_line"
+        >
+    <field
+                name="workflow_id"
+                ref="account_invoice_workflow_policy.base_workflow_account_invoice"
+            />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','restart_approval_ok')]"
+            />
+    <field
+                name="python_code"
+            >result = document.journal_id.invoice_restart_approval_grp_ids.ids</field>
 </record>
 </data>
 </openerp>

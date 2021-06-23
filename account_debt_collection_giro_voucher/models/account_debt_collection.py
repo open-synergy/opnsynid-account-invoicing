@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api, _
+from openerp import _, api, fields, models
 from openerp.exceptions import Warning as UserError
 
 
@@ -23,17 +22,15 @@ class AccountDebtCollection(models.Model):
 
     @api.multi
     def _compute_allowed_journal_giro_ids(self):
-        voucher_type_id =\
-            self.env.ref(
-                "account_voucher_giro.voucher_type_giro_receipt")
-        obj_voucher_type_allowed_journal =\
-            self.env["account.voucher_type_allowed_journal"]
+        voucher_type_id = self.env.ref("account_voucher_giro.voucher_type_giro_receipt")
+        obj_voucher_type_allowed_journal = self.env[
+            "account.voucher_type_allowed_journal"
+        ]
 
         for document in self:
-            journal_ids =\
-                obj_voucher_type_allowed_journal.search([
-                    ("voucher_type_id", "=", voucher_type_id.id)
-                ]).mapped(lambda r: r.journal_id.id)
+            journal_ids = obj_voucher_type_allowed_journal.search(
+                [("voucher_type_id", "=", voucher_type_id.id)]
+            ).mapped(lambda r: r.journal_id.id)
             document.allowed_journal_giro_ids = journal_ids
 
     allowed_journal_giro_ids = fields.Many2many(
@@ -71,35 +68,26 @@ class AccountDebtCollection(models.Model):
     def _create_giro_receipt(self):
         self.ensure_one()
 
-        voucher_type_id =\
-            self.env.ref(
-                "account_voucher_giro.voucher_type_giro_receipt")
+        voucher_type_id = self.env.ref("account_voucher_giro.voucher_type_giro_receipt")
 
-        obj_giro_receipt =\
-            self.env["account.giro_receipt"]
-        obj_giro_receipt_line =\
-            self.env["account.giro_receipt_line"]
+        obj_giro_receipt = self.env["account.giro_receipt"]
+        obj_giro_receipt_line = self.env["account.giro_receipt_line"]
 
         if self.giro_detail_ids:
             for giro in self.giro_detail_ids:
                 if giro.detail_ids:
-                    voucher_data =\
-                        self._prepare_receipt_voucher_data(
-                            giro, voucher_type_id)
-                    giro_data =\
-                        self._prepare_giro_receipt_data(giro)
+                    voucher_data = self._prepare_receipt_voucher_data(
+                        giro, voucher_type_id
+                    )
+                    giro_data = self._prepare_giro_receipt_data(giro)
                     giro_data.update(voucher_data)
                     gr = obj_giro_receipt.create(giro_data)
-                    giro.write({
-                        "giro_receipt_id": gr.id
-                    })
+                    giro.write({"giro_receipt_id": gr.id})
                     for giro_detail in giro.detail_ids:
                         giro_line = obj_giro_receipt_line.create(
-                            self._prepare_receipt_voucher_line_data(
-                                gr, giro_detail))
-                        giro_detail.write({
-                            "giro_receipt_line_id": giro_line.id
-                        })
+                            self._prepare_receipt_voucher_line_data(gr, giro_detail)
+                        )
+                        giro_detail.write({"giro_receipt_line_id": giro_line.id})
         return True
 
     @api.multi
@@ -116,10 +104,9 @@ class AccountDebtCollection(models.Model):
 
     @api.multi
     def _get_action_giro_receipt(self):
-        action =\
-            self.env.ref(
-                "account_voucher_giro."
-                "account_giro_receipt_action").read()[0]
+        action = self.env.ref(
+            "account_voucher_giro." "account_giro_receipt_action"
+        ).read()[0]
         return action
 
     @api.multi

@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
+from openerp import api, fields, models
 
 
 class AccountDebtCollectionCheque(models.Model):
@@ -66,12 +65,11 @@ class AccountDebtCollectionCheque(models.Model):
     def _check_cheque_receipt_cancel(self):
         self.ensure_one()
         result = True
-        obj_cheque_receipt =\
-            self.env["account.cheque_receipt"]
+        obj_cheque_receipt = self.env["account.cheque_receipt"]
         if self.cheque_receipt_id:
             criteria = [
                 ("state", "<>", "draft"),
-                ("id", "=", self.cheque_receipt_id.id)
+                ("id", "=", self.cheque_receipt_id.id),
             ]
             post_count = obj_cheque_receipt.search_count(criteria)
             if post_count > 0:

@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <openerp>
     <data>
         <record id="act_confirm" model="workflow.activity">
-            <field name="wkf_id" ref="account.wkf"/>
+            <field name="wkf_id" ref="account.wkf" />
             <field name="name">open</field>
             <field name="action">wkf_confirm()</field>
             <field name="kind">function</field>
         </record>
         <record id="account.act_open" model="workflow.activity">
-            <field name="wkf_id" ref="account.wkf"/>
+            <field name="wkf_id" ref="account.wkf" />
             <field name="name">open</field>
             <field name="action">invoice_validate()
 action_date_assign()
@@ -18,23 +18,23 @@ action_number()</field>
         </record>
 
         <record id="account.t4" model="workflow.transition">
-            <field name="act_from" ref="act_confirm"/>
-            <field name="act_to" ref="account.act_open"/>
+            <field name="act_from" ref="act_confirm" />
+            <field name="act_to" ref="account.act_open" />
             <field name="signal">invoice_open</field>
         </record>
         <record id="wkf_trans_draft_2_confirm" model="workflow.transition">
-            <field name="act_from" ref="account.act_draft"/>
-            <field name="act_to" ref="act_confirm"/>
+            <field name="act_from" ref="account.act_draft" />
+            <field name="act_to" ref="act_confirm" />
             <field name="signal">button_confirm</field>
         </record>
         <record id="wkf_trans_proforma_2_confirm" model="workflow.transition">
-            <field name="act_from" ref="account.act_proforma2"/>
-            <field name="act_to" ref="act_confirm"/>
+            <field name="act_from" ref="account.act_proforma2" />
+            <field name="act_to" ref="act_confirm" />
             <field name="signal">button_confirm</field>
         </record>
         <record id="wkf_trans_confirm_2_cancel" model="workflow.transition">
-            <field name="act_from" ref="act_confirm"/>
-            <field name="act_to" ref="account.act_cancel"/>
+            <field name="act_from" ref="act_confirm" />
+            <field name="act_to" ref="account.act_cancel" />
             <field name="signal">invoice_cancel</field>
         </record>
     </data>

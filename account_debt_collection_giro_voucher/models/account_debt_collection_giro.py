@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
+from openerp import api, fields, models
 
 
 class AccountDebtCollectionGiro(models.Model):
@@ -79,8 +78,7 @@ class AccountDebtCollectionGiro(models.Model):
         }
         self.source_bank_id = False
         if self.company_id and self.partner_id:
-            commercial_partner = self.company_id.partner_id.\
-                commercial_partner_id
+            commercial_partner = self.company_id.partner_id.commercial_partner_id
             criteria = [
                 ("commercial_partner_id", "=", commercial_partner.id),
             ]
@@ -95,13 +93,9 @@ class AccountDebtCollectionGiro(models.Model):
     def _check_giro_receipt_cancel(self):
         self.ensure_one()
         result = True
-        obj_giro_receipt =\
-            self.env["account.giro_receipt"]
+        obj_giro_receipt = self.env["account.giro_receipt"]
         if self.giro_receipt_id:
-            criteria = [
-                ("state", "<>", "draft"),
-                ("id", "=", self.giro_receipt_id.id)
-            ]
+            criteria = [("state", "<>", "draft"), ("id", "=", self.giro_receipt_id.id)]
             post_count = obj_giro_receipt.search_count(criteria)
             if post_count > 0:
                 result = False

@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api, _
+from openerp import _, api, fields, models
 from openerp.exceptions import Warning as UserError
 
 
@@ -35,17 +34,17 @@ class AccountDebtCollection(models.Model):
 
     @api.multi
     def _compute_allowed_journal_br_ids(self):
-        voucher_type_id =\
-            self.env.ref(
-                "account_voucher_bank_cash.voucher_type_bank_receipt")
-        obj_voucher_type_allowed_journal =\
-            self.env["account.voucher_type_allowed_journal"]
+        voucher_type_id = self.env.ref(
+            "account_voucher_bank_cash.voucher_type_bank_receipt"
+        )
+        obj_voucher_type_allowed_journal = self.env[
+            "account.voucher_type_allowed_journal"
+        ]
 
         for document in self:
-            journal_ids =\
-                obj_voucher_type_allowed_journal.search([
-                    ("voucher_type_id", "=", voucher_type_id.id)
-                ]).mapped(lambda r: r.journal_id.id)
+            journal_ids = obj_voucher_type_allowed_journal.search(
+                [("voucher_type_id", "=", voucher_type_id.id)]
+            ).mapped(lambda r: r.journal_id.id)
             document.allowed_journal_br_ids = journal_ids
 
     allowed_journal_br_ids = fields.Many2many(
@@ -57,17 +56,17 @@ class AccountDebtCollection(models.Model):
 
     @api.multi
     def _compute_allowed_journal_cr_ids(self):
-        voucher_type_id =\
-            self.env.ref(
-                "account_voucher_bank_cash.voucher_type_cash_receipt")
-        obj_voucher_type_allowed_journal =\
-            self.env["account.voucher_type_allowed_journal"]
+        voucher_type_id = self.env.ref(
+            "account_voucher_bank_cash.voucher_type_cash_receipt"
+        )
+        obj_voucher_type_allowed_journal = self.env[
+            "account.voucher_type_allowed_journal"
+        ]
 
         for document in self:
-            journal_ids =\
-                obj_voucher_type_allowed_journal.search([
-                    ("voucher_type_id", "=", voucher_type_id.id)
-                ]).mapped(lambda r: r.journal_id.id)
+            journal_ids = obj_voucher_type_allowed_journal.search(
+                [("voucher_type_id", "=", voucher_type_id.id)]
+            ).mapped(lambda r: r.journal_id.id)
             document.allowed_journal_cr_ids = journal_ids
 
     allowed_journal_cr_ids = fields.Many2many(
@@ -109,66 +108,53 @@ class AccountDebtCollection(models.Model):
     def _create_bank_receipt(self):
         self.ensure_one()
 
-        voucher_type_id =\
-            self.env.ref(
-                "account_voucher_bank_cash.voucher_type_bank_receipt")
+        voucher_type_id = self.env.ref(
+            "account_voucher_bank_cash.voucher_type_bank_receipt"
+        )
 
-        obj_bank_receipt =\
-            self.env["account.bank_receipt"]
-        obj_bank_receipt_line =\
-            self.env["account.bank_receipt_line"]
+        obj_bank_receipt = self.env["account.bank_receipt"]
+        obj_bank_receipt_line = self.env["account.bank_receipt_line"]
 
         if self.bank_detail_ids:
             for bank in self.bank_detail_ids:
                 if bank.detail_ids:
-                    voucher_data =\
-                        self._prepare_receipt_voucher_data(
-                            bank, voucher_type_id)
-                    bank_data =\
-                        self._prepare_bank_receipt_data(bank)
+                    voucher_data = self._prepare_receipt_voucher_data(
+                        bank, voucher_type_id
+                    )
+                    bank_data = self._prepare_bank_receipt_data(bank)
                     bank_data.update(voucher_data)
                     br = obj_bank_receipt.create(bank_data)
-                    bank.write({
-                        "bank_receipt_id": br.id
-                    })
+                    bank.write({"bank_receipt_id": br.id})
                     for bank_detail in bank.detail_ids:
                         br_line = obj_bank_receipt_line.create(
-                            self._prepare_receipt_voucher_line_data(
-                                br, bank_detail))
-                        bank_detail.write({
-                            "bank_receipt_line_id": br_line.id
-                        })
+                            self._prepare_receipt_voucher_line_data(br, bank_detail)
+                        )
+                        bank_detail.write({"bank_receipt_line_id": br_line.id})
         return True
 
     @api.multi
     def _create_cash_receipt(self):
         self.ensure_one()
 
-        voucher_type_id =\
-            self.env.ref(
-                "account_voucher_bank_cash.voucher_type_cash_receipt")
+        voucher_type_id = self.env.ref(
+            "account_voucher_bank_cash.voucher_type_cash_receipt"
+        )
 
-        obj_cash_receipt =\
-            self.env["account.cash_receipt"]
-        obj_cash_receipt_line =\
-            self.env["account.cash_receipt_line"]
+        obj_cash_receipt = self.env["account.cash_receipt"]
+        obj_cash_receipt_line = self.env["account.cash_receipt_line"]
 
         if self.cash_detail_ids:
             for cash in self.cash_detail_ids:
                 if cash.detail_ids:
                     cr = obj_cash_receipt.create(
-                        self._prepare_receipt_voucher_data(
-                            cash, voucher_type_id))
-                    cash.write({
-                        "cash_receipt_id": cr.id
-                    })
+                        self._prepare_receipt_voucher_data(cash, voucher_type_id)
+                    )
+                    cash.write({"cash_receipt_id": cr.id})
                     for cash_detail in cash.detail_ids:
                         cr_line = obj_cash_receipt_line.create(
-                            self._prepare_receipt_voucher_line_data(
-                                cr, cash_detail))
-                        cash_detail.write({
-                            "cash_receipt_line_id": cr_line.id
-                        })
+                            self._prepare_receipt_voucher_line_data(cr, cash_detail)
+                        )
+                        cash_detail.write({"cash_receipt_line_id": cr_line.id})
         return True
 
     @api.multi
@@ -207,10 +193,9 @@ class AccountDebtCollection(models.Model):
 
     @api.multi
     def _get_action_bank_receipt(self):
-        action =\
-            self.env.ref(
-                "account_voucher_bank_cash."
-                "account_bank_receipt_action").read()[0]
+        action = self.env.ref(
+            "account_voucher_bank_cash." "account_bank_receipt_action"
+        ).read()[0]
         return action
 
     @api.multi
@@ -231,10 +216,9 @@ class AccountDebtCollection(models.Model):
 
     @api.multi
     def _get_action_cash_receipt(self):
-        action =\
-            self.env.ref(
-                "account_voucher_bank_cash."
-                "account_cash_receipt_action").read()[0]
+        action = self.env.ref(
+            "account_voucher_bank_cash." "account_cash_receipt_action"
+        ).read()[0]
         return action
 
     @api.multi
