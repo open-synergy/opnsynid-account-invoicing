@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields
 import openerp.addons.decimal_precision as dp
+from openerp import fields, models
 
 
 class AccountDebtCollectionDetailSummary(models.Model):
@@ -16,7 +15,10 @@ class AccountDebtCollectionDetailSummary(models.Model):
 
     def _select(self):
         _super = super(AccountDebtCollectionDetailSummary, self)
-        select_str = _super._select() + """,
+        select_str = (
+            _super._select()
+            + """,
             SUM(a.amount_cheque_collected) AS total_amount_cheque_collected
         """
+        )
         return select_str

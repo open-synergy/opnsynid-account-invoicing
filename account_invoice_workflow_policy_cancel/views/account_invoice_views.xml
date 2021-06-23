@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2019 OpenSynergy Indonesia
      Copyright 2020 PT. Simetri Sinergi Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
@@ -7,15 +7,21 @@
         <record id="account_invoice_supplier_view_form" model="ir.ui.view">
             <field name="name">account.invoice.supplier.account.cancel.policy</field>
             <field name="model">account.invoice</field>
-            <field name="inherit_id" ref="account_cancel.invoice_supplier_cancel_form_inherit"/>
+            <field
+                name="inherit_id"
+                ref="account_cancel.invoice_supplier_cancel_form_inherit"
+            />
             <field name="arch" type="xml">
                 <data>
-                    <xpath expr="//button[@name='invoice_cancel']" position="attributes">
+                    <xpath
+                        expr="//button[@name='invoice_cancel']"
+                        position="attributes"
+                    >
                         <attribute name="attrs">
                             {'invisible':['|',('state','in', ['cancel','paid']),'&amp;',('state','!=', 'cancel'),('cancel_ok','=',False)]}
                         </attribute>
-                        <attribute name="states"/>
-                        <attribute name="groups"/>
+                        <attribute name="states" />
+                        <attribute name="groups" />
                     </xpath>
                 </data>
             </field>
@@ -24,15 +30,18 @@
         <record id="account_invoice_view_form" model="ir.ui.view">
             <field name="name">account.invoice.customer.account.cancel.policy</field>
             <field name="model">account.invoice</field>
-            <field name="inherit_id" ref="account_cancel.invoice_form_cancel_inherit"/>
+            <field name="inherit_id" ref="account_cancel.invoice_form_cancel_inherit" />
             <field name="arch" type="xml">
                 <data>
-                    <xpath expr="//button[@name='invoice_cancel']" position="attributes">
+                    <xpath
+                        expr="//button[@name='invoice_cancel']"
+                        position="attributes"
+                    >
                         <attribute name="attrs">
                             {'invisible':['|',('state','in', ['cancel','paid']),'&amp;',('state','!=', 'cancel'),('cancel_ok','=',False)]}
                         </attribute>
-                        <attribute name="states"/>
-                        <attribute name="groups"/>
+                        <attribute name="states" />
+                        <attribute name="groups" />
                     </xpath>
                 </data>
             </field>

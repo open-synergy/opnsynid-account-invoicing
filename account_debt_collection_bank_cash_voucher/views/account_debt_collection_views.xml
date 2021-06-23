@@ -1,68 +1,112 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <openerp>
     <data>
 
       <record id="account_debt_collection_view_form" model="ir.ui.view">
           <field name="name">account.debt_collection.bank.cash.form</field>
           <field name="model">account.debt_collection</field>
-          <field name="inherit_id" ref="account_debt_collection.account_debt_collection_view_form"/>
+          <field
+                name="inherit_id"
+                ref="account_debt_collection.account_debt_collection_view_form"
+            />
           <field name="arch" type="xml">
               <xpath expr="//field[@name='company_id']" position="before">
-                  <field name="id" invisible="1"/>
-                  <field name="allowed_journal_br_ids" widget="many2many_tags" invisible="1"/>
-                  <field name="allowed_journal_cr_ids" widget="many2many_tags" invisible="1"/>
-                  <field name="allowed_partner_ids" widget="many2many_tags" invisible="1"/>
+                  <field name="id" invisible="1" />
+                  <field
+                        name="allowed_journal_br_ids"
+                        widget="many2many_tags"
+                        invisible="1"
+                    />
+                  <field
+                        name="allowed_journal_cr_ids"
+                        widget="many2many_tags"
+                        invisible="1"
+                    />
+                  <field
+                        name="allowed_partner_ids"
+                        widget="many2many_tags"
+                        invisible="1"
+                    />
               </xpath>
               <xpath expr="//field[@name='amount_collected']" position="after">
-                  <field name="amount_bank_collected"/>
-                  <field name="amount_cash_collected"/>
+                  <field name="amount_bank_collected" />
+                  <field name="amount_cash_collected" />
               </xpath>
-              <xpath expr="//notebook/page[@name='content']/field[@name='detail_summary_ids']/tree/field[@name='total_amount_collected']" position="after">
-                  <field name="total_amount_bank_collected"/>
-                  <field name="total_amount_cash_collected"/>
+              <xpath
+                    expr="//notebook/page[@name='content']/field[@name='detail_summary_ids']/tree/field[@name='total_amount_collected']"
+                    position="after"
+                >
+                  <field name="total_amount_bank_collected" />
+                  <field name="total_amount_cash_collected" />
               </xpath>
               <xpath expr="//notebook/page[@name='note']" position="before">
                   <page name="bank_detail" string="Bank Receipts">
                       <button
-                          string="Bank Receipts"
-                          name="action_view_bank_receipts"
-                          type="object"
-                          class="oe_stat_button"
-                          icon="fa-list-alt"/>
-                      <field name="bank_detail_ids" colspan="4" nolabel="1" context="{'debt_collection_id': id}">
+                            string="Bank Receipts"
+                            name="action_view_bank_receipts"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-list-alt"
+                        />
+                      <field
+                            name="bank_detail_ids"
+                            colspan="4"
+                            nolabel="1"
+                            context="{'debt_collection_id': id}"
+                        >
                           <tree>
-                              <field name="reference"/>
-                              <field name="journal_id"/>
-                              <field name="date"/>
-                              <field name="partner_id"/>
-                              <field name="amount"/>
-                              <field name="amount_real"/>
+                              <field name="reference" />
+                              <field name="journal_id" />
+                              <field name="date" />
+                              <field name="partner_id" />
+                              <field name="amount" />
+                              <field name="amount_real" />
                           </tree>
                           <form>
                             <group name="group_3" colspan="4" col="2">
                                 <group name="group_3_1" colspan="1" col="2">
-                                    <field name="company_id" groups="base.group_multi_company"/>
-                                    <field name="debt_collection_id" invisible="1"/>
-                                    <field name="allowed_journal_ids" widget="many2many_tags" invisible="1"/>
-                                    <field name="allowed_partner_ids" widget="many2many_tags" invisible="1"/>
-                                    <field name="reference"/>
-                                    <field name="date"/>
-                                    <field name="period_id"/>
-                                    <field name="amount"/>
-                                    <field name="amount_real"/>
+                                    <field
+                                            name="company_id"
+                                            groups="base.group_multi_company"
+                                        />
+                                    <field name="debt_collection_id" invisible="1" />
+                                    <field
+                                            name="allowed_journal_ids"
+                                            widget="many2many_tags"
+                                            invisible="1"
+                                        />
+                                    <field
+                                            name="allowed_partner_ids"
+                                            widget="many2many_tags"
+                                            invisible="1"
+                                        />
+                                    <field name="reference" />
+                                    <field name="date" />
+                                    <field name="period_id" />
+                                    <field name="amount" />
+                                    <field name="amount_real" />
                                 </group>
                                 <group name="group_3_2" colspan="1" col="2">
-                                    <field name="journal_id" domain="[('id', 'in', allowed_journal_ids[0][2])]"/>
-                                    <field name="partner_id" domain="[('id', 'in', allowed_partner_ids[0][2])]"/>
-                                    <field name="payment_mode_id"/>
+                                    <field
+                                            name="journal_id"
+                                            domain="[('id', 'in', allowed_journal_ids[0][2])]"
+                                        />
+                                    <field
+                                            name="partner_id"
+                                            domain="[('id', 'in', allowed_partner_ids[0][2])]"
+                                        />
+                                    <field name="payment_mode_id" />
                                 </group>
                             </group>
                             <notebook colspan="4">
                                 <page name="bank_details" string="Details">
                                     <field name="detail_ids" colspan="4" nolabel="1">
                                         <tree editable="bottom">
-                                            <field name="collection_detail_id" domain="[('debt_collection_id', '=', parent.debt_collection_id),('invoice_id.partner_id', '=', parent.partner_id)]"/>
-                                            <field name="amount"/>
+                                            <field
+                                                    name="collection_detail_id"
+                                                    domain="[('debt_collection_id', '=', parent.debt_collection_id),('invoice_id.partner_id', '=', parent.partner_id)]"
+                                                />
+                                            <field name="amount" />
                                         </tree>
                                     </field>
                                 </page>
@@ -72,43 +116,66 @@
                   </page>
                   <page name="cash_detail" string="Cash Receipts">
                     <button
-                        string="Cash Receipts"
-                        name="action_view_cash_receipts"
-                        type="object"
-                        class="oe_stat_button"
-                        icon="fa-list-alt"/>
-                    <field name="cash_detail_ids" colspan="4" nolabel="1" context="{'debt_collection_id': id}">
+                            string="Cash Receipts"
+                            name="action_view_cash_receipts"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-list-alt"
+                        />
+                    <field
+                            name="cash_detail_ids"
+                            colspan="4"
+                            nolabel="1"
+                            context="{'debt_collection_id': id}"
+                        >
                       <tree>
-                          <field name="reference"/>
-                          <field name="journal_id"/>
-                          <field name="date"/>
-                          <field name="partner_id"/>
-                          <field name="amount"/>
-                          <field name="amount_real"/>
+                          <field name="reference" />
+                          <field name="journal_id" />
+                          <field name="date" />
+                          <field name="partner_id" />
+                          <field name="amount" />
+                          <field name="amount_real" />
                       </tree>
                       <form>
                         <group name="group_4" colspan="4" col="2">
                             <group name="group_4_1" colspan="1" col="2">
-                                <field name="debt_collection_id" invisible="1"/>
-                                <field name="allowed_journal_ids" widget="many2many_tags" invisible="1"/>
-                                <field name="allowed_partner_ids" widget="many2many_tags" invisible="1"/>
-                                <field name="reference"/>
-                                <field name="date"/>
-                                <field name="period_id"/>
-                                <field name="amount"/>
-                                <field name="amount_real"/>
+                                <field name="debt_collection_id" invisible="1" />
+                                <field
+                                            name="allowed_journal_ids"
+                                            widget="many2many_tags"
+                                            invisible="1"
+                                        />
+                                <field
+                                            name="allowed_partner_ids"
+                                            widget="many2many_tags"
+                                            invisible="1"
+                                        />
+                                <field name="reference" />
+                                <field name="date" />
+                                <field name="period_id" />
+                                <field name="amount" />
+                                <field name="amount_real" />
                             </group>
                             <group name="group_4_2" colspan="1" col="2">
-                                <field name="journal_id" domain="[('id', 'in', allowed_journal_ids[0][2])]"/>
-                                <field name="partner_id" domain="[('id', 'in', allowed_partner_ids[0][2])]"/>
+                                <field
+                                            name="journal_id"
+                                            domain="[('id', 'in', allowed_journal_ids[0][2])]"
+                                        />
+                                <field
+                                            name="partner_id"
+                                            domain="[('id', 'in', allowed_partner_ids[0][2])]"
+                                        />
                             </group>
                         </group>
                         <notebook colspan="4">
                             <page name="bank_details" string="Details">
                                 <field name="detail_ids" colspan="4" nolabel="1">
                                     <tree editable="bottom">
-                                        <field name="collection_detail_id" domain="[('debt_collection_id', '=', parent.debt_collection_id),('invoice_id.partner_id', '=', parent.partner_id)]"/>
-                                        <field name="amount"/>
+                                        <field
+                                                    name="collection_detail_id"
+                                                    domain="[('debt_collection_id', '=', parent.debt_collection_id),('invoice_id.partner_id', '=', parent.partner_id)]"
+                                                />
+                                        <field name="amount" />
                                     </tree>
                                 </field>
                             </page>

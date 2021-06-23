@@ -1,11 +1,9 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 OpenSynergy Indonesia
 # Copyright 2020 PT. Simetri Sinergi Indonesia
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Invoicing Signature",
-    "summary": "Implement a signature process "
-               "for Invoicing",
+    "summary": "Implement a signature process " "for Invoicing",
     "version": "8.0.1.0.0",
     "category": "Invoicing",
     "website": "https://simetri-sinergi.id",

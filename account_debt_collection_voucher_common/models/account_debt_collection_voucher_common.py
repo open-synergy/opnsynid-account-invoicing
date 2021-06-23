@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
 import openerp.addons.decimal_precision as dp
+from openerp import api, fields, models
 
 
 class AccountDebtCollectionVoucherCommon(models.AbstractModel):
@@ -22,8 +21,7 @@ class AccountDebtCollectionVoucherCommon(models.AbstractModel):
 
     @api.model
     def _default_collection_id(self):
-        active_id =\
-            self.env.context.get("debt_collection_id", False)
+        active_id = self.env.context.get("debt_collection_id", False)
         return active_id
 
     debt_collection_id = fields.Many2one(
@@ -31,7 +29,7 @@ class AccountDebtCollectionVoucherCommon(models.AbstractModel):
         comodel_name="account.debt_collection",
         default=lambda self: self._default_collection_id(),
         required=True,
-        readonly=True
+        readonly=True,
     )
 
     @api.model
@@ -62,17 +60,17 @@ class AccountDebtCollectionVoucherCommon(models.AbstractModel):
     )
 
     @api.multi
-    @api.depends(
-        "detail_ids.amount"
-    )
+    @api.depends("detail_ids.amount")
     def _compute_amount(self):
         for document in self:
             amount = 0.0
             for detail in document.detail_ids:
                 amount += detail.amount
-            document.update({
-                "amount": amount,
-            })
+            document.update(
+                {
+                    "amount": amount,
+                }
+            )
 
     amount = fields.Float(
         string="Amount",
@@ -108,8 +106,7 @@ class AccountDebtCollectionVoucherCommon(models.AbstractModel):
     @api.multi
     @api.onchange("date")
     def onchange_period_id(self):
-        self.period_id = self.env[
-            "account.period"].find(self.date).id
+        self.period_id = self.env["account.period"].find(self.date).id
 
     @api.multi
     def _get_write_off_account(self):

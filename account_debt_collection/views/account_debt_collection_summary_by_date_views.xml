@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2019 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <openerp>
 <data>
 <record id="account_debt_collection_summary_by_date_view_search" model="ir.ui.view">
@@ -10,9 +9,21 @@
     <field name="arch" type="xml">
         <search>
             <group name="group_main" string="Group By..">
-                <filter name="grp_date_year" string="Date by Year" context="{'group_by':'date:year'}"/>
-                <filter name="grp_date_month" string="Date by Month" context="{'group_by':'date:month'}"/>
-                <filter name="grp_date_week" string="Date by Week" context="{'group_by':'date:week'}"/>
+                <filter
+                            name="grp_date_year"
+                            string="Date by Year"
+                            context="{'group_by':'date:year'}"
+                        />
+                <filter
+                            name="grp_date_month"
+                            string="Date by Month"
+                            context="{'group_by':'date:month'}"
+                        />
+                <filter
+                            name="grp_date_week"
+                            string="Date by Week"
+                            context="{'group_by':'date:week'}"
+                        />
             </group>
         </search>
     </field>
@@ -23,8 +34,8 @@
     <field name="model">account.debt_collection_summary_by_date</field>
     <field name="arch" type="xml">
         <tree create="false" edit="false" delete="false">
-          <field name="date"/>
-          <field name="total_amount_collected"/>
+          <field name="date" />
+          <field name="total_amount_collected" />
         </tree>
     </field>
 </record>
@@ -35,26 +46,38 @@
     <field name="arch" type="xml">
         <form create="false" edit="false" delete="false">
             <header>
-                <button name="%(base_print_policy.base_print_document_action)d" string="Print" type="action" icon="gtk-print"/>
+                <button
+                            name="%(base_print_policy.base_print_document_action)d"
+                            string="Print"
+                            type="action"
+                            icon="gtk-print"
+                        />
             </header>
             <sheet>
                 <group name="group_1" colspan="4" col="2">
-                    <field name="date"/>
-                    <field name="debt_collection_group"/>
-                    <field name="invoice_group"/>
+                    <field name="date" />
+                    <field name="debt_collection_group" />
+                    <field name="invoice_group" />
                 </group>
                 <group name="group_footer" class="oe_subtotal_footer oe_right">
                     <div class="oe_subtotal_footer_separator oe_inline">
-                        <label for="total_amount_collected"/>
+                        <label for="total_amount_collected" />
                     </div>
-                    <field name="total_amount_collected" nolabel="1" class="oe_subtotal_footer_separator" />
+                    <field
+                                name="total_amount_collected"
+                                nolabel="1"
+                                class="oe_subtotal_footer_separator"
+                            />
                 </group>
             </sheet>
         </form>
     </field>
 </record>
 
-<record id="account_debt_collection_summary_by_date_action" model="ir.actions.act_window">
+<record
+            id="account_debt_collection_summary_by_date_action"
+            model="ir.actions.act_window"
+        >
     <field name="name">A/R Collection Summary By Date</field>
     <field name="summary_by_date">ir.actions.act_window</field>
     <field name="res_model">account.debt_collection_summary_by_date</field>
@@ -63,12 +86,12 @@
 </record>
 
 <menuitem
-    id="account_debt_collection_summary_by_date_menu"
-    name="Summary By Date"
-    parent="account_debt_collection_root_menu"
-    action="account_debt_collection_summary_by_date_action"
-    sequence="2"
-    />
+            id="account_debt_collection_summary_by_date_menu"
+            name="Summary By Date"
+            parent="account_debt_collection_root_menu"
+            action="account_debt_collection_summary_by_date_action"
+            sequence="2"
+        />
 
 </data>
 </openerp>

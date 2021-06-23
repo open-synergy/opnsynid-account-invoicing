@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 OpenSynergy Indonesia
 # Copyright 2020 PT. Simetri Sinergi Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import models, fields, api
+from openerp import api, fields, models
 
 
 class AccountDebtCollectionSchedule(models.Model):
@@ -35,17 +34,16 @@ class AccountDebtCollectionSchedule(models.Model):
         "type_id",
     )
     def _compute_allowed_collector_ids(self):
-        obj_collection_type =\
-            self.env["account.debt_collection_type"]
+        obj_collection_type = self.env["account.debt_collection_type"]
 
         for document in self:
             if document.type_id:
-                collection_type_ids =\
-                    obj_collection_type.search([
-                        ("id", "=", document.type_id.id)
-                    ])
-                document.allowed_collector_ids =\
+                collection_type_ids = obj_collection_type.search(
+                    [("id", "=", document.type_id.id)]
+                )
+                document.allowed_collector_ids = (
                     collection_type_ids.allowed_collector_ids
+                )
 
     allowed_collector_ids = fields.Many2many(
         string="Allowed Collectors",
@@ -64,15 +62,13 @@ class AccountDebtCollectionSchedule(models.Model):
         "collector_id",
     )
     def _compute_allowed_partner_ids(self):
-        obj_res_partner =\
-            self.env["res.partner"]
+        obj_res_partner = self.env["res.partner"]
 
         for document in self:
             if document.collector_id:
-                partner_ids =\
-                    obj_res_partner.search([
-                        ("collector_id", "=", document.collector_id.id)
-                    ])
+                partner_ids = obj_res_partner.search(
+                    [("collector_id", "=", document.collector_id.id)]
+                )
                 document.allowed_partner_ids = partner_ids.ids
 
     allowed_partner_ids = fields.Many2many(
@@ -129,8 +125,7 @@ class AccountDebtCollectionSchedule(models.Model):
     @api.multi
     def _prepare_cron_data(self):
         self.ensure_one()
-        cron_name = "Account Debt Collection Schedule: %s" % (
-            self.name)
+        cron_name = "Account Debt Collection Schedule: %s" % (self.name)
         return {
             "name": cron_name,
             "user_id": self.env.user.id,
@@ -146,8 +141,7 @@ class AccountDebtCollectionSchedule(models.Model):
 
     @api.model
     def cron_create_debt_collection(self, collection_schedule_id):
-        collection_schedule =\
-            self.browse([collection_schedule_id])[0]
+        collection_schedule = self.browse([collection_schedule_id])[0]
         collection_schedule._create_collection()
 
     @api.multi
@@ -175,22 +169,16 @@ class AccountDebtCollectionSchedule(models.Model):
     @api.multi
     def _create_collection(self):
         self.ensure_one()
-        obj_account_debt_collection =\
-            self.env["account.debt_collection"]
-        obj_account_debt_collection_detail =\
-            self.env["account.debt_collection_detail"]
-        obj_account_invoice =\
-            self.env["account.invoice"]
-        collection = obj_account_debt_collection.create(
-            self._prepare_collection_data())
-        criteria_invoice =\
-            collection._prepare_criteria_specific_invoice()
-        invoice_ids =\
-            obj_account_invoice.search(
-                criteria_invoice
-            ).filtered(lambda r: r.partner_id.id in self.partner_ids.ids)
+        obj_account_debt_collection = self.env["account.debt_collection"]
+        obj_account_debt_collection_detail = self.env["account.debt_collection_detail"]
+        obj_account_invoice = self.env["account.invoice"]
+        collection = obj_account_debt_collection.create(self._prepare_collection_data())
+        criteria_invoice = collection._prepare_criteria_specific_invoice()
+        invoice_ids = obj_account_invoice.search(criteria_invoice).filtered(
+            lambda r: r.partner_id.id in self.partner_ids.ids
+        )
         if invoice_ids:
             for invoice in invoice_ids:
                 obj_account_debt_collection_detail.create(
-                    self._prepare_collection_detail_data(
-                        collection, invoice))
+                    self._prepare_collection_detail_data(collection, invoice)
+                )

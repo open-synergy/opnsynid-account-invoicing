@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
 import openerp.addons.decimal_precision as dp
+from openerp import api, fields, models
 
 
 class AccountDebtCollectionDetail(models.Model):
@@ -13,8 +12,7 @@ class AccountDebtCollectionDetail(models.Model):
     def get_amount_collected_all(self):
         _super = super(AccountDebtCollectionDetail, self)
         result = _super.get_amount_collected_all()
-        amount_giro_collected =\
-            self.amount_giro_collected
+        amount_giro_collected = self.amount_giro_collected
         result += amount_giro_collected
         return result
 
@@ -35,8 +33,7 @@ class AccountDebtCollectionDetail(models.Model):
     def _compute_giro_collected_amount(self):
         for document in self:
             amount_giro_collected = 0.0
-            giro_detail_ids =\
-                document.debt_collection_id.giro_detail_ids
+            giro_detail_ids = document.debt_collection_id.giro_detail_ids
             if giro_detail_ids:
                 for giro_detail in giro_detail_ids:
                     detail_ids = giro_detail.detail_ids
@@ -44,9 +41,11 @@ class AccountDebtCollectionDetail(models.Model):
                         lambda r: r.collection_detail_id.id == document.id
                     ):
                         amount_giro_collected += detail.amount
-                        document.update({
-                            "amount_giro_collected": amount_giro_collected,
-                        })
+                        document.update(
+                            {
+                                "amount_giro_collected": amount_giro_collected,
+                            }
+                        )
 
     amount_giro_collected = fields.Float(
         string="Collected Giro Amount",

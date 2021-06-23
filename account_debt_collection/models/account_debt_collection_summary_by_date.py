@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields
-from openerp import tools
 import openerp.addons.decimal_precision as dp
+from openerp import fields, models, tools
+from psycopg2.extensions import AsIs
 
 
 class AccountDebtCollectionSummaryByDate(models.Model):
@@ -79,23 +78,26 @@ class AccountDebtCollectionSummaryByDate(models.Model):
 
     def init(self, cr):
         tools.drop_view_if_exists(cr, self._table)
-        cr.execute("""CREATE or REPLACE VIEW %s as (
+        view_query = """
             SELECT
                 %s
             FROM
                 %s
-            %s
+                %s
             WHERE
                 %s
             GROUP BY
                 %s
             ORDER BY
                 %s
-            )""" % (
-            self._table,
+            """ % (
             self._select(),
             self._from(),
             self._join(),
             self._where(),
             self._group_by(),
-            self._order_by()))
+            self._order_by(),
+        )
+        cr.execute(
+            "CREATE OR REPLACE VIEW %s AS %s", (AsIs(self._table), AsIs(view_query))
+        )

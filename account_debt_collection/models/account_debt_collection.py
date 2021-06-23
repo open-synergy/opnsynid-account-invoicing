@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api, _
 from datetime import datetime, timedelta
+
+from openerp import _, api, fields, models
 from openerp.exceptions import Warning as UserError
 
 
@@ -133,10 +133,8 @@ class AccountDebtCollection(models.Model):
             for line in document.detail_ids:
                 total_amount_due += line.amount_due
                 total_amount_collected += line.amount_collected
-            document.total_amount_due =\
-                total_amount_due
-            document.total_amount_collected =\
-                total_amount_collected
+            document.total_amount_due = total_amount_due
+            document.total_amount_collected = total_amount_collected
 
     total_amount_due = fields.Float(
         string="Total Amount Due",
@@ -157,13 +155,10 @@ class AccountDebtCollection(models.Model):
     )
     def _compute_collection_rate(self):
         for document in self:
-            total_amount_due = \
-                document.total_amount_due
-            total_amount_collected = \
-                document.total_amount_collected
+            total_amount_due = document.total_amount_due
+            total_amount_collected = document.total_amount_collected
             try:
-                document.collection_rate = \
-                    total_amount_collected / total_amount_due
+                document.collection_rate = total_amount_collected / total_amount_due
             except ZeroDivisionError:
                 document.collection_rate = 0
 
@@ -175,13 +170,12 @@ class AccountDebtCollection(models.Model):
 
     @api.multi
     def _compute_allowed_invoice_ids(self):
-        obj_account_invoice =\
-            self.env["account.invoice"]
+        obj_account_invoice = self.env["account.invoice"]
 
         for document in self:
-            invoice_ids =\
-                obj_account_invoice.search(
-                    document._prepare_general_criteria_invoice())
+            invoice_ids = obj_account_invoice.search(
+                document._prepare_general_criteria_invoice()
+            )
             document.allowed_invoice_ids = invoice_ids.ids
 
     allowed_invoice_ids = fields.Many2many(
@@ -193,13 +187,12 @@ class AccountDebtCollection(models.Model):
 
     @api.multi
     def _compute_allowed_invoice_specific_ids(self):
-        obj_account_invoice =\
-            self.env["account.invoice"]
+        obj_account_invoice = self.env["account.invoice"]
 
         for document in self:
-            invoice_ids =\
-                obj_account_invoice.search(
-                    document._prepare_criteria_specific_invoice())
+            invoice_ids = obj_account_invoice.search(
+                document._prepare_criteria_specific_invoice()
+            )
             document.allowed_invoice_specific_ids = invoice_ids.ids
 
     allowed_invoice_specific_ids = fields.Many2many(
@@ -210,20 +203,17 @@ class AccountDebtCollection(models.Model):
     )
 
     @api.multi
-    @api.depends(
-        "collection_type_id"
-    )
+    @api.depends("collection_type_id")
     def _compute_allowed_collector_ids(self):
-        obj_debt_collection_type =\
-            self.env["account.debt_collection_type"]
+        obj_debt_collection_type = self.env["account.debt_collection_type"]
 
         for document in self:
-            collection_type_id =\
-                obj_debt_collection_type.search([
-                    ("id", "=", document.collection_type_id.id)
-                ])
-            document.allowed_collector_ids =\
+            collection_type_id = obj_debt_collection_type.search(
+                [("id", "=", document.collection_type_id.id)]
+            )
+            document.allowed_collector_ids = (
                 collection_type_id.allowed_collector_ids.ids
+            )
 
     allowed_collector_ids = fields.Many2many(
         string="Allowed Collectors",
@@ -321,11 +311,8 @@ class AccountDebtCollection(models.Model):
     @api.multi
     def _prepare_general_criteria_invoice(self):
         self.ensure_one()
-        result = [
-            ("id", "=", 0)
-        ]
-        allowed_journal_ids =\
-            self.collection_type_id.allowed_journal_ids.ids
+        result = [("id", "=", 0)]
+        allowed_journal_ids = self.collection_type_id.allowed_journal_ids.ids
 
         if allowed_journal_ids:
             result = [
@@ -338,26 +325,22 @@ class AccountDebtCollection(models.Model):
     @api.multi
     def _prepare_criteria_specific_invoice(self):
         self.ensure_one()
-        criteria =\
-            self._prepare_general_criteria_invoice()
-        collector_id =\
-            self.collector_id.id
+        criteria = self._prepare_general_criteria_invoice()
+        collector_id = self.collector_id.id
         criteria += [
             ("partner_id.collector_id", "=", collector_id),
         ]
         if self.date:
             date = datetime.strptime(self.date, "%Y-%m-%d")
-            days_after_due =\
-                self.collection_type_id.days_after_due
-            days_before_due =\
-                self.collection_type_id.days_before_due
+            days_after_due = self.collection_type_id.days_after_due
+            days_before_due = self.collection_type_id.days_before_due
 
-            date_after_invoice_due =\
-                self._get_date_after_invoice_due(
-                    date, days_after_due).strftime("%Y-%m-%d")
-            date_before_invoice_due =\
-                self._get_date_before_invoice_due(
-                    date, days_before_due).strftime("%Y-%m-%d")
+            date_after_invoice_due = self._get_date_after_invoice_due(
+                date, days_after_due
+            ).strftime("%Y-%m-%d")
+            date_before_invoice_due = self._get_date_before_invoice_due(
+                date, days_before_due
+            ).strftime("%Y-%m-%d")
             result = [
                 ("date_due", ">=", date_before_invoice_due),
                 ("date_due", "<=", date_after_invoice_due),
@@ -482,9 +465,11 @@ class AccountDebtCollection(models.Model):
         _super = super(AccountDebtCollection, self)
         result = _super.create(values)
         sequence = result._create_sequence()
-        result.write({
-            "name": sequence,
-        })
+        result.write(
+            {
+                "name": sequence,
+            }
+        )
         return result
 
     @api.multi

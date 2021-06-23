@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 OpenSynergy Indonesia
 # Copyright 2020 PT. Simetri Sinergi Indonesia
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from openerp import models, fields, api
+from openerp import api, fields, models
 
 
 class AccountInvoice(models.Model):
@@ -11,10 +10,7 @@ class AccountInvoice(models.Model):
         "account.invoice",
         "tier.validation",
     ]
-    _state_from = [
-        "draft",
-        "confirm"
-    ]
+    _state_from = ["draft", "confirm"]
     _state_to = [
         "open",
     ]

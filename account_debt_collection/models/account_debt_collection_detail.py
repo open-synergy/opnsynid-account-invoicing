@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
 import openerp.addons.decimal_precision as dp
+from openerp import api, fields, models
 
 
 class AccountDebtCollectionDetail(models.Model):
@@ -16,8 +15,9 @@ class AccountDebtCollectionDetail(models.Model):
     )
     def _compute_partner_id(self):
         for document in self:
-            document.partner_id = document.invoice_id.partner_id.\
-                commercial_partner_id.id
+            document.partner_id = (
+                document.invoice_id.partner_id.commercial_partner_id.id
+            )
 
     name = fields.Char(
         string="Description",
@@ -67,8 +67,7 @@ class AccountDebtCollectionDetail(models.Model):
     @api.multi
     def _compute_amount_collected(self):
         for document in self:
-            amount_collected =\
-                document.get_amount_collected_all()
+            amount_collected = document.get_amount_collected_all()
             document.amount_collected += amount_collected
 
     amount_collected = fields.Float(
@@ -100,8 +99,7 @@ class AccountDebtCollectionDetail(models.Model):
     @api.multi
     def _compute_state(self):
         for document in self:
-            document.state = \
-                document.debt_collection_id.state
+            document.state = document.debt_collection_id.state
 
     state = fields.Selection(
         string="State",
@@ -118,13 +116,10 @@ class AccountDebtCollectionDetail(models.Model):
     )
 
     @api.multi
-    @api.onchange(
-        "invoice_id"
-    )
+    @api.onchange("invoice_id")
     def onchange_amount_due(self):
         if self.invoice_id:
-            self.amount_due =\
-                self.invoice_id.residual
+            self.amount_due = self.invoice_id.residual
 
     @api.multi
     def _get_name(self):
@@ -140,7 +135,9 @@ class AccountDebtCollectionDetail(models.Model):
         result = _super.create(values)
         name = result._get_name()
         if name:
-            result.write({
-                "name": name,
-            })
+            result.write(
+                {
+                    "name": name,
+                }
+            )
         return result

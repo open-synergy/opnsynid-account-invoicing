@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
+from openerp import api, fields, models
 
 
 class AccountDebtCollectionCash(models.Model):
@@ -31,12 +30,11 @@ class AccountDebtCollectionCash(models.Model):
     def _check_cash_receipt_cancel(self):
         self.ensure_one()
         result = True
-        obj_cash_receipt =\
-            self.env["account.cash_receipt"]
+        obj_cash_receipt = self.env["account.cash_receipt"]
         if self.cash_receipt_id:
             criteria = [
                 ("state", "not in", ["draft", "cancel"]),
-                ("id", "=", self.cash_receipt_id.id)
+                ("id", "=", self.cash_receipt_id.id),
             ]
             post_count = obj_cash_receipt.search_count(criteria)
             if post_count > 0:

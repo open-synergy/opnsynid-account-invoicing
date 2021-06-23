@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields
-from openerp import tools
+from openerp import fields, models, tools
+from psycopg2.extensions import AsIs
 
 
 class AccountInvoiceLineSummary(models.Model):
@@ -90,12 +89,13 @@ class AccountInvoiceLineSummary(models.Model):
 
     def init(self, cr):
         tools.drop_view_if_exists(cr, self._table)
-        cr.execute("""CREATE or REPLACE VIEW %s as (
-            %s
+        view_query = """%s
             FROM %s
-            %s
-            )""" % (
-            self._table,
+            %s""" % (
             self._select(),
             self._from(),
-            self._group_by()))
+            self._group_by(),
+        )
+        cr.execute(
+            "CREATE OR REPLACE VIEW %s AS %s", (AsIs(self._table), AsIs(view_query))
+        )

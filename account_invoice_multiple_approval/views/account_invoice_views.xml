@@ -1,60 +1,95 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <openerp>
     <data>
         <record id="account_invoice_view_form" model="ir.ui.view">
             <field name="name">Account Invoice Form</field>
             <field name="model">account.invoice</field>
-            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="priority" eval="100" />
+            <field name="inherit_id" ref="account.invoice_form" />
             <field name="arch" type="xml">
                 <xpath expr="//header" position="after">
-                    <field name="need_validation" invisible="1"/>
-                    <field name="validated" invisible="1"/>
-                    <field name="rejected" invisible="1"/>
-                    <div class="alert alert-warning"
-                         attrs="{'invisible': ['|', '|', '|',
+                    <field name="need_validation" invisible="1" />
+                    <field name="validated" invisible="1" />
+                    <field name="rejected" invisible="1" />
+                    <div
+                        class="alert alert-warning"
+                        attrs="{'invisible': ['|', '|', '|',
                          ('validated', '=', True), ('state', 'not in', ['confirm']),
                          ('rejected', '=', True), ('review_ids', '=', [])]}"
-                         style="margin-bottom:0px;">
-                        <p><i class="fa fa-info-circle"/>This Invoice needs to be
+                        style="margin-bottom:0px;"
+                    >
+                        <p><i class="fa fa-info-circle" />This Invoice needs to be
                             validated.
-                            <button name="validate_tier"
+                            <button
+                                name="validate_tier"
                                 string="Validate"
                                 attrs="{'invisible': [('review_ids', '=', [])]}"
                                 type="object"
                                 class="oe_inline oe_button btn-success"
-                                icon="terp-check"/>
-                            <button name="reject_tier"
+                                icon="terp-check"
+                            />
+                            <button
+                                name="reject_tier"
                                 string="Reject"
                                 type="object"
                                 class="btn-icon btn-danger"
-                                icon="terp-gtk-stop"/>
+                                icon="terp-gtk-stop"
+                            />
                         </p>
                     </div>
-                    <div class="alert alert-success"
-                         attrs="{'invisible': ['|', '|', ('validated', '!=', True), ('state', 'not in', ['confirm']), ('review_ids', '=', [])]}"
-                         style="margin-bottom:0px;">
-                        <p><i class="fa fa-thumbs-up"/> Operation has been <b>validated</b>!</p>
+                    <div
+                        class="alert alert-success"
+                        attrs="{'invisible': ['|', '|', ('validated', '!=', True), ('state', 'not in', ['confirm']), ('review_ids', '=', [])]}"
+                        style="margin-bottom:0px;"
+                    >
+                        <p><i class="fa fa-thumbs-up" /> Operation has been <b
+                            >validated</b>!</p>
                     </div>
-                    <div class="alert alert-danger"
-                         attrs="{'invisible': ['|', '|', ('rejected', '!=', True), ('state', 'not in', ['confirm']), ('review_ids', '=', [])]}"
-                         style="margin-bottom:0px;">
-                        <p><i class="fa fa-thumbs-down"/> Operation has been <b>rejected</b>.</p>
+                    <div
+                        class="alert alert-danger"
+                        attrs="{'invisible': ['|', '|', ('rejected', '!=', True), ('state', 'not in', ['confirm']), ('review_ids', '=', [])]}"
+                        style="margin-bottom:0px;"
+                    >
+                        <p><i class="fa fa-thumbs-down" /> Operation has been <b
+                            >rejected</b>.</p>
                     </div>
                 </xpath>
                 <xpath expr="//header/field[@name='state']" position="replace">
-                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm,open,paid" statusbar_colors='{"proforma":"blue","proforma2":"blue"}' readonly="1"/>
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,confirm,open,paid"
+                        statusbar_colors='{"proforma":"blue","proforma2":"blue"}'
+                        readonly="1"
+                    />
                 </xpath>
                 <xpath expr="//button[@name='invoice_open'][1]" position="before">
-                    <button name="request_validation"
+                    <button
+                        name="request_validation"
                         string="Request Validation"
                         attrs="{'invisible': ['|','|',('need_validation', '!=', True),('rejected','=',True),('state','not in',['confirm'])]}"
-                        type="object"/>
-                    <button name="restart_validation"
+                        type="object"
+                    />
+                    <button
+                        name="restart_validation"
                         string="Restart Validation"
                         attrs="{'invisible': ['|','|',('review_ids', '=', []),('rejected','=',False),('state','not in',['confirm'])]}"
-                        type="object"/>
-                    <button name="button_confirm" states="draft" string="Confirm" class="oe_highlight" groups="base.group_user"/>
-                    <button name="button_confirm" states="proforma2" string="Confirm" class="oe_highlight" groups="base.group_user"/>
+                        type="object"
+                    />
+                    <button
+                        name="button_confirm"
+                        states="draft"
+                        string="Confirm"
+                        class="oe_highlight"
+                        groups="base.group_user"
+                    />
+                    <button
+                        name="button_confirm"
+                        states="proforma2"
+                        string="Confirm"
+                        class="oe_highlight"
+                        groups="base.group_user"
+                    />
                 </xpath>
                 <xpath expr="//button[@name='invoice_open'][1]" position="attributes">
                     <attribute name="invisible">1</attribute>
@@ -68,11 +103,14 @@
                 <xpath expr="//notebook" position="inside">
                     <page string="Reviews" name="tier_validation">
                         <group>
-                            <field name="definition_id"/>
-                            <field name="reviewer_partner_ids" widget="many2many_tags"/>
-                            <field name="active_reviewer_ids" widget="many2many_tags"/>
-                            <field name="next_reviewer_ids" widget="many2many_tags"/>
-                            <field name="review_ids" readonly="1"/>
+                            <field name="definition_id" />
+                            <field
+                                name="reviewer_partner_ids"
+                                widget="many2many_tags"
+                            />
+                            <field name="active_reviewer_ids" widget="many2many_tags" />
+                            <field name="next_reviewer_ids" widget="many2many_tags" />
+                            <field name="review_ids" readonly="1" />
                         </group>
                     </page>
                 </xpath>
@@ -82,58 +120,87 @@
         <record id="account_invoice_supplier_view_form" model="ir.ui.view">
             <field name="name">Account Invoice Supplier Form</field>
             <field name="model">account.invoice</field>
-            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="priority" eval="100" />
+            <field name="inherit_id" ref="account.invoice_supplier_form" />
             <field name="arch" type="xml">
                 <xpath expr="//header" position="after">
-                    <field name="need_validation" invisible="1"/>
-                    <field name="validated" invisible="1"/>
-                    <field name="rejected" invisible="1"/>
-                    <div class="alert alert-warning"
-                         attrs="{'invisible': ['|', '|', '|',
+                    <field name="need_validation" invisible="1" />
+                    <field name="validated" invisible="1" />
+                    <field name="rejected" invisible="1" />
+                    <div
+                        class="alert alert-warning"
+                        attrs="{'invisible': ['|', '|', '|',
                          ('validated', '=', True), ('state', 'not in', ['confirm']),
                          ('rejected', '=', True), ('review_ids', '=', [])]}"
-                         style="margin-bottom:0px;">
-                        <p><i class="fa fa-info-circle"/>This Invoice needs to be
+                        style="margin-bottom:0px;"
+                    >
+                        <p><i class="fa fa-info-circle" />This Invoice needs to be
                             validated.
-                            <button name="validate_tier"
+                            <button
+                                name="validate_tier"
                                 string="Validate"
                                 attrs="{'invisible': [('review_ids', '=', [])]}"
                                 type="object"
                                 class="oe_inline oe_button btn-success"
-                                icon="terp-check"/>
-                            <button name="reject_tier"
+                                icon="terp-check"
+                            />
+                            <button
+                                name="reject_tier"
                                 string="Reject"
                                 type="object"
                                 class="btn-icon btn-danger"
-                                icon="terp-gtk-stop"/>
+                                icon="terp-gtk-stop"
+                            />
                         </p>
                     </div>
-                    <div class="alert alert-success"
-                         attrs="{'invisible': ['|', '|', ('validated', '!=', True), ('state', 'not in', ['confirm']), ('review_ids', '=', [])]}"
-                         style="margin-bottom:0px;">
-                        <p><i class="fa fa-thumbs-up"/> Operation has been <b>validated</b>!</p>
+                    <div
+                        class="alert alert-success"
+                        attrs="{'invisible': ['|', '|', ('validated', '!=', True), ('state', 'not in', ['confirm']), ('review_ids', '=', [])]}"
+                        style="margin-bottom:0px;"
+                    >
+                        <p><i class="fa fa-thumbs-up" /> Operation has been <b
+                            >validated</b>!</p>
                     </div>
-                    <div class="alert alert-danger"
-                         attrs="{'invisible': ['|', '|', ('rejected', '!=', True), ('state', 'not in', ['confirm']), ('review_ids', '=', [])]}"
-                         style="margin-bottom:0px;">
-                        <p><i class="fa fa-thumbs-down"/> Operation has been <b>rejected</b>.</p>
+                    <div
+                        class="alert alert-danger"
+                        attrs="{'invisible': ['|', '|', ('rejected', '!=', True), ('state', 'not in', ['confirm']), ('review_ids', '=', [])]}"
+                        style="margin-bottom:0px;"
+                    >
+                        <p><i class="fa fa-thumbs-down" /> Operation has been <b
+                            >rejected</b>.</p>
                     </div>
                 </xpath>
 
                 <xpath expr="//header/field[@name='state']" position="replace">
-                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm,open,paid" statusbar_colors='{"proforma":"blue","proforma2":"blue"}' readonly="1"/>
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,confirm,open,paid"
+                        statusbar_colors='{"proforma":"blue","proforma2":"blue"}'
+                        readonly="1"
+                    />
                 </xpath>
 
                 <xpath expr="//button[@name='invoice_open']" position="before">
-                    <button name="request_validation"
+                    <button
+                        name="request_validation"
                         string="Request Validation"
                         attrs="{'invisible': ['|','|',('need_validation', '!=', True),('rejected','=',True),('state','not in',['confirm'])]}"
-                        type="object"/>
-                    <button name="restart_validation"
+                        type="object"
+                    />
+                    <button
+                        name="restart_validation"
                         string="Restart Validation"
                         attrs="{'invisible': ['|','|',('review_ids', '=', []),('rejected','=',False),('state','not in',['confirm'])]}"
-                        type="object"/>
-                    <button name="button_confirm" states="draft" string="Confirm" class="oe_highlight" groups="base.group_user"/>
+                        type="object"
+                    />
+                    <button
+                        name="button_confirm"
+                        states="draft"
+                        string="Confirm"
+                        class="oe_highlight"
+                        groups="base.group_user"
+                    />
                 </xpath>
 
                 <xpath expr="//button[@name='invoice_open']" position="attributes">
@@ -147,11 +214,14 @@
                 <xpath expr="//notebook" position="inside">
                     <page string="Reviews" name="tier_validation">
                         <group>
-                            <field name="definition_id"/>
-                            <field name="reviewer_partner_ids" widget="many2many_tags"/>
-                            <field name="active_reviewer_ids" widget="many2many_tags"/>
-                            <field name="next_reviewer_ids" widget="many2many_tags"/>
-                            <field name="review_ids" readonly="1"/>
+                            <field name="definition_id" />
+                            <field
+                                name="reviewer_partner_ids"
+                                widget="many2many_tags"
+                            />
+                            <field name="active_reviewer_ids" widget="many2many_tags" />
+                            <field name="next_reviewer_ids" widget="many2many_tags" />
+                            <field name="review_ids" readonly="1" />
                         </group>
                     </page>
                 </xpath>
@@ -161,13 +231,19 @@
         <record id="account_invoice_view_search" model="ir.ui.view">
             <field name="name">account.invoice.multiple.approval.search</field>
             <field name="model">account.invoice</field>
-            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="inherit_id" ref="account.view_account_invoice_filter" />
             <field name="arch" type="xml">
                 <xpath expr="//filter[@name='unpaid']" position="after">
-                  <filter name="needs_review" string="Waiting for Approval"
-                          domain="[('state', '=', 'confirm')]"/>
-                    <filter name="needs_review" string="Needs my Review"
-                            domain="[('reviewer_ids','in',uid), ('state', '=', 'confirm')]"/>
+                  <filter
+                        name="needs_review"
+                        string="Waiting for Approval"
+                        domain="[('state', '=', 'confirm')]"
+                    />
+                    <filter
+                        name="needs_review"
+                        string="Needs my Review"
+                        domain="[('reviewer_ids','in',uid), ('state', '=', 'confirm')]"
+                    />
                 </xpath>
             </field>
         </record>
