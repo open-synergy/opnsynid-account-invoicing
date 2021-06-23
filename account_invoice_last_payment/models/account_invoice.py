@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
+from openerp import api, fields, models
 
 
 class AccountInvoice(models.Model):
@@ -12,16 +11,17 @@ class AccountInvoice(models.Model):
     @api.depends(
         "state",
         "move_id",
-        "move_id", "move_id.state",
-        "move_id.line_id", "move_id.line_id.reconcile_id",
+        "move_id",
+        "move_id.state",
+        "move_id.line_id",
+        "move_id.line_id.reconcile_id",
         "move_id.line_id.reconcile_partial_id",
     )
     def _compute_last_payment_info(self):
         for inv in self:
             payment_date = move_line_id = move_id = False
             if inv.move_lines:
-                line = inv.move_lines.sorted(
-                    key=lambda r: r.date, reverse=True)[0]
+                line = inv.move_lines.sorted(key=lambda r: r.date, reverse=True)[0]
                 payment_date = line.date
                 move_line_id = line.id
                 move_id = line.move_id.id
