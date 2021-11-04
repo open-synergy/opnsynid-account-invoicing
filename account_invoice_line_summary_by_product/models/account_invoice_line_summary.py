@@ -89,9 +89,9 @@ class AccountInvoiceLineSummary(models.Model):
 
     def init(self, cr):
         tools.drop_view_if_exists(cr, self._table)
-        view_query = """%s
-            FROM %s
-            %s""" % (
+        view_query = """{}
+            FROM {}
+            {}""".format(
             self._select(),
             self._from(),
             self._group_by(),

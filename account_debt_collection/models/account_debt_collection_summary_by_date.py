@@ -80,17 +80,17 @@ class AccountDebtCollectionSummaryByDate(models.Model):
         tools.drop_view_if_exists(cr, self._table)
         view_query = """
             SELECT
-                %s
+                {}
             FROM
-                %s
-                %s
+                {}
+                {}
             WHERE
-                %s
+                {}
             GROUP BY
-                %s
+                {}
             ORDER BY
-                %s
-            """ % (
+                {}
+            """.format(
             self._select(),
             self._from(),
             self._join(),
