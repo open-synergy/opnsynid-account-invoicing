@@ -58,8 +58,8 @@ class TestLineSummary(TransactionCase):
         self.assertIsNotNone(data_invoice.line_summary_ids)
 
         # Check Line Summary Is Grouped By Product
-        self.assertEquals(1, len(data_invoice.line_summary_ids.ids))
+        self.assertEqual(1, len(data_invoice.line_summary_ids.ids))
 
         # Check Line Summary Data
-        self.assertEquals(6, data_invoice.line_summary_ids[0].product_qty)
-        self.assertEquals(6000000, data_invoice.line_summary_ids[0].price_subtotal)
+        self.assertEqual(6, data_invoice.line_summary_ids[0].product_qty)
+        self.assertEqual(6000000, data_invoice.line_summary_ids[0].price_subtotal)

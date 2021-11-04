@@ -59,14 +59,14 @@ class AccountDebtCollectionDetailSummary(models.Model):
         tools.drop_view_if_exists(cr, self._table)
         view_query = """
             SELECT
-                %s
+                {}
             FROM
-                %s
+                {}
             JOIN
-                %s
+                {}
             GROUP BY
-                %s
-            """ % (
+                {}
+            """.format(
             self._select(),
             self._from(),
             self._join(),
