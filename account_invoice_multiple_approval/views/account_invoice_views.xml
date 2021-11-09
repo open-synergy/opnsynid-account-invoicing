@@ -7,7 +7,11 @@
         <field name="name">Account Invoice Form</field>
         <field name="model">account.invoice</field>
         <field name="inherit_id" ref="account.invoice_form" />
+        <field name="priority" eval="50" />
         <field name="arch" type="xml">
+            <xpath expr="//header/field[@name='state']" position="attributes">
+                <attribute name="statusbar_visible">draft,confirm,open,paid</attribute>
+            </xpath>
             <xpath expr="//header" position="after">
                 <field name="need_validation" invisible="1" />
                 <field name="approved" invisible="1" />
@@ -61,36 +65,31 @@
             <xpath expr="//button[@name='action_invoice_open']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
-            <!-- <xpath expr="//button[@name='action_invoice_draft']" position="attributes">
-                <attribute name="attrs">
-                    {'invisible':[('state','not in',['cancel','reject'])]}
-                </attribute>
-            </xpath> -->
-
             <xpath expr="//button[@name='action_invoice_open']" position="before">
                 <button
                     name="action_confirm"
                     type="object"
                     string="Confirm"
                     class="oe_highlight"
-                    attrs="{'invisible':[('state','!=','draft')]}"
-                />
-                <button
-                    name="action_cancel"
-                    type="object"
-                    string="Cancel"
-                    class="oe_highlight"
-                    attrs="{'invisible':[('state','in',['cancel'])]}"
-                />
-                <!-- <button name="action_cancel" type="object" string="Cancel" class="oe_highlight" attrs="{'invisible':[('state','in',['cancel','reject'])]}"/> -->
-                <!-- <button name="action_restart" type="object" string="Restart" class="oe_highlight" attrs="{'invisible':[('state','not in',['cancel','reject'])]}"/> -->
-                <button
-                    name="action_request_approval"
-                    string="Request Approval"
-                    attrs="{'invisible': ['|','|',('need_validation', '!=', True),('rejected','=',True),('state','not in',['confirm'])]}"
-                    type="object"
+                    states="draft"
                 />
             </xpath>
+            <xpath expr="//button[@name='action_invoice_cancel']" position="attributes">
+                <attribute name="states">draft,confirm,open</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_invoice_draft']" position="attributes">
+                <attribute name="states" />
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_invoice_draft']" position="after">
+              <button
+                    name="action_restart"
+                    type="object"
+                    string="Restart"
+                    states="cancel,reject"
+                />
+            </xpath>
+
             <xpath expr="//notebook" position="inside">
                 <page string="Approvals" name="tier_validation">
                     <group>
@@ -114,11 +113,15 @@
         <field name="name">Account Invoice Supplier Form</field>
         <field name="model">account.invoice</field>
         <field name="inherit_id" ref="account.invoice_supplier_form" />
+        <field name="priority" eval="50" />
         <field name="arch" type="xml">
+            <xpath expr="//header/field[@name='state']" position="attributes">
+                <attribute name="statusbar_visible">draft,confirm,open,paid</attribute>
+            </xpath>
             <xpath expr="//header" position="after">
-                <field name="need_validation" invisible="0" />
-                <field name="approved" invisible="0" />
-                <field name="rejected" invisible="0" />
+                <field name="need_validation" invisible="1" />
+                <field name="approved" invisible="1" />
+                <field name="rejected" invisible="1" />
                 <div
                     role="alert"
                     class="alert alert-warning"
@@ -169,12 +172,30 @@
             <xpath expr="//button[@name='action_invoice_open']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
-
-            <!-- <xpath expr="//button[@name='action_invoice_draft']" position="attributes">
-                <attribute name="attrs">
-                    {'invisible':[('state','not in',['cancel','reject'])]}
-                </attribute>
-            </xpath> -->
+            <xpath expr="//button[@name='action_invoice_open']" position="before">
+                <button
+                    name="action_confirm"
+                    type="object"
+                    string="Confirm"
+                    class="oe_highlight"
+                    states="draft"
+                />
+            </xpath>
+            <xpath expr="//button[@name='action_invoice_cancel']" position="attributes">
+                <attribute name="states">draft,confirm,open</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_invoice_draft']" position="attributes">
+                <attribute name="states" />
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_invoice_draft']" position="after">
+              <button
+                    name="action_restart"
+                    type="object"
+                    string="Restart"
+                    states="cancel,reject"
+                />
+            </xpath>
 
             <xpath expr="//notebook" position="inside">
                 <page string="Approvals" name="tier_validation">
