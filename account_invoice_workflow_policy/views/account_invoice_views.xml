@@ -22,6 +22,8 @@
                             <field name="restart_ok" />
                             <field name="payment_ok" />
                             <field name="send_email_ok" />
+                            <field name="approve_ok" />
+                            <field name="reject_ok" />
                         </group>
                     </page>
                 </xpath>
@@ -62,6 +64,22 @@
                         {'invisible':[('cancel_ok','=',False)]}
                     </attribute>
                 </xpath>
+                <xpath
+                    expr="//button[@name='action_approve_approval']"
+                    position="attributes"
+                >
+                    <attribute name="attrs">
+                        {'invisible':[('approve_ok','=',False)]}
+                    </attribute>
+                </xpath>
+                <xpath
+                    expr="//button[@name='action_reject_approval']"
+                    position="attributes"
+                >
+                    <attribute name="attrs">
+                        {'invisible':[('reject_ok','=',False)]}
+                    </attribute>
+                </xpath>
 
             </data>
         </field>
@@ -89,6 +107,8 @@
                             <field name="payment_ok" />
                             <field name="send_email_ok" />
                             <field name="print_ok" />
+                            <field name="approve_ok" />
+                            <field name="reject_ok" />
                         </group>
                     </page>
                 </xpath>
@@ -156,6 +176,22 @@
                 >
                     <attribute name="attrs">
                         {'invisible':[('cancel_ok','=',False)]}
+                    </attribute>
+                </xpath>
+                <xpath
+                    expr="//button[@name='action_approve_approval']"
+                    position="attributes"
+                >
+                    <attribute name="attrs">
+                        {'invisible':[('approve_ok','=',False)]}
+                    </attribute>
+                </xpath>
+                <xpath
+                    expr="//button[@name='action_reject_approval']"
+                    position="attributes"
+                >
+                    <attribute name="attrs">
+                        {'invisible':[('reject_ok','=',False)]}
                     </attribute>
                 </xpath>
 

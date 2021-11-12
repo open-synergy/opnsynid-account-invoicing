@@ -1,5 +1,5 @@
 # Copyright 2021 OpenSynergy Indonesia
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, fields, models
 
@@ -44,6 +44,16 @@ class AccountInvoice(models.Model):
     )
     print_ok = fields.Boolean(
         string="Can Print Invoice",
+        compute="_compute_policy",
+        store=False,
+    )
+    approve_ok = fields.Boolean(
+        string="Can Approve",
+        compute="_compute_policy",
+        store=False,
+    )
+    reject_ok = fields.Boolean(
+        string="Can Reject",
         compute="_compute_policy",
         store=False,
     )
