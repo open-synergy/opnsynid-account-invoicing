@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="account_invoice_supplier_view_form" model="ir.ui.view">
+        <field name="name">Account Invoice Supplier Form</field>
+        <field name="model">account.invoice</field>
+        <field name="priority" eval="100" />
+        <field name="inherit_id" ref="account.invoice_supplier_form" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//notebook" position="inside">
+                    <page
+                        name="page_supplier_invoice_policy"
+                        string="Policy"
+                        groups="base.group_system"
+                    >
+                        <group name="grp_supplier_invoice_policy">
+                            <field name="policy_template_id" />
+                            <field name="open_ok" />
+                            <field name="refund_ok" />
+                            <field name="cancel_ok" />
+                            <field name="restart_ok" />
+                            <field name="payment_ok" />
+                            <field name="send_email_ok" />
+                        </group>
+                    </page>
+                </xpath>
+
+                <xpath expr="//button[@name='action_confirm']" position="attributes">
+                    <attribute name="attrs">
+                        {'invisible':[('open_ok','=',False)]}
+                    </attribute>
+                </xpath>
+
+                <xpath
+                    expr="//button[@name='%(account.action_account_invoice_refund)d']"
+                    position="attributes"
+                >
+                    <attribute name="attrs">
+                        {'invisible':[('refund_ok','=',False)]}
+                    </attribute>
+                </xpath>
+                <xpath
+                    expr="//button[@name='%(account.action_account_invoice_payment)d']"
+                    position="attributes"
+                >
+                    <attribute name="attrs">
+                        {'invisible':[('payment_ok','=',False)]}
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='action_restart']" position="attributes">
+                    <attribute name="attrs">
+                        {'invisible':[('restart_ok','=',False)]}
+                    </attribute>
+                </xpath>
+                <xpath
+                    expr="//button[@name='action_invoice_cancel']"
+                    position="attributes"
+                >
+                    <attribute name="attrs">
+                        {'invisible':[('cancel_ok','=',False)]}
+                    </attribute>
+                </xpath>
+
+            </data>
+        </field>
+    </record>
+
+    <record id="account_invoice_view_form" model="ir.ui.view">
+        <field name="name">Account Invoice Form</field>
+        <field name="model">account.invoice</field>
+        <field name="priority" eval="100" />
+        <field name="inherit_id" ref="account.invoice_form" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//notebook" position="inside">
+                    <page
+                        name="page_supplier_invoice_policy"
+                        string="Policy"
+                        groups="base.group_system"
+                    >
+                        <group name="grp_supplier_invoice_policy">
+                            <field name="policy_template_id" />
+                            <field name="open_ok" />
+                            <field name="refund_ok" />
+                            <field name="cancel_ok" />
+                            <field name="restart_ok" />
+                            <field name="payment_ok" />
+                            <field name="send_email_ok" />
+                            <field name="print_ok" />
+                        </group>
+                    </page>
+                </xpath>
+
+                <xpath
+                    expr="//button[@name='action_invoice_sent'][1]"
+                    position="attributes"
+                >
+                    <attribute name="attrs">
+                        {'invisible':[('send_email_ok', '=', False)]}
+                    </attribute>
+                </xpath>
+                <xpath
+                    expr="//button[@name='action_invoice_sent'][2]"
+                    position="attributes"
+                >
+                    <attribute name="attrs">
+                        {'invisible':[('send_email_ok', '=', False)]}
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='invoice_print'][1]" position="attributes">
+                    <attribute name="attrs">
+                        {'invisible':[('print_ok', '=', False)]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//button[@name='invoice_print'][2]" position="attributes">
+                    <attribute name="attrs">
+                        {'invisible':[('print_ok', '=', False)]}
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='action_confirm']" position="attributes">
+                    <attribute name="attrs">
+                        {'invisible':[('open_ok','=',False)]}
+                    </attribute>
+                </xpath>
+
+                <xpath
+                    expr="//button[@name='%(account.action_account_invoice_refund)d']"
+                    position="attributes"
+                >
+                    <attribute name="attrs">
+                        {'invisible':[('refund_ok','=',False)]}
+                    </attribute>
+                </xpath>
+                <xpath
+                    expr="//button[@name='%(account.action_account_invoice_payment)d']"
+                    position="attributes"
+                >
+                    <attribute name="attrs">
+                        {'invisible':[('payment_ok','=',False)]}
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='action_restart']" position="attributes">
+                    <attribute name="attrs">
+                        {'invisible':[('restart_ok','=',False)]}
+                    </attribute>
+                </xpath>
+
+                <xpath
+                    expr="//button[@name='action_invoice_cancel']"
+                    position="attributes"
+                >
+                    <attribute name="attrs">
+                        {'invisible':[('cancel_ok','=',False)]}
+                    </attribute>
+                </xpath>
+
+            </data>
+        </field>
+    </record>
+
+</odoo>
