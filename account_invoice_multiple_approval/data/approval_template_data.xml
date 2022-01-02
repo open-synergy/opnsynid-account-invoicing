@@ -1,0 +1,63 @@
+<odoo>
+<data noupdate="1">
+<!-- Cust. Invoice -->
+<record id="cust_inv_approval_template" model="approval.template">
+    <field name="name">Standard Customer Invoice</field>
+    <field name="model_id" ref="account.model_account_invoice" />
+    <field name="sequence" eval="100" />
+    <field name="computation_method">use_python</field>
+    <field name="python_code">rec.type == "out_invoice"</field>
+    <field name="validate_sequence" eval="1" />
+</record>
+<record id="cust_inv_approval_template_detail" model="approval.template_detail">
+    <field name="template_id" ref="cust_inv_approval_template" />
+    <field name="approver_selection_method">use_group</field>
+    <field name="approver_group_ids" eval="[(6,0,[ref('base.group_user')])]" />
+</record>
+
+<!-- Supp. Invoice -->
+<record id="supp_inv_approval_template" model="approval.template">
+    <field name="name">Standard Supplier Invoice</field>
+    <field name="model_id" ref="account.model_account_invoice" />
+    <field name="sequence" eval="100" />
+    <field name="computation_method">use_python</field>
+    <field name="python_code">rec.type == "in_invoice"</field>
+    <field name="validate_sequence" eval="1" />
+</record>
+<record id="supp_inv_approval_template_detail" model="approval.template_detail">
+    <field name="template_id" ref="supp_inv_approval_template" />
+    <field name="approver_selection_method">use_group</field>
+    <field name="approver_group_ids" eval="[(6,0,[ref('base.group_user')])]" />
+</record>
+
+<!-- Cust. Refund -->
+<record id="cust_ref_approval_template" model="approval.template">
+    <field name="name">Standard Customer Refund</field>
+    <field name="model_id" ref="account.model_account_invoice" />
+    <field name="sequence" eval="100" />
+    <field name="computation_method">use_python</field>
+    <field name="python_code">rec.type == "out_refund"</field>
+    <field name="validate_sequence" eval="1" />
+</record>
+<record id="cust_ref_approval_template_detail" model="approval.template_detail">
+    <field name="template_id" ref="cust_ref_approval_template" />
+    <field name="approver_selection_method">use_group</field>
+    <field name="approver_group_ids" eval="[(6,0,[ref('base.group_user')])]" />
+</record>
+
+<!-- Supp. Refund -->
+<record id="supp_ref_approval_template" model="approval.template">
+    <field name="name">Standard Supplier Refund</field>
+    <field name="model_id" ref="account.model_account_invoice" />
+    <field name="sequence" eval="100" />
+    <field name="computation_method">use_python</field>
+    <field name="python_code">rec.type == "in_refund"</field>
+    <field name="validate_sequence" eval="1" />
+</record>
+<record id="supp_ref_approval_template_detail" model="approval.template_detail">
+    <field name="template_id" ref="supp_ref_approval_template" />
+    <field name="approver_selection_method">use_group</field>
+    <field name="approver_group_ids" eval="[(6,0,[ref('base.group_user')])]" />
+</record>
+</data>
+</odoo>
