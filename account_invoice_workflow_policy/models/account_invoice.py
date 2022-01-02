@@ -13,7 +13,7 @@ class AccountInvoice(models.Model):
         _super._compute_policy()
 
     open_ok = fields.Boolean(
-        string="Can Validate",
+        string="Can Confirm",
         compute="_compute_policy",
         store=False,
     )
@@ -65,3 +65,11 @@ class AccountInvoice(models.Model):
         template_id = self._get_template_policy()
         for document in self:
             document.policy_template_id = template_id
+
+    @api.model
+    def create(self, values):
+        _super = super(AccountInvoice, self)
+        result = _super.create(values)
+        if not result.policy_template_id:
+            result.onchange_policy_template_id()
+        return result

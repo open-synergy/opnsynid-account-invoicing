@@ -3,7 +3,7 @@
 
 {
     "name": "Account Invoice Workflow Policy",
-    "version": "11.0.1.0.1",
+    "version": "11.0.1.1.0",
     "license": "LGPL-3",
     "category": "Invoicing",
     "website": "https://simetri-sinergi.id",
@@ -13,6 +13,7 @@
         "ssi_policy_mixin",
     ],
     "data": [
+        "data/policy_template_data.xml",
         "views/account_invoice_views.xml",
     ],
     "installable": True,
