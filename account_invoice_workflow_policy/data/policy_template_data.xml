@@ -1,0 +1,519 @@
+<odoo>
+<data noupdate="1">
+<!-- Customer Invoice -->
+<record id="cust_inv_policy_template" model="policy.template">
+    <field name="name">Standard Customer Invoice</field>
+    <field name="model_id" ref="account.model_account_invoice" />
+    <field
+                name="state_field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','state')]"
+            />
+    <field name="sequence" eval="100" />
+    <field name="computation_method">use_python</field>
+    <field name="python_code">result=False
+if document.type == "out_invoice":
+    result=True</field>
+</record>
+
+<record id="cust_inv_policy_template_detail_confirm" model="policy.template_detail">
+    <field name="template_id" ref="cust_inv_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','open_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">draft</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="cust_inv_policy_template_detail_approve" model="policy.template_detail">
+    <field name="template_id" ref="cust_inv_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','approve_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">confirm</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="1" />
+    <field name="additional_python_code">result = False
+if env.user.id in document.active_approver_user_ids.ids:
+    result = True</field>
+</record>
+
+<record id="cust_inv_policy_template_detail_reject" model="policy.template_detail">
+    <field name="template_id" ref="cust_inv_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','reject_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">confirm</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="1" />
+    <field name="additional_python_code">result = False
+if env.user.id in document.active_approver_user_ids.ids:
+    result = True</field>
+</record>
+
+<record id="cust_inv_policy_template_detail_cancel" model="policy.template_detail">
+    <field name="template_id" ref="cust_inv_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','cancel_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">draft,confirm,open</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="cust_inv_policy_template_detail_restart" model="policy.template_detail">
+    <field name="template_id" ref="cust_inv_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','restart_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">cancel,reject</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="cust_inv_policy_template_detail_refund" model="policy.template_detail">
+    <field name="template_id" ref="cust_inv_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','refund_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">open,paid</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="cust_inv_policy_template_detail_email" model="policy.template_detail">
+    <field name="template_id" ref="cust_inv_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','send_email_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">open,paid</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="cust_inv_policy_template_detail_payment" model="policy.template_detail">
+    <field name="template_id" ref="cust_inv_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','payment_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">open</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="cust_inv_policy_template_detail_print" model="policy.template_detail">
+    <field name="template_id" ref="cust_inv_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','print_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">open,paid</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<!-- Supplier Invoice -->
+<record id="supp_inv_policy_template" model="policy.template">
+    <field name="name">Standard Supplier Invoice</field>
+    <field name="model_id" ref="account.model_account_invoice" />
+    <field
+                name="state_field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','state')]"
+            />
+    <field name="sequence" eval="100" />
+    <field name="computation_method">use_python</field>
+    <field name="python_code">result=False
+if document.type == "in_invoice":
+    result=True</field>
+</record>
+
+<record id="supp_inv_policy_template_detail_confirm" model="policy.template_detail">
+    <field name="template_id" ref="supp_inv_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','open_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">draft</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="supp_inv_policy_template_detail_approve" model="policy.template_detail">
+    <field name="template_id" ref="supp_inv_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','approve_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">confirm</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="1" />
+    <field name="additional_python_code">result = False
+if env.user.id in document.active_approver_user_ids.ids:
+    result = True</field>
+</record>
+
+<record id="supp_inv_policy_template_detail_reject" model="policy.template_detail">
+    <field name="template_id" ref="supp_inv_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','reject_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">confirm</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="1" />
+    <field name="additional_python_code">result = False
+if env.user.id in document.active_approver_user_ids.ids:
+    result = True</field>
+</record>
+
+<record id="supp_inv_policy_template_detail_cancel" model="policy.template_detail">
+    <field name="template_id" ref="supp_inv_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','cancel_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">draft,confirm,open</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="supp_inv_policy_template_detail_restart" model="policy.template_detail">
+    <field name="template_id" ref="supp_inv_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','restart_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">cancel,reject</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="supp_inv_policy_template_detail_refund" model="policy.template_detail">
+    <field name="template_id" ref="supp_inv_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','refund_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">open,paid</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="supp_inv_policy_template_detail_email" model="policy.template_detail">
+    <field name="template_id" ref="supp_inv_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','send_email_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">open,paid</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="supp_inv_policy_template_detail_payment" model="policy.template_detail">
+    <field name="template_id" ref="supp_inv_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','payment_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">open</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="supp_inv_policy_template_detail_print" model="policy.template_detail">
+    <field name="template_id" ref="supp_inv_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','print_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">open,paid</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<!-- Customer Refund -->
+<record id="cust_ref_policy_template" model="policy.template">
+    <field name="name">Standard Customer Refund</field>
+    <field name="model_id" ref="account.model_account_invoice" />
+    <field
+                name="state_field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','state')]"
+            />
+    <field name="sequence" eval="100" />
+    <field name="computation_method">use_python</field>
+    <field name="python_code">result=False
+if document.type == "in_refund":
+    result=True</field>
+</record>
+
+<record id="cust_ref_policy_template_detail_confirm" model="policy.template_detail">
+    <field name="template_id" ref="cust_ref_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','open_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">draft</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="cust_ref_policy_template_detail_approve" model="policy.template_detail">
+    <field name="template_id" ref="cust_ref_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','approve_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">confirm</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="1" />
+    <field name="additional_python_code">result = False
+if env.user.id in document.active_approver_user_ids.ids:
+    result = True</field>
+</record>
+
+<record id="cust_ref_policy_template_detail_reject" model="policy.template_detail">
+    <field name="template_id" ref="cust_ref_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','reject_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">confirm</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="1" />
+    <field name="additional_python_code">result = False
+if env.user.id in document.active_approver_user_ids.ids:
+    result = True</field>
+</record>
+
+<record id="cust_ref_policy_template_detail_cancel" model="policy.template_detail">
+    <field name="template_id" ref="cust_ref_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','cancel_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">draft,confirm,open</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="cust_ref_policy_template_detail_restart" model="policy.template_detail">
+    <field name="template_id" ref="cust_ref_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','restart_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">cancel,reject</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="cust_ref_policy_template_detail_refund" model="policy.template_detail">
+    <field name="template_id" ref="cust_ref_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','refund_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">open,paid</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="cust_ref_policy_template_detail_email" model="policy.template_detail">
+    <field name="template_id" ref="cust_ref_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','send_email_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">open,paid</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="cust_ref_policy_template_detail_payment" model="policy.template_detail">
+    <field name="template_id" ref="cust_inv_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','payment_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">open</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="cust_ref_policy_template_detail_print" model="policy.template_detail">
+    <field name="template_id" ref="cust_inv_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','print_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">open,paid</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<!-- Supplier Refund -->
+<record id="supp_ref_policy_template" model="policy.template">
+    <field name="name">Standard Supplier Invoice</field>
+    <field name="model_id" ref="account.model_account_invoice" />
+    <field
+                name="state_field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','state')]"
+            />
+    <field name="sequence" eval="100" />
+    <field name="computation_method">use_python</field>
+    <field name="python_code">result=False
+if document.type == "in_invoice":
+    result=True</field>
+</record>
+
+<record id="supp_ref_policy_template_detail_confirm" model="policy.template_detail">
+    <field name="template_id" ref="supp_ref_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','open_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">draft</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="supp_ref_policy_template_detail_approve" model="policy.template_detail">
+    <field name="template_id" ref="supp_ref_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','approve_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">confirm</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="1" />
+    <field name="additional_python_code">result = False
+if env.user.id in document.active_approver_user_ids.ids:
+    result = True</field>
+</record>
+
+<record id="supp_ref_policy_template_detail_reject" model="policy.template_detail">
+    <field name="template_id" ref="supp_ref_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','reject_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">confirm</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="1" />
+    <field name="additional_python_code">result = False
+if env.user.id in document.active_approver_user_ids.ids:
+    result = True</field>
+</record>
+
+<record id="supp_ref_policy_template_detail_cancel" model="policy.template_detail">
+    <field name="template_id" ref="supp_ref_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','cancel_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">draft,confirm,open</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="supp_ref_policy_template_detail_restart" model="policy.template_detail">
+    <field name="template_id" ref="supp_ref_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','restart_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">cancel,reject</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="supp_ref_policy_template_detail_refund" model="policy.template_detail">
+    <field name="template_id" ref="supp_ref_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','refund_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">open,paid</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="supp_ref_policy_template_detail_email" model="policy.template_detail">
+    <field name="template_id" ref="supp_ref_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','send_email_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">open,paid</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="supp_ref_policy_template_detail_payment" model="policy.template_detail">
+    <field name="template_id" ref="supp_ref_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','payment_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">open</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+
+<record id="supp_ref_policy_template_detail_print" model="policy.template_detail">
+    <field name="template_id" ref="supp_ref_policy_template" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','account.invoice'),('name','=','print_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field name="states">open,paid</field>
+    <field name="restrict_user" eval="0" />
+    <field name="restrict_additional" eval="0" />
+</record>
+</data>
+</odoo>

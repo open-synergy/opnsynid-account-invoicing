@@ -15,6 +15,20 @@
                         groups="base.group_system"
                     >
                         <group name="grp_supplier_invoice_policy">
+                            <field
+                                name="allowed_policy_template_ids"
+                                widget="many2many_tags"
+                                invisible="1"
+                            />
+                            <field
+                                name="policy_template_id"
+                                domain="[('id','in',allowed_policy_template_ids)]"
+                            />
+                            <button
+                                name="action_reload_policy_template"
+                                type="object"
+                                string="Reload Template Policy"
+                            />
                             <field name="policy_template_id" />
                             <field name="open_ok" />
                             <field name="refund_ok" />
@@ -32,6 +46,7 @@
                     <attribute name="attrs">
                         {'invisible':[('open_ok','=',False)]}
                     </attribute>
+                    <attribute name="states" />
                 </xpath>
 
                 <xpath
@@ -41,6 +56,7 @@
                     <attribute name="attrs">
                         {'invisible':[('refund_ok','=',False)]}
                     </attribute>
+                    <attribute name="states" />
                 </xpath>
                 <xpath
                     expr="//button[@name='%(account.action_account_invoice_payment)d']"
@@ -49,12 +65,14 @@
                     <attribute name="attrs">
                         {'invisible':[('payment_ok','=',False)]}
                     </attribute>
+                    <attribute name="states" />
                 </xpath>
 
                 <xpath expr="//button[@name='action_restart']" position="attributes">
                     <attribute name="attrs">
                         {'invisible':[('restart_ok','=',False)]}
                     </attribute>
+                    <attribute name="states" />
                 </xpath>
                 <xpath
                     expr="//button[@name='action_invoice_cancel']"
@@ -63,6 +81,7 @@
                     <attribute name="attrs">
                         {'invisible':[('cancel_ok','=',False)]}
                     </attribute>
+                    <attribute name="states" />
                 </xpath>
                 <xpath
                     expr="//button[@name='action_approve_approval']"
@@ -71,6 +90,7 @@
                     <attribute name="attrs">
                         {'invisible':[('approve_ok','=',False)]}
                     </attribute>
+                    <attribute name="states" />
                 </xpath>
                 <xpath
                     expr="//button[@name='action_reject_approval']"
@@ -79,6 +99,7 @@
                     <attribute name="attrs">
                         {'invisible':[('reject_ok','=',False)]}
                     </attribute>
+                    <attribute name="states" />
                 </xpath>
 
             </data>
@@ -99,6 +120,20 @@
                         groups="base.group_system"
                     >
                         <group name="grp_supplier_invoice_policy">
+                            <field
+                                name="allowed_policy_template_ids"
+                                widget="many2many_tags"
+                                invisible="1"
+                            />
+                            <field
+                                name="policy_template_id"
+                                domain="[('id','in',allowed_policy_template_ids)]"
+                            />
+                            <button
+                                name="action_reload_policy_template"
+                                type="object"
+                                string="Reload Template Policy"
+                            />
                             <field name="policy_template_id" />
                             <field name="open_ok" />
                             <field name="refund_ok" />
@@ -120,31 +155,32 @@
                     <attribute name="attrs">
                         {'invisible':[('send_email_ok', '=', False)]}
                     </attribute>
+                    <attribute name="states" />
                 </xpath>
                 <xpath
                     expr="//button[@name='action_invoice_sent'][2]"
                     position="attributes"
                 >
-                    <attribute name="attrs">
-                        {'invisible':[('send_email_ok', '=', False)]}
-                    </attribute>
+                    <attribute name="invisible">1</attribute>
+                    <attribute name="states" />
                 </xpath>
 
                 <xpath expr="//button[@name='invoice_print'][1]" position="attributes">
                     <attribute name="attrs">
                         {'invisible':[('print_ok', '=', False)]}
                     </attribute>
+                    <attribute name="states" />
                 </xpath>
                 <xpath expr="//button[@name='invoice_print'][2]" position="attributes">
-                    <attribute name="attrs">
-                        {'invisible':[('print_ok', '=', False)]}
-                    </attribute>
+                    <attribute name="invisible">1</attribute>
+                    <attribute name="states" />
                 </xpath>
 
                 <xpath expr="//button[@name='action_confirm']" position="attributes">
                     <attribute name="attrs">
                         {'invisible':[('open_ok','=',False)]}
                     </attribute>
+                    <attribute name="states" />
                 </xpath>
 
                 <xpath
@@ -154,6 +190,7 @@
                     <attribute name="attrs">
                         {'invisible':[('refund_ok','=',False)]}
                     </attribute>
+                    <attribute name="states" />
                 </xpath>
                 <xpath
                     expr="//button[@name='%(account.action_account_invoice_payment)d']"
@@ -162,12 +199,14 @@
                     <attribute name="attrs">
                         {'invisible':[('payment_ok','=',False)]}
                     </attribute>
+                    <attribute name="states" />
                 </xpath>
 
                 <xpath expr="//button[@name='action_restart']" position="attributes">
                     <attribute name="attrs">
                         {'invisible':[('restart_ok','=',False)]}
                     </attribute>
+                    <attribute name="states" />
                 </xpath>
 
                 <xpath
@@ -177,6 +216,7 @@
                     <attribute name="attrs">
                         {'invisible':[('cancel_ok','=',False)]}
                     </attribute>
+                    <attribute name="states" />
                 </xpath>
                 <xpath
                     expr="//button[@name='action_approve_approval']"
@@ -185,6 +225,7 @@
                     <attribute name="attrs">
                         {'invisible':[('approve_ok','=',False)]}
                     </attribute>
+                    <attribute name="states" />
                 </xpath>
                 <xpath
                     expr="//button[@name='action_reject_approval']"
@@ -193,6 +234,7 @@
                     <attribute name="attrs">
                         {'invisible':[('reject_ok','=',False)]}
                     </attribute>
+                    <attribute name="states" />
                 </xpath>
 
             </data>
