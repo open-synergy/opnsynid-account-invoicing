@@ -4,7 +4,7 @@
 {
     "name": "Invoicing Sequence Configurator",
     "summary": "Implement a sequence configurator process " "for Invoicing",
-    "version": "8.0.1.0.0",
+    "version": "8.0.1.0.1",
     "category": "Invoicing",
     "website": "https://simetri-sinergi.id",
     "author": "PT. Simetri Sinergi Indonesia, OpenSynergy Indonesia",
