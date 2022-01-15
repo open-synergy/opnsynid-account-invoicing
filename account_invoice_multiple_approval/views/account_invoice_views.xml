@@ -16,51 +16,6 @@
                 <field name="need_validation" invisible="1" />
                 <field name="approved" invisible="1" />
                 <field name="rejected" invisible="1" />
-                <div
-                    role="alert"
-                    class="alert alert-warning"
-                    attrs="{'invisible': ['|', '|', '|',
-                     ('approved', '=', True), ('state', 'not in', ['confirm']),
-                     ('rejected', '=', True), ('approval_ids', '=', [])]}"
-                    style="margin-bottom:0px;"
-                >
-                    <p><i class="fa fa-info-circle" />This Record needs to be
-                        approved.
-                        <button
-                            name="action_approve_approval"
-                            string="Approve"
-                            attrs="{'invisible': [('approval_ids', '=', [])]}"
-                            type="object"
-                            class="oe_inline oe_button btn-success"
-                            icon="fa-check"
-                        />
-                        <button
-                            name="action_reject_approval"
-                            string="Reject"
-                            type="object"
-                            class="btn-icon btn-danger"
-                            icon="fa-stop"
-                        />
-                    </p>
-                </div>
-                <div
-                    role="alert"
-                    class="alert alert-success"
-                    attrs="{'invisible': ['|', '|', ('approved', '!=', True), ('state', 'not in', ['confirm']), ('approval_ids', '=', [])]}"
-                    style="margin-bottom:0px;"
-                >
-                    <p><i class="fa fa-thumbs-up" /> Operation has been <b
-                        >approved</b>!</p>
-                </div>
-                <div
-                    role="alert"
-                    class="alert alert-danger"
-                    attrs="{'invisible': ['|', '|', ('rejected', '!=', True), ('state', 'not in', ['confirm']), ('approval_ids', '=', [])]}"
-                    style="margin-bottom:0px;"
-                >
-                    <p><i class="fa fa-thumbs-down" /> Operation has been <b
-                        >rejected</b>.</p>
-                </div>
             </xpath>
             <xpath expr="//button[@name='action_invoice_open']" position="attributes">
                 <attribute name="invisible">1</attribute>
@@ -72,6 +27,26 @@
                     string="Confirm"
                     class="oe_highlight"
                     states="draft"
+                />
+                <button
+                    name="action_approve_approval"
+                    string="Approve"
+                    attrs="{'invisible': [('approval_ids', '=', [])]}"
+                    type="object"
+                    class="oe_highlight"
+                    states="confirm"
+                />
+                <button
+                    name="action_reject_approval"
+                    string="Reject"
+                    type="object"
+                    states="confirm"
+                />
+                <button
+                    name="action_request_approval"
+                    string="Request Approval"
+                    attrs="{'invisible': ['|',('state', '!=', 'confirm'),'&amp;',('state', '=', 'confirm'),('approval_template_id','!=',False)]}"
+                    type="object"
                 />
             </xpath>
             <xpath expr="//button[@name='action_invoice_cancel']" position="attributes">
@@ -122,51 +97,6 @@
                 <field name="need_validation" invisible="1" />
                 <field name="approved" invisible="1" />
                 <field name="rejected" invisible="1" />
-                <div
-                    role="alert"
-                    class="alert alert-warning"
-                    attrs="{'invisible': ['|', '|', '|',
-                     ('approved', '=', True), ('state', 'not in', ['confirm']),
-                     ('rejected', '=', True), ('approval_ids', '=', [])]}"
-                    style="margin-bottom:0px;"
-                >
-                    <p><i class="fa fa-info-circle" />This Record needs to be
-                        approved.
-                        <button
-                            name="action_approve_approval"
-                            string="Approve"
-                            attrs="{'invisible': [('approval_ids', '=', [])]}"
-                            type="object"
-                            class="oe_inline oe_button btn-success"
-                            icon="fa-check"
-                        />
-                        <button
-                            name="action_reject_approval"
-                            string="Reject"
-                            type="object"
-                            class="btn-icon btn-danger"
-                            icon="fa-stop"
-                        />
-                    </p>
-                </div>
-                <div
-                    role="alert"
-                    class="alert alert-success"
-                    attrs="{'invisible': ['|', '|', ('approved', '!=', True), ('state', 'not in', ['confirm']), ('approval_ids', '=', [])]}"
-                    style="margin-bottom:0px;"
-                >
-                    <p><i class="fa fa-thumbs-up" /> Operation has been <b
-                        >approved</b>!</p>
-                </div>
-                <div
-                    role="alert"
-                    class="alert alert-danger"
-                    attrs="{'invisible': ['|', '|', ('rejected', '!=', True), ('state', 'not in', ['confirm']), ('approval_ids', '=', [])]}"
-                    style="margin-bottom:0px;"
-                >
-                    <p><i class="fa fa-thumbs-down" /> Operation has been <b
-                        >rejected</b>.</p>
-                </div>
             </xpath>
 
             <xpath expr="//button[@name='action_invoice_open']" position="attributes">
@@ -179,6 +109,26 @@
                     string="Confirm"
                     class="oe_highlight"
                     states="draft"
+                />
+                <button
+                    name="action_approve_approval"
+                    string="Approve"
+                    attrs="{'invisible': [('approval_ids', '=', [])]}"
+                    type="object"
+                    class="oe_highlight"
+                    states="confirm"
+                />
+                <button
+                    name="action_reject_approval"
+                    string="Reject"
+                    type="object"
+                    states="confirm"
+                />
+                <button
+                    name="action_request_approval"
+                    string="Request Approval"
+                    attrs="{'invisible': ['|',('state', '!=', 'confirm'),'&amp;',('state', '=', 'confirm'),('approval_template_id','!=',False)]}"
+                    type="object"
                 />
             </xpath>
             <xpath expr="//button[@name='action_invoice_cancel']" position="attributes">
