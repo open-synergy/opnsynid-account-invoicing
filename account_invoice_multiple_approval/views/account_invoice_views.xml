@@ -69,6 +69,12 @@
                 <page string="Approvals" name="tier_validation">
                     <group>
                         <field name="approval_template_id" />
+                        <button
+                            name="action_request_approval"
+                            type="object"
+                            string="Reload Approval Template"
+                            states="confirm"
+                        />
                         <field
                             name="active_approver_partner_ids"
                             widget="many2many_tags"
@@ -151,6 +157,12 @@
                 <page string="Approvals" name="tier_validation">
                     <group>
                         <field name="approval_template_id" />
+                        <button
+                            name="action_request_approval"
+                            type="object"
+                            string="Reload Approval Template"
+                            states="confirm"
+                        />
                         <field
                             name="active_approver_partner_ids"
                             widget="many2many_tags"
