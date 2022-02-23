@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+<record id="account_invoice_supplier_view_form" model="ir.ui.view">
+    <field name="name">Account Invoice Supplier Form</field>
+    <field name="model">account.invoice</field>
+    <field name="inherit_id" ref="account.invoice_supplier_form" />
+    <field name="arch" type="xml">
+        <data>
+            <xpath expr="//field[@name='date_due']" position="after">
+              <field name="days_overdue" />
+            </xpath>
+        </data>
+    </field>
+</record>
+
+<record id="account_invoice_view_form" model="ir.ui.view">
+    <field name="name">Account Invoice Form</field>
+    <field name="model">account.invoice</field>
+    <field name="inherit_id" ref="account.invoice_form" />
+
+    <field name="arch" type="xml">
+        <data>
+          <xpath expr="//field[@name='date_due']" position="after">
+            <field name="days_overdue" />
+          </xpath>
+        </data>
+    </field>
+</record>
+
+<record id="account_invoice_view_search" model="ir.ui.view">
+    <field name="name">account.invoice search</field>
+    <field name="model">account.invoice</field>
+    <field name="priority" eval="100" />
+    <field name="inherit_id" ref="account.view_account_invoice_filter" />
+    <field name="arch" type="xml">
+        <data>
+            <xpath expr="//filter[@name='late']" position="after">
+              <filter
+                        name="reverse"
+                        string="Reversed"
+                        domain="[('reversal_id', '!=', False)]"
+                    />
+              <filter
+                        name="not_reverse"
+                        string="Not Reversed"
+                        domain="[('reversal_id', '=', False)]"
+                    />
+            </xpath>
+        </data>
+    </field>
+</record>
+
+</odoo>
