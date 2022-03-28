@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+<record id="account_invoice_supplier_view_form" model="ir.ui.view">
+    <field name="name">Account Invoice Supplier Form</field>
+    <field name="model">account.invoice</field>
+    <field name="inherit_id" ref="account.invoice_supplier_form" />
+    <field name="arch" type="xml">
+        <data>
+            <xpath expr="//field[@name='reference']" position="after">
+                <field name="source_document_res_id" invisible="1" />
+                <field name="source_document_model_id" invisible="1" />
+                <field name="source_document_model" invisible="1" />
+                <field name="source_document_id" />
+            </xpath>
+        </data>
+    </field>
+</record>
+
+<record id="account_invoice_view_form" model="ir.ui.view">
+    <field name="name">Account Invoice Form</field>
+    <field name="model">account.invoice</field>
+    <field name="inherit_id" ref="account.invoice_form" />
+    <field name="arch" type="xml">
+        <data>
+          <xpath expr="//field[@name='date_invoice']" position="after">
+              <field name="source_document_res_id" invisible="1" />
+              <field name="source_document_model_id" invisible="1" />
+              <field name="source_document_model" invisible="1" />
+              <field name="source_document_id" />
+          </xpath>
+        </data>
+    </field>
+</record>
+
+
+</odoo>
