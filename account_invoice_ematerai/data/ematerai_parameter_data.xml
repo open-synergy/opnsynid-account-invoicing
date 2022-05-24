@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+<!-- Copyright 2022 OpenSynergy Indonesia
+     Copyright 2022 PT. Simetri Sinergi Indonesia
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <data noupdate="1">
+        <record id="ematerai_parameter_invoice" model="ematerai.param">
+            <field name="name">Invoice Parameter</field>
+            <field name="code">INV-Parameter</field>
+        </record>
+        <record
+            id="ematerai_parameter_detail_invoice_document_no"
+            model="ematerai.param_detail"
+        >
+            <field name="param_id" ref="ematerai_parameter_invoice" />
+            <field name="name">document_no</field>
+            <field name="python_code">result = document.number</field>
+        </record>
+        <record
+            id="ematerai_parameter_detail_invoice_document_date"
+            model="ematerai.param_detail"
+        >
+            <field name="param_id" ref="ematerai_parameter_invoice" />
+            <field name="name">document_date</field>
+            <field name="python_code">result = document.date_invoice</field>
+        </record>
+        <record
+            id="ematerai_parameter_detail_invoice_document_reason"
+            model="ematerai.param_detail"
+        >
+            <field name="param_id" ref="ematerai_parameter_invoice" />
+            <field name="name">reason</field>
+            <field name="python_code">result = "approval"</field>
+        </record>
+        <record
+            id="ematerai_parameter_detail_invoice_document_password"
+            model="ematerai.param_detail"
+        >
+            <field name="param_id" ref="ematerai_parameter_invoice" />
+            <field name="name">document_password</field>
+            <field name="python_code">result = ""</field>
+        </record>
+    </data>
+</odoo>
