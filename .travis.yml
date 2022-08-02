@@ -19,12 +19,13 @@ stages:
 
 jobs:
   include:
+    # Test all other addons together
     - stage: test
       env:
-        - TESTS=1 ODOO_REPO="odoo/odoo" MAKEPOT="1"
+        - TESTS=1 ODOO_REPO="odoo/odoo" MAKEPOT=1 EXCLUDE="account_invoice_ematerai"
     - stage: test
       env:
-        - TESTS=1 ODOO_REPO="OCA/OCB"
+        - TESTS=1 ODOO_REPO="OCA/OCB" EXCLUDE="account_invoice_ematerai"
 env:
   global:
     - VERSION="11.0" TESTS="0" LINT_CHECK="0" MAKEPOT="1"
