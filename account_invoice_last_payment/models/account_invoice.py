@@ -1,7 +1,8 @@
-# Copyright 2018 OpenSynergy Indonesia
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# Copyright 2022 OpenSynergy Indonesia
+# Copyright 2022 PT. Simetri Sinergi Indonesia
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 
 class AccountInvoice(models.Model):
@@ -9,25 +10,21 @@ class AccountInvoice(models.Model):
 
     @api.multi
     @api.depends(
-        "state",
-        "move_id",
-        "move_id",
-        "move_id.state",
-        "move_id.line_id",
-        "move_id.line_id.reconcile_id",
-        "move_id.line_id.reconcile_partial_id",
+        "payment_move_line_ids",
     )
     def _compute_last_payment_info(self):
-        for inv in self:
+        for document in self:
             payment_date = move_line_id = move_id = False
-            if inv.move_lines:
-                line = inv.move_lines.sorted(key=lambda r: r.date, reverse=True)[0]
-                payment_date = line.date
-                move_line_id = line.id
-                move_id = line.move_id.id
-            inv.last_payment_date = payment_date
-            inv.last_payment_line_id = move_line_id
-            inv.last_payment_move_id = move_id
+            if document.payment_move_line_ids:
+                move_line = document.payment_move_line_ids.sorted(
+                    key=lambda r: r.date, reverse=True
+                )[0]
+                payment_date = move_line.date
+                move_line_id = move_line.id
+                move_id = move_line.move_id.id
+            document.last_payment_date = payment_date
+            document.last_payment_line_id = move_line_id
+            document.last_payment_move_id = move_id
 
     last_payment_date = fields.Date(
         string="Last Payment Date",
