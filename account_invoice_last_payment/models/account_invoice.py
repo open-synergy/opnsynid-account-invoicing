@@ -11,6 +11,7 @@ class AccountInvoice(models.Model):
     @api.multi
     @api.depends(
         "payment_move_line_ids",
+        "payment_move_line_ids.date",
     )
     def _compute_last_payment_info(self):
         for document in self:
