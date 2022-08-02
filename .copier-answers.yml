@@ -6,8 +6,9 @@ generate_requirements_txt: true
 include_aeroo_report: false
 include_wkhtmltopdf: false
 odoo_version: 11.0
-rebel_module_groups: []
-repo_description: null
+rebel_module_groups:
+  - account_invoice_ematerai
+repo_description: opnsynid-account-invoicing
 repo_name: opnsynid-account-invoicing
 repo_slug: opnsynid-account-invoicing
 travis_apt_packages: []
