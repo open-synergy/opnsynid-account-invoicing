@@ -4,17 +4,18 @@
 
 {
     "name": "Account Invoice E-Materai",
-    "version": "11.0.1.0.0",
+    "version": "11.0.1.1.0",
     "license": "LGPL-3",
     "category": "Invoicing",
     "website": "https://simetri-sinergi.id",
     "author": "PT. Simetri Sinergi Indonesia, OpenSynergy Indonesia",
     "depends": [
-        "account",
+        "account_cancel",
         "ssi_ematerai_mixin",
     ],
     "data": [
         "data/ematerai_parameter_data.xml",
+        "views/account_invoice_views.xml",
     ],
     "installable": True,
     "auto_install": False,
