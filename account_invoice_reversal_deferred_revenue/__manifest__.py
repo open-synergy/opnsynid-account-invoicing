@@ -3,7 +3,7 @@
 
 {
     "name": "Automatic Reverse Deferred Revenue",
-    "version": "11.0.1.0.0",
+    "version": "11.0.1.1.0",
     "license": "LGPL-3",
     "category": "Invoicing",
     "website": "https://simetri-sinergi.id",

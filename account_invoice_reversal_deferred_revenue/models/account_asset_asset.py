@@ -66,7 +66,7 @@ class AccountAssetAsset(models.Model):
     def _get_deferred_revenue_line_to_be_reverse(self):
         self.ensure_one()
 
-        result = False
+        result = []
 
         obj_depr_line = self.env["account.asset.depreciation.line"]
 
