@@ -3,7 +3,7 @@
 
 {
     "name": "Automatic Reverse Deferred Revenue",
-    "version": "11.0.1.1.0",
+    "version": "11.0.1.2.0",
     "license": "LGPL-3",
     "category": "Invoicing",
     "website": "https://simetri-sinergi.id",
@@ -11,6 +11,9 @@
     "depends": [
         "account_invoice_reversal",
         "account_deferred_revenue",
+    ],
+    "data": [
+        "wizards/account_asset_reverse_views.xml",
     ],
     "installable": True,
     "auto_install": False,
