@@ -14,7 +14,21 @@ opnsynid-account-invoicing
 
 [//]: # (addons)
 
-This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
+Available addons
+----------------
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[account_invoice_day_overdue](account_invoice_day_overdue/) | 11.0.1.0.0 |  | Account Invoice Daye Overdue
+[account_invoice_ematerai](account_invoice_ematerai/) | 11.0.1.0.0 |  | Account Invoice E-Materai
+[account_invoice_full_description_to_journal_item](account_invoice_full_description_to_journal_item/) | 11.0.1.0.0 |  | Full Invoice Line Description To Journal Item
+[account_invoice_last_payment](account_invoice_last_payment/) | 11.0.1.0.0 |  | Invoice Last Payment Information
+[account_invoice_multiple_approval](account_invoice_multiple_approval/) | 11.0.1.2.0 |  | Invoicing Multiple Approval
+[account_invoice_proforma](account_invoice_proforma/) | 11.0.1.0.0 |  | Proforma Invoice
+[account_invoice_reversal](account_invoice_reversal/) | 11.0.1.1.0 |  | Account Invoice Reversal
+[account_invoice_reversal_deferred_revenue](account_invoice_reversal_deferred_revenue/) | 11.0.1.2.0 |  | Automatic Reverse Deferred Revenue
+[account_invoice_reversal_deferred_revenue_extra_move](account_invoice_reversal_deferred_revenue_extra_move/) | 11.0.1.0.0 |  | Automatic Reverse Deferred Revenue's Extra Move
+[account_invoice_source_document](account_invoice_source_document/) | 11.0.1.1.0 |  | Account Invoice Source Document
+[account_invoice_workflow_policy](account_invoice_workflow_policy/) | 11.0.1.1.0 |  | Account Invoice Workflow Policy
 
 [//]: # (end addons)
 
