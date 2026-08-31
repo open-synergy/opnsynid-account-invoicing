@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+<record id="account_invoice_view_search" model="ir.ui.view">
+    <field name="name">account.invoice search</field>
+    <field name="model">account.invoice</field>
+    <field name="priority" eval="200" />
+    <field name="inherit_id" ref="account.view_account_invoice_filter" />
+    <field name="arch" type="xml">
+        <data>
+            <xpath expr="//filter[@name='late']" position="after">
+              <filter
+                        name="filter_with_ematerai"
+                        string="Invoice With E-Materai"
+                        domain="[('ematerai_document_ids', '!=', False)]"
+                    />
+                <filter
+                        name="filter_with_ematerai"
+                        string="Invoice Without E-Materai"
+                        domain="[('ematerai_document_ids', '=', False)]"
+                    />
+            </xpath>
+        </data>
+    </field>
+</record>
+
+<record id="invoice_form_cancel_inherit" model="ir.ui.view">
+    <field name="name">invoice.form.cancel.ematerai.inherit</field>
+    <field name="model">account.invoice</field>
+    <field name="priority" eval="100" />
+    <field name="inherit_id" ref="account_cancel.invoice_form_cancel_inherit" />
+    <field name="arch" type="xml">
+        <data>
+            <xpath expr="//button[@name='action_invoice_cancel']" position="attributes">
+                <attribute
+                        name="confirm"
+                    >Canceling this data will delete the E-Materai that has been created. Are you sure?</attribute>
+            </xpath>
+        </data>
+    </field>
+</record>
+
+</odoo>
